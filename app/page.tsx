@@ -6,16 +6,17 @@ import { Image } from "@nextui-org/image";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
+import { Spacer } from "@nextui-org/spacer";
 
 export default function Home() {
   return (
     <>
       <section
-        className="flex flex-col items-center justify-center gap-4 py-8 md:py-10"
+        className="flex flex-col items-center justify-center gap-4 py-8 md:py-10 mb-20"
         id="home"
       >
         <div className="flex flex-col md:flex-row justify-center items-center gap-20">
-          <div className="max-w-lg text-start">
+          <div className="max-w-lg text-center md:text-start">
             <h2 className={subtitle()}>Hi, my name is Nurdin</h2>
             <h1 className={title({ color: "turqoise", size: "xl" })}>
               I&rsquo;m a Fullstack Developer
@@ -41,7 +42,7 @@ export default function Home() {
           </div>
           <Image
             alt="Nurdin A. Alawiyah"
-            className="object-cover rounded-xl"
+            className="object-cover rounded-xl hidden md:block"
             src="/images/nurdin1.png"
             width={450}
           />
@@ -49,7 +50,7 @@ export default function Home() {
       </section>
 
       <section
-        className="flex flex-col items-center justify-center gap-4 py-8 md:py-10"
+        className="flex flex-col items-center justify-center gap-4 py-8 md:py-10 mb-20"
         id="about"
       >
         <div className="flex flex-col md:flex-col items-center justify-center gap-10">
@@ -62,16 +63,16 @@ export default function Home() {
           <Card
             isBlurred
             className="border-none bg-background/60 dark:bg-default-100/50 max-w-4xl"
-            shadow="sm"
+            shadow="m"
           >
             <CardBody>
               <div className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center">
-                <div className="relative col-span-6 md:col-span-4">
+                <div className="relative col-span-6 md:col-span-4 mx-auto my-11">
                   <Image
                     isBlurred
                     width={240}
                     src="images/nurdin-circle.png"
-                    alt="NextUI Album Cover"
+                    alt="Nurdin A. Alawiyah"
                   />
                 </div>
 
@@ -92,6 +93,67 @@ export default function Home() {
               </div>
             </CardBody>
           </Card>
+        </div>
+      </section>
+
+      <section
+        className="flex flex-col items-center justify-center gap-4 py-8 md:py-10"
+        id="work"
+      >
+        <div className="flex flex-col md:flex-col items-center justify-center gap-10">
+          <div className="max-w-lg text-center">
+            <h1 className={title({ color: "turqoise", size: "sm" })}>
+              Work Experience
+            </h1>
+            <h2 className={subtitle()}>
+              A Journey Through Professional Growth and Achievements
+            </h2>
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="flex flex-col items-center justify-center gap-4 py-8 md:py-10"
+        id="project"
+      >
+        <div className="flex flex-col md:flex-col items-center justify-center gap-10">
+          <div className="max-w-lg text-center">
+            <h1 className={title({ color: "turqoise", size: "sm" })}>
+              Project
+            </h1>
+            <h2 className={subtitle()}>From Ideas to Solutions</h2>
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="flex flex-col items-center justify-center gap-4 py-8 md:py-10"
+        id="skill"
+      >
+        <div className="flex flex-col md:flex-col items-center justify-center gap-10">
+          <div className="max-w-lg text-center">
+            <h1 className={title({ color: "turqoise", size: "sm" })}>
+              My Skills
+            </h1>
+            <h2 className={subtitle()}>Shaping My Expertise</h2>
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="flex flex-col items-center justify-center gap-4 py-8 md:py-10"
+        id="contact"
+      >
+        <div className="flex flex-col md:flex-col items-center justify-center gap-10">
+          <div className="max-w-lg text-center">
+            <h1 className={title({ color: "turqoise", size: "sm" })}>
+              Contact Me
+            </h1>
+            <h2 className={subtitle()}>
+              Reach out to me easily through the contact form or my social media
+              profiles.
+            </h2>
+          </div>
         </div>
       </section>
     </>

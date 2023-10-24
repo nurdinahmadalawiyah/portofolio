@@ -14,45 +14,45 @@ export const siteConfig = {
 		},
 		{
 			label: "Work",
-			href: "/pricing",
+			href: "#work",
 		},
 		{
 			label: "Project",
-			href: "/blog",
+			href: "#project",
 		},
 		{
 			label: "Skill",
-			href: "/about",
+			href: "#skill",
 		},
 		{
 			label: "Contact",
-			href: "/about",
+			href: "#contact",
 		}
 	],
 	navMenuItems: [
 		{
 			label: "Home",
-			href: "/profile",
+			href: "#home",
 		},
 		{
 			label: "About",
-			href: "/dashboard",
+			href: "#about",
 		},
 		{
 			label: "Work",
-			href: "/projects",
+			href: "#work",
 		},
 		{
 			label: "Project",
-			href: "/team",
+			href: "#project",
 		},
 		{
 			label: "Skill",
-			href: "/calendar",
+			href: "#skill",
 		},
 		{
 			label: "Contact",
-			href: "/settings",
+			href: "#contact",
 		},
 	],
 	links: {
