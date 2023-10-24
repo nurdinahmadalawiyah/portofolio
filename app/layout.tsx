@@ -29,7 +29,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="en" suppressHydrationWarning className="scroll-smooth">
 			<head />
 			<body
 				className={clsx(
@@ -43,9 +43,9 @@ export default function RootLayout({
 						<main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
 							{children}
 						</main>
-						<footer className="w-full flex items-center justify-center py-3">
+						{/* <footer className="w-full flex items-center justify-center py-3">
 							<span className="text-default-600">Copyright © 2023, Nurdin A. Alawiyah</span>
-						</footer>
+						</footer> */}
 					</div>
 				</Providers>
 			</body>

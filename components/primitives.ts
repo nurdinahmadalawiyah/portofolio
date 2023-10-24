@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 
 export const title = tv({
-	base: "tracking-tight inline font-semibold",
+	base: "tracking-tight inline font-bold",
 	variants: {
 		color: {
 			turqoise: "from-[#5DF8DB] to-[#2CE7F1]", 
@@ -17,6 +17,7 @@ export const title = tv({
 			sm: "text-3xl lg:text-4xl",
 			md: "text-[2.3rem] lg:text-5xl leading-9",
 			lg: "text-4xl lg:text-6xl",
+			xl: "text-5xl lg:text-7xl",
 		},
 		fullWidth: {
 			true: "w-full block",
