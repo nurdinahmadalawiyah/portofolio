@@ -4,6 +4,7 @@ export const title = tv({
 	base: "tracking-tight inline font-semibold",
 	variants: {
 		color: {
+			turqoise: "from-[#5DF8DB] to-[#2CE7F1]", 
 			violet: "from-[#FF1CF7] to-[#b249f8]",
 			yellow: "from-[#FF705B] to-[#FFB457]",
 			blue: "from-[#5EA2EF] to-[#0072F5]",
@@ -27,6 +28,7 @@ export const title = tv({
 	compoundVariants: [
 		{
 			color: [
+				"turqoise",
 				"violet",
 				"yellow",
 				"blue",

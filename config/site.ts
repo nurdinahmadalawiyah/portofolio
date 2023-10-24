@@ -1,69 +1,63 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-	name: "Next.js + NextUI",
+	name: "Nurdin A. Alawiyah",
 	description: "Make beautiful websites regardless of your design experience.",
 	navItems: [
 		{
 			label: "Home",
 			href: "/",
 		},
-    {
-      label: "Docs",
-      href: "/docs",
-    },
-    {
-      label: "Pricing",
-      href: "/pricing",
-    },
-    {
-      label: "Blog",
-      href: "/blog",
-    },
-    {
-      label: "About",
-      href: "/about",
-    }
+		{
+			label: "About",
+			href: "/docs",
+		},
+		{
+			label: "Work",
+			href: "/pricing",
+		},
+		{
+			label: "Project",
+			href: "/blog",
+		},
+		{
+			label: "Skill",
+			href: "/about",
+		},
+		{
+			label: "Contact",
+			href: "/about",
+		}
 	],
 	navMenuItems: [
 		{
-			label: "Profile",
+			label: "Home",
 			href: "/profile",
 		},
 		{
-			label: "Dashboard",
+			label: "About",
 			href: "/dashboard",
 		},
 		{
-			label: "Projects",
+			label: "Work",
 			href: "/projects",
 		},
 		{
-			label: "Team",
+			label: "Project",
 			href: "/team",
 		},
 		{
-			label: "Calendar",
+			label: "Skill",
 			href: "/calendar",
 		},
 		{
-			label: "Settings",
+			label: "Contact",
 			href: "/settings",
-		},
-		{
-			label: "Help & Feedback",
-			href: "/help-feedback",
-		},
-		{
-			label: "Logout",
-			href: "/logout",
 		},
 	],
 	links: {
-		github: "https://github.com/nextui-org/nextui",
-		twitter: "https://twitter.com/getnextui",
+		github: "https://github.com/nurdinahmadalawiyah",
 		docs: "https://nextui.org",
-		discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev"
+		cv: "https://patreon.com/jrgarciadev"
 	},
 };
