@@ -7,7 +7,6 @@ import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { motion, useAnimation } from "framer-motion"; 
 import { useEffect } from "react";
-import { TypedText } from "@/components/typed-text";
 
 export default function HomePage() {
   const controls = useAnimation();
@@ -23,7 +22,6 @@ export default function HomePage() {
         <h1 className={title({ color: "turqoise", size: "xl" })}>
           I&rsquo;m a Fullstack Developer
         </h1>
-        <TypedText />
         <br />
         <h2 className={subtitle({ class: "mt-8" })}>
           I&rsquo;m passionate about creating innovative and user-friendly web
