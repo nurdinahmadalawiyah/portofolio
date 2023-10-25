@@ -32,27 +32,27 @@ export const siteConfig = {
 	navMenuItems: [
 		{
 			label: "Home",
-			href: "#home",
+			href: "/",
 		},
 		{
 			label: "About",
-			href: "#about",
+			href: "/about",
 		},
 		{
 			label: "Work",
-			href: "#work",
+			href: "/work",
 		},
 		{
 			label: "Project",
-			href: "#project",
+			href: "/project",
 		},
 		{
 			label: "Skill",
-			href: "#skill",
+			href: "/skill",
 		},
 		{
 			label: "Contact",
-			href: "#contact",
+			href: "/contact",
 		},
 	],
 	links: {
