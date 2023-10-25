@@ -1,9 +1,11 @@
+"use client";
+
 import { title, subtitle } from "@/components/primitives";
 import { Tabs, Tab } from "@nextui-org/tabs";
 import { Card, CardBody } from "@nextui-org/card";
 import { siteConfig } from "@/config/site";
 import { useEffect, useState } from "react";
-import { Avatar, AvatarGroup, AvatarIcon } from "@nextui-org/avatar";
+import { Avatar } from "@nextui-org/avatar";
 
 export default function WorkPage() {
   const [tabSize, setTabSize] = useState<"lg" | "sm" | "md" | undefined>("lg");
