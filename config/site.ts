@@ -12,6 +12,7 @@ export const siteConfig = {
 	},
 	work: [
 		{
+			image: "/images/padepokan.png",
 			company: "Padepokan Tujuh Sembilan",
 			alamat: "Bandung, Jawa Barat, Indonesia",
 			experience:
@@ -37,6 +38,7 @@ export const siteConfig = {
 				]
 		},
 		{
+			image: "/images/crop.png",
 			company: "Crop Inspirasi Digital",
 			alamat: "Bandung, Jawa Barat, Indonesia",
 			experience:
