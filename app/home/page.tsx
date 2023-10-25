@@ -5,8 +5,17 @@ import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
+import { motion, useAnimation } from "framer-motion"; 
+import { useEffect } from "react";
+import { TypedText } from "@/components/typed-text";
 
 export default function HomePage() {
+  const controls = useAnimation();
+
+  useEffect(() => {
+    controls.start({ x: 0 });
+  }, [controls]);
+
   return (
     <>
       <div className="max-w-lg text-center md:text-start">
@@ -14,6 +23,7 @@ export default function HomePage() {
         <h1 className={title({ color: "turqoise", size: "xl" })}>
           I&rsquo;m a Fullstack Developer
         </h1>
+        <TypedText />
         <br />
         <h2 className={subtitle({ class: "mt-8" })}>
           I&rsquo;m passionate about creating innovative and user-friendly web
@@ -33,11 +43,20 @@ export default function HomePage() {
           </Link>
         </div>
       </div>
-      <Image
+      <motion.img
         alt="Nurdin A. Alawiyah"
         className="object-cover rounded-xl hidden md:block"
         src="/images/nurdin1.png"
         width={450}
+        whileHover={{ scale: 1.1 }}
+        animate={{ y: [10, -10, 10] }} // Animasi bergerak atas-bawah
+        transition={{
+          y: {
+            repeat: Infinity, // Mengulangi animasi secara tak terbatas
+            duration: 4, // Durasi per putaran animasi
+            ease: "linear", // Jenis animasi (dalam hal ini, linear)
+          },
+        }}
       />
     </>
   );

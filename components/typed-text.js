@@ -1,17 +1,25 @@
+'use client'
+
 import React, { useEffect } from "react";
-import Typewriter from "typewriter-effect";
 import { title } from "@/components/primitives";
+import Typed from "typed.js";
 
 export const TypedText = () => {
-  useEffect(() => {
-    const target = document.getElementById("typewriter-target")
-    if (target) {
-      new Typewriter(target, {
-        strings: ["I’m a Fullstack Developer", "I’m a Frontend Developer", "I’m a Backend Developer"],
-        autoStart: true,
-        loop: true,
-      });
-    }
+  const typedTextRef = useRef(null);
+
+ useEffect(() => {
+    const typed = new Typed(typedTextRef.current, {
+      strings: [
+        "I’m a Fullstack Developer",
+        "I’m a Frontend Developer",
+        "I’m a Backend Developer",
+      ],
+      typeSpeed: 50,
+    });
+
+    return () => {
+      typed.destroy();
+    };
   }, []);
     
   return (
