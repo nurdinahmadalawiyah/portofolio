@@ -5,7 +5,7 @@ import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
-import { motion, useAnimation } from "framer-motion"; 
+import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
 
 export default function HomePage() {
@@ -18,16 +18,13 @@ export default function HomePage() {
   return (
     <>
       <div className="max-w-lg text-center md:text-start">
-        <h2 className={subtitle()}>Hi, my name is Nurdin</h2>
+        <h2 className={subtitle()}>{siteConfig.home.greatings}</h2>
         <h1 className={title({ color: "turqoise", size: "xl" })}>
-          I&rsquo;m a Fullstack Developer
+          {siteConfig.home.role}
         </h1>
         <br />
         <h2 className={subtitle({ class: "mt-8" })}>
-          I&rsquo;m passionate about creating innovative and user-friendly web
-          applications, and my enthusiasm extends to crafting intuitive and
-          seamless mobile applications as well. I believe in delivering
-          exceptional digital experiences across all platforms.
+          {siteConfig.home.description}
         </h2>
         <div className="mt-8">
           <Link isExternal as={NextLink} href={siteConfig.links.docs}>
