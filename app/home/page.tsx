@@ -17,7 +17,7 @@ export default function HomePage() {
 
   return (
     <>
-      <div className="max-w-lg text-center md:text-start">
+      <div className="max-w-lg text-center lg:text-start">
         <h2 className={subtitle()}>{siteConfig.home.greatings}</h2>
         <h1 className={title({ color: "turqoise", size: "xl" })}>
           {siteConfig.home.role}
@@ -40,7 +40,7 @@ export default function HomePage() {
       </div>
       <motion.img
         alt="Nurdin A. Alawiyah"
-        className="object-cover rounded-xl hidden md:block"
+        className="object-cover rounded-xl hidden lg:block"
         src="/images/nurdin1.png"
         width={450}
         whileHover={{ scale: 1.1 }}

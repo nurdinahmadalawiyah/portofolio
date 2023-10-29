@@ -37,7 +37,7 @@ export const Navbar = () => {
         justify="end"
       >
         <NavbarItem className="hidden sm:flex gap-2">
-          <ul className="hidden lg:flex gap-4 justify-start mr-10">
+          <ul className="hidden md:flex lg:flex gap-4 justify-start mr-10">
             {siteConfig.navItems.map((item) => (
               <NavbarItem key={item.href}>
                 <NextLink
