@@ -56,36 +56,36 @@ export const siteConfig = {
 		{
 			name: "Aplikasi Praktik Kerja Lapangan Berbasis Mobile (Studi Kasus: Politeknik TEDC Bandung)",
 			desc: "PKL APP is a cutting-edge mobile application designed to streamline and simplify the process of managing internships and student placements.",
-			image: "",
+			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
 			link: "https://github.com/nurdinahmadalawiyah/pkl-app",
 			tech: [
 				{
 					name: "Flutter",
-					image: ""
+					image: "/icons/flutter-icon.svg"
 				},
 				{
 					name: "Next.js",
-					image: ""
+					image: "/icons/next-icon.svg"
 				},
 				{
 					name: "Laravel",
-					image: ""
+					image: "/icons/laravel-icon.svg"
 				},
 				{
 					name: "MySql",
-					image: ""
+					image: "/icons/mysql-icon.svg"
 				},
 			]
 		},
 		{
 			name: "Futoboru",
 			desc: "Futoboru is the ultimate mobile application designed exclusively for football enthusiasts. With Futoboru, you'll experience the thrill of football at your fingertips.",
-			image: "",
+			image: "https://nextui-docs-v2.vercel.app/images/fruit-4.jpeg",
 			link: "https://github.com/nurdinahmadalawiyah/Futoboru",
 			tech: [
 				{
 					name: "Flutter",
-					image: ""
+					image: "/icons/flutter-icon.svg"
 				}
 			]
 		},

@@ -78,7 +78,7 @@ export default function WorkPage() {
                           <TimelineDot sx={{ bgcolor: '#2CE7F1' }} />
                           {index < item.experience.length - 1 && <TimelineConnector sx={{ bgcolor: '#2CE7F1' }} />}
                         </TimelineSeparator>
-                        <TimelineContent>
+                        <TimelineContent sx={{ paddingLeft: "45px" }}>
                           {experience.position}
                           <p className="text-small text-foreground/80">
                             {experience.type}
