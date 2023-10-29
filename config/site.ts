@@ -209,7 +209,6 @@ export const siteConfig = {
 	],
 	links: {
 		github: "https://github.com/nurdinahmadalawiyah",
-		docs: "https://nextui.org",
 		cv: "https://patreon.com/jrgarciadev"
 	},
 };

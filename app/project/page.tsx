@@ -16,7 +16,7 @@ export default function ProjectPage() {
       </div>
       {siteConfig.project.map((item, index) => (
         <Card
-          className="border-none bg-background/60 dark:bg-default-100/50 max-w-full"
+          className="border-none bg-background/60 dark:bg-default-100/50 max-w-6xl"
           shadow="sm"
           key={item.name}
         >
