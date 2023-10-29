@@ -93,63 +93,67 @@ export const siteConfig = {
 	skill: [
 		{
 			name: "HTML",
-			image: "",
+			image: "/icons/html-icon.svg",
 		},
 		{
 			name: "CSS",
-			image: "",
+			image: "/icons/css-icon.svg",
 		},
 		{
 			name: "JavaScript",
-			image: "",
+			image: "/icons/javascript-icon.svg",
 		},
 		{
 			name: "Java",
-			image: "",
+			image: "/icons/java-icon.svg",
 		},
 		{
 			name: "Dart",
-			image: "",
+			image: "/icons/dart-icon.svg",
 		},
 		{
 			name: "PHP",
-			image: "",
+			image: "/icons/php-icon.svg",
 		},
 		{
 			name: "React",
-			image: "",
+			image: "/icons/react-icon.svg",
 		},
 		{
 			name: "Next.js",
-			image: "",
+			image: "/icons/next-icon.svg",
 		},
 		{
 			name: "Spring Boot",
-			image: "",
+			image: "/icons/spring-icon.svg",
 		},
 		{
 			name: "Flutter",
-			image: "",
+			image: "/icons/flutter-icon.svg",
 		},
 		{
 			name: "Laravel",
-			image: "",
+			image: "/icons/laravel-icon.svg",
+		},
+		{
+			name: "Hapi.js",
+			image: "/icons/hapi-icon.svg",
 		},
 		{
 			name: "Node JS",
-			image: "",
+			image: "/icons/node-icon.svg",
 		},
 		{
 			name: "MySQL",
-			image: "",
+			image: "/icons/mysql-icon.svg",
 		},
 		{
 			name: "PostgreSQL",
-			image: "",
+			image: "/icons/postgresql-icon.svg",
 		},
 		{
 			name: "Figma",
-			image: "",
+			image: "/icons/figma-icon.svg",
 		}
 	],
 	contact: {
@@ -209,6 +213,6 @@ export const siteConfig = {
 	],
 	links: {
 		github: "https://github.com/nurdinahmadalawiyah",
-		cv: "https://patreon.com/jrgarciadev"
+		cv: "CV - Nurdin A. Alawiyah.pdf"
 	},
 };

@@ -75,7 +75,7 @@ export const Navbar = () => {
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <ThemeSwitch />
-        <Link isExternal href={siteConfig.links.github}>
+        <Link isExternal href={siteConfig.links.cv}>
           <DownloadIcon className="text-default-500" />
         </Link>
         <NavbarMenuToggle />
