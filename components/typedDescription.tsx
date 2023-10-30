@@ -1,3 +1,5 @@
+"use client";
+
 import { siteConfig } from '@/config/site';
 import React, { useEffect, useRef } from 'react';
 import Typed from 'typed.js';
