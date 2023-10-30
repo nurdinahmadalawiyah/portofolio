@@ -1,7 +1,7 @@
 import { title, subtitle } from "@/components/primitives";
 import { Card, CardBody } from "@nextui-org/card";
 import { Tooltip } from "@nextui-org/tooltip";
-import { Image } from "@nextui-org/image";
+import { motion } from "framer-motion";
 import { siteConfig } from "@/config/site";
 
 export default function SkillPage() {
@@ -13,13 +13,13 @@ export default function SkillPage() {
       </div>
       <Card>
         <CardBody  className="grid grid-cols-3 sm:grid-cols-4 gap-4 sm:gap-8">
-          {siteConfig.skill.map((item, index) => (
+          {siteConfig.skill.map((item) => (
             <Tooltip content={item.name} key={item.name}>
-              <Image
-                radius="none"
+              <motion.img
                 width={75}
                 alt={item.name}
                 src={item.image}
+                whileHover={{ scale: 1.2 }}
               />
             </Tooltip>
           ))}

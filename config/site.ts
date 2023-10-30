@@ -4,7 +4,7 @@ export const siteConfig = {
 	name: "Nurdin A. Alawiyah",
 	home: {
 		greatings: "Hi, my name is Nurdin",
-		role: "I'm a Fullstack Developer",
+		role: ["I'm a Frontend Developer", "I'm a Backend Developer", "I'm a Fullstack Developer"],
 		description: "I'm passionate about creating innovative and user-friendly web applications, and my enthusiasm extends to crafting intuitive and seamless mobile applications as well.I believe in delivering exceptional digital experiences across all platforms.",
 	},
 	about: {

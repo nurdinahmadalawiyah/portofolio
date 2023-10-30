@@ -2,11 +2,11 @@
 import NextLink from "next/link";
 import { Link } from "@nextui-org/link";
 import { Button } from "@nextui-org/button";
-import { Image } from "@nextui-org/image";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
+import TypedDescription from "@/components/typedDescription";
 
 export default function HomePage() {
   const controls = useAnimation();
@@ -19,8 +19,8 @@ export default function HomePage() {
     <>
       <div className="max-w-lg text-center lg:text-start">
         <h2 className={subtitle()}>{siteConfig.home.greatings}</h2>
-        <h1 className={title({ color: "turqoise", size: "xl" })}>
-          {siteConfig.home.role}
+        <h1 className={title({ color: "turqoise", size: "xl"})}>
+          <TypedDescription />
         </h1>
         <br />
         <h2 className={subtitle({ class: "mt-8" })}>
