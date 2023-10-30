@@ -8,7 +8,7 @@ const TypedDescription = () => {
   useEffect(() => {
     const options = {
       strings: siteConfig.home.role,
-      typeSpeed: 50,
+      typeSpeed: 100,
       backSpeed: 50,
       showCursor: true,
       cursorChar: '|',
