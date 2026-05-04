@@ -32,7 +32,7 @@ export default function HomePage() {
             <Button
               variant="shadow"
               size="lg"
-              className="bg-turquoise dark:text-black light:text-white shadow-lg font-bold"
+              className="bg-turquoise text-white dark:text-black shadow-lg font-bold"
             >
               Explore Project →
             </Button>

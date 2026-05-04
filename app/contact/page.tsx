@@ -87,7 +87,7 @@ export default function ContactPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className={title({ color: "cyan", size: "lg" })}>Get In Touch</h1>
+          <h1 className={title({ color: "turqoise", size: "sm" })}>Get In Touch</h1>
           <h2 className={subtitle({ className: "mt-4" })}>
             I'm always open to new opportunities, collaborations, or just a friendly chat.
           </h2>
@@ -181,7 +181,7 @@ export default function ContactPage() {
                   />
                   <Button 
                     size="lg" 
-                    className="font-bold text-white bg-gradient-to-r from-[#00b7fa] to-[#01cfea] shadow-lg shadow-cyan-500/30 mt-2 w-full"
+                    className="font-bold text-white dark:text-black bg-turquoise shadow-lg shadow-cyan-500/30 mt-2 w-full"
                     onPress={handleSendMessage}
                   >
                     Send Message

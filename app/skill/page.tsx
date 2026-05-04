@@ -58,7 +58,7 @@ export default function SkillPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className={title({ color: "cyan", size: "lg" })}>My Skills</h1>
+          <h1 className={title({ color: "turqoise", size: "sm" })}>My Skills</h1>
           <h2 className={subtitle({ className: "mt-4" })}>
             Shaping My Expertise with Modern Technologies
           </h2>
@@ -76,7 +76,7 @@ export default function SkillPage() {
           >
             <Card className="border-none bg-background/60 dark:bg-default-100/50 backdrop-blur-md shadow-lg h-full">
               <CardBody className="p-6">
-                <h3 className="text-xl font-bold mb-8 text-primary">
+                <h3 className="text-xl font-bold mb-8 text-turquoise">
                   {category.name}
                 </h3>
                 <div className="flex flex-wrap gap-6 justify-center sm:justify-start">
