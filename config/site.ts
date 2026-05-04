@@ -157,7 +157,13 @@ export const siteConfig = {
 		}
 	],
 	contact: {
-
+		email: "nurdinahmada@gmail.com",
+		linkedin: "https://www.linkedin.com/in/nurdin-ahmad-alawiyah/",
+		instagram: "https://www.instagram.com/nurdin_ahmad_alawiyah/",
+		github: "https://github.com/nurdinahmadalawiyah",
+		whatsapp: "https://wa.me/628977612607",
+		location: "Bandung",
+		maps: "https://www.google.com/maps/search/?api=1&query=Bandung",
 	},
 	navItems: [
 		{
