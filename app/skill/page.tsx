@@ -27,7 +27,7 @@ export default function SkillPage() {
     },
     {
       name: "Database",
-      skills: ["MySQL", "PostgreSQL"],
+      skills: ["MySQL", "MongoDB", "PostgreSQL"],
     },
     {
       name: "Design",

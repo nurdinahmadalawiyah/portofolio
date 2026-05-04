@@ -176,6 +176,10 @@ export const siteConfig = {
 			image: "/icons/mysql-icon.svg",
 		},
 		{
+			name: "MongoDB",
+			image: "/icons/mongodb-icon.svg",
+		},
+		{
 			name: "PostgreSQL",
 			image: "/icons/postgresql-icon.svg",
 		},
