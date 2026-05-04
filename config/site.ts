@@ -116,12 +116,24 @@ export const siteConfig = {
 			image: "/icons/php-icon.svg",
 		},
 		{
+			name: "Kotlin",
+			image: "/icons/kotlin-icon.svg",
+		},
+		{
+			name: "TypeScript",
+			image: "/icons/typescript-icon.svg",
+		},
+		{
 			name: "React",
 			image: "/icons/react-icon.svg",
 		},
 		{
 			name: "Next.js",
 			image: "/icons/next-icon.svg",
+		},
+		{
+			name: "Angular",
+			image: "/icons/angular-icon.svg",
 		},
 		{
 			name: "Spring Boot",
@@ -132,12 +144,28 @@ export const siteConfig = {
 			image: "/icons/flutter-icon.svg",
 		},
 		{
+			name: "Jetpack Compose",
+			image: "/icons/jetpack-compose-icon.svg",
+		},
+		{
+			name: "React Native",
+			image: "/icons/react-native-icon.svg",
+		},
+		{
+			name: "Expo",
+			image: "/icons/expo-icon.svg",
+		},
+		{
 			name: "Laravel",
 			image: "/icons/laravel-icon.svg",
 		},
 		{
-			name: "Hapi.js",
-			image: "/icons/hapi-icon.svg",
+			name: "Express.js",
+			image: "/icons/express-icon.svg",
+		},
+		{
+			name: "NestJS",
+			image: "/icons/nestjs-icon.svg",
 		},
 		{
 			name: "Node JS",

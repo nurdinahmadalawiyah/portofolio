@@ -10,20 +10,20 @@ import { Image } from "@nextui-org/image";
 export default function SkillPage() {
   const categories = [
     {
-      name: "Languages",
-      skills: ["HTML", "CSS", "JavaScript", "Java", "Dart", "PHP"],
+      name: "Programming & Markup",
+      skills: ["HTML", "CSS", "JavaScript", "Java", "Dart", "PHP", "Kotlin", "TypeScript"],
     },
     {
       name: "Frontend",
-      skills: ["React", "Next.js"],
+      skills: ["React", "Next.js", "Angular"],
     },
     {
       name: "Backend",
-      skills: ["Spring Boot", "Laravel", "Hapi.js", "Node JS"],
+      skills: ["Spring Boot", "Laravel", "Express.js", "NestJS", "Node JS"],
     },
     {
       name: "Mobile",
-      skills: ["Flutter"],
+      skills: ["Flutter", "Jetpack Compose", "React Native", "Expo"],
     },
     {
       name: "Database",
