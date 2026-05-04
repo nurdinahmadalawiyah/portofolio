@@ -81,7 +81,7 @@ export default function ContactPage() {
 
   return (
     <section id="contact" className="flex flex-col items-center justify-center gap-8 py-12 md:py-20">
-      <div className="inline-block max-w-2xl text-center justify-center">
+      <div className="inline-block max-w-3xl text-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -94,7 +94,7 @@ export default function ContactPage() {
         </motion.div>
       </div>
 
-      <div className="flex flex-col gap-16 w-full max-w-4xl px-4 mt-12 mx-auto">
+      <div className="flex flex-col gap-16 w-full max-w-6xl px-4 mt-12 mx-auto">
         {/* Social Links Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -118,9 +118,11 @@ export default function ContactPage() {
                     <div className={`p-3 rounded-2xl ${item.color}`}>
                       {item.icon}
                     </div>
-                    <div className="flex flex-col items-start">
+                    <div className="flex flex-col items-start min-w-0">
                       <span className="text-xs text-default-500">{item.label}</span>
-                      <span className="text-sm font-medium truncate max-w-[150px]">{item.value}</span>
+                      <span className="text-sm font-medium break-words">
+                        {item.value}
+                      </span>
                     </div>
                   </CardBody>
                 </Card>
@@ -152,6 +154,9 @@ export default function ContactPage() {
                       placeholder="Enter your name"
                       variant="bordered"
                       className="flex-1"
+                      classNames={{
+                        inputWrapper: "group-data-[focus=true]:border-turquoise",
+                      }}
                       value={formData.name}
                       onValueChange={(val) => handleInputChange("name", val)}
                     />
@@ -160,6 +165,9 @@ export default function ContactPage() {
                       placeholder="Enter your email"
                       variant="bordered"
                       className="flex-1"
+                      classNames={{
+                        inputWrapper: "group-data-[focus=true]:border-turquoise",
+                      }}
                       value={formData.email}
                       onValueChange={(val) => handleInputChange("email", val)}
                     />
@@ -168,6 +176,9 @@ export default function ContactPage() {
                     label="Subject"
                     placeholder="What is this about?"
                     variant="bordered"
+                    classNames={{
+                      inputWrapper: "group-data-[focus=true]:border-turquoise",
+                    }}
                     value={formData.subject}
                     onValueChange={(val) => handleInputChange("subject", val)}
                   />
@@ -176,6 +187,9 @@ export default function ContactPage() {
                     placeholder="Write your message here..."
                     variant="bordered"
                     minRows={4}
+                    classNames={{
+                      inputWrapper: "group-data-[focus=true]:border-turquoise",
+                    }}
                     value={formData.message}
                     onValueChange={(val) => handleInputChange("message", val)}
                   />

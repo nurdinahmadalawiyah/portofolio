@@ -34,8 +34,8 @@ export default function HomePage() {
           <h2 className={subtitle({ class: "text-turquoise font-medium mb-2" })}>
             {siteConfig.home.greatings}
           </h2>
-          <div className="h-[200px] md:h-[160px] flex items-center justify-center lg:justify-start overflow-visible">
-            <h1 className={title({ color: "turqoise", size: "xl" })}>
+          <div className="min-h-[160px] md:min-h-[140px] flex items-center justify-center lg:justify-start overflow-visible py-2">
+            <h1 className={`${title({ color: "turqoise", size: "xl" })} leading-[1.2] pb-2`}>
               <TypedDescription />
             </h1>
           </div>
