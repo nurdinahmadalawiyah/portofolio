@@ -9,6 +9,23 @@ export const siteConfig = {
 	},
 	about: {
 		desc: "I am Nurdin A. Alawiyah, and I possess a deep passion for the realm of programming. Leveraging my accumulated experience in web and mobile application development, I remain highly enthusiastic and fully committed to the continuous expansion of my skills and knowledge within the dynamic landscape of technology and programming. Beyond my working hours, I diligently engage in online courses to further enrich my expertise in this ever-evolving field.",
+		highlights: [
+			{
+				label: "Experience",
+				value: "2+ Years",
+				icon: "Briefcase"
+			},
+			{
+				label: "Education",
+				value: "Politeknik TEDC",
+				icon: "GraduationCap"
+			},
+			{
+				label: "Focus",
+				value: "Web & Mobile",
+				icon: "Code2"
+			}
+		]
 	},
 	work: [
 		{
