@@ -27,13 +27,13 @@ export const siteConfig = {
 						position: "Backend Developer",
 						type: "On Job Training",
 						date: "June 2023 - September 2023",
-						duration: "3 Month"
+						duration: "3 Months"
 					},
 					{
 						position: "Frontend Web Developer",
 						type: "Intership",
 						date: "March 2023 - May 2023",
-						duration: "3 Month"
+						duration: "3 Months"
 					}
 				]
 		},
@@ -47,7 +47,7 @@ export const siteConfig = {
 						position: "Mobile Developer",
 						type: "Intership",
 						date: "July 2022 - December 2022",
-						duration: "6 Month"
+						duration: "6 Months"
 					}
 				]
 		}
