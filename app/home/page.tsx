@@ -28,7 +28,7 @@ export default function HomePage() {
           {siteConfig.home.description}
         </h2>
         <div className="mt-8">
-          <Link as={NextLink} href={siteConfig.navItems[3].href}>
+          <Link as={NextLink} href={siteConfig.navItems[1].href}>
             <Button
               variant="shadow"
               size="lg"

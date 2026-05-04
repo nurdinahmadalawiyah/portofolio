@@ -203,20 +203,20 @@ export const siteConfig = {
 			href: "#home",
 		},
 		{
-			label: "About",
-			href: "#about",
-		},
-		{
-			label: "Work",
-			href: "#work",
-		},
-		{
 			label: "Project",
 			href: "#project",
 		},
 		{
 			label: "Skill",
 			href: "#skill",
+		},
+		{
+			label: "Work",
+			href: "#work",
+		},
+		{
+			label: "About",
+			href: "#about",
 		},
 		{
 			label: "Contact",
@@ -229,20 +229,20 @@ export const siteConfig = {
 			href: "/",
 		},
 		{
-			label: "About",
-			href: "/about",
-		},
-		{
-			label: "Work",
-			href: "/work",
-		},
-		{
 			label: "Project",
 			href: "/project",
 		},
 		{
 			label: "Skill",
 			href: "/skill",
+		},
+		{
+			label: "Work",
+			href: "/work",
+		},
+		{
+			label: "About",
+			href: "/about",
 		},
 		{
 			label: "Contact",

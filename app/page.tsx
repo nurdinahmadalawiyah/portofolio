@@ -19,14 +19,6 @@ export default function Home() {
         <HomePage />
       </HomeLayout>
 
-      <AboutLayout>
-        <AboutPage />
-      </AboutLayout>
-
-      <WorkLayout>
-        <WorkPage />
-      </WorkLayout>
-      
       <ProjectLayout>
         <ProjectPage />
       </ProjectLayout>
@@ -34,6 +26,14 @@ export default function Home() {
       <SkillLayout>
         <SkillPage />
       </SkillLayout>
+
+      <WorkLayout>
+        <WorkPage />
+      </WorkLayout>
+
+      <AboutLayout>
+        <AboutPage />
+      </AboutLayout>
 
       <ContactLayout>
         <ContactPage />
