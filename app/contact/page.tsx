@@ -89,7 +89,7 @@ export default function ContactPage() {
         >
           <h1 className={title({ color: "turqoise", size: "sm" })}>Get In Touch</h1>
           <h2 className={subtitle({ className: "mt-4" })}>
-            I'm always open to new opportunities, collaborations, or just a friendly chat.
+            I&apos;m always open to new opportunities, collaborations, or just a friendly chat.
           </h2>
         </motion.div>
       </div>
