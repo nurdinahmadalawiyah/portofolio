@@ -91,7 +91,7 @@ export const Navbar = () => {
         </NavbarContent>
 
         <NavbarContent className="basis-1/5 sm:basis-full" justify="end">
-          <NavbarItem className="hidden sm:flex gap-4 items-center">
+          <NavbarItem className="hidden lg:flex gap-4 items-center">
             <ThemeSwitch />
             <Button
               isExternal
@@ -104,11 +104,11 @@ export const Navbar = () => {
               Download CV
             </Button>
           </NavbarItem>
-          
-          <NavbarContent className="lg:hidden flex items-center gap-2">
-            <ThemeSwitch />
-            <NavbarMenuToggle className="text-default-500 w-10 h-10" />
-          </NavbarContent>
+        </NavbarContent>
+
+        <NavbarContent className="lg:hidden basis-1" justify="end">
+          <ThemeSwitch />
+          <NavbarMenuToggle className="text-default-500 w-10 h-10" />
         </NavbarContent>
 
         <NavbarMenu className="mt-4 rounded-3xl bg-background/95 backdrop-blur-xl border border-white/10 p-6 shadow-2xl overflow-hidden">
