@@ -4,6 +4,7 @@ import { title, subtitle } from "@/components/primitives";
 import { Card, CardBody, CardFooter } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
+import { Tooltip } from "@nextui-org/tooltip";
 import { motion } from "framer-motion";
 import { siteConfig } from "@/config/site";
 import { GithubIcon, ExternalLinkIcon, MapPinIcon } from "@/components/icons";
@@ -84,9 +85,14 @@ export default function ProjectPage() {
                   {/* Floating Tech Stack */}
                   <div className="absolute bottom-4 left-4 flex flex-wrap gap-2 z-10">
                     {project.tech.map((tech: any, techIdx: number) => (
-                      <div key={techIdx} className="p-2 rounded-xl bg-black/40 backdrop-blur-md border border-white/10 shadow-xl">
-                        <Image src={tech.image} width={18} height={18} alt={tech.name} className="object-contain" />
-                      </div>
+                      <Tooltip key={techIdx} content={tech.name} closeDelay={0}>
+                        <motion.div 
+                          whileHover={{ y: -5, scale: 1.1 }}
+                          className="p-2 rounded-xl bg-black/40 backdrop-blur-md border border-white/10 shadow-xl cursor-help transition-colors hover:border-turquoise/50"
+                        >
+                          <Image src={tech.image} width={18} height={18} alt={tech.name} className="object-contain" />
+                        </motion.div>
+                      </Tooltip>
                     ))}
                   </div>
                 </div>
