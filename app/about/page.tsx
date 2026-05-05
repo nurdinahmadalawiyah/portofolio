@@ -69,15 +69,15 @@ export default function AboutPage() {
               {/* Profile Image with Glow */}
               <div className="relative group flex-shrink-0">
                 {/* Dual-tone Ambient Glow (Turquoise + Deep Cyan) */}
-                <div className="absolute -inset-6 bg-turquoise/20 rounded-[3.5rem] blur-3xl group-hover:bg-turquoise/40 transition-all duration-500" />
-                <div className="absolute -inset-8 bg-cyan-600/20 rounded-[4rem] blur-[100px] group-hover:bg-cyan-600/30 transition-all duration-500" />
+                <div className="absolute -inset-6 bg-turquoise/20 rounded-2xl blur-3xl group-hover:bg-turquoise/40 transition-all duration-500" />
+                <div className="absolute -inset-8 bg-cyan-600/10 rounded-2xl blur-[100px] group-hover:bg-cyan-600/20 transition-all duration-500" />
                 
                 <Image
                   isBlurred
                   width={280}
                   src="images/nurdin-circle-new.jpg"
                   alt="Nurdin A. Alawiyah"
-                  className="relative z-10 border-2 border-turquoise/20 rounded-[3rem] shadow-[0_0_25px_rgba(8,145,178,0.4)] group-hover:shadow-[0_0_40px_rgba(8,145,178,0.6)] transition-all duration-500 object-cover aspect-square md:aspect-auto"
+                  className="relative z-10 border-2 border-turquoise/20 rounded-2xl shadow-[0_0_25px_rgba(8,145,178,0.4)] group-hover:shadow-[0_0_40px_rgba(8,145,178,0.6)] transition-all duration-500 object-cover aspect-square md:aspect-auto"
                 />
               </div>
 
