@@ -85,7 +85,7 @@ export default function SkillPage() {
             >
               <CardBody className="p-8">
                 <div className="flex items-center gap-3 mb-8">
-                  <div className="w-1.5 h-6 bg-turquoise rounded-full shadow-[0_0_10px_rgba(44,231,241,0.5)]" />
+                  <div className="w-1.5 h-6 bg-turquoise rounded-full shadow-[0_0_10px_rgb(var(--accent-color)/0.5)]" />
                   <h3 className="text-xl font-black text-foreground tracking-tight">
                     {category.name}
                   </h3>

@@ -75,7 +75,7 @@ export const Navbar = () => {
                     {isActive && (
                       <motion.div
                         layoutId="nav-underline"
-                        className="absolute -bottom-1 left-0 right-0 h-[3px] bg-turquoise rounded-full shadow-[0_0_15px_rgba(76,242,226,0.6)]"
+                        className="absolute -bottom-1 left-0 right-0 h-[3px] bg-turquoise rounded-full shadow-[0_0_15px_rgb(var(--accent-color)/0.6)]"
                         transition={{
                           type: "spring",
                           stiffness: 380,

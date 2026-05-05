@@ -70,8 +70,8 @@ export default function ProjectPage() {
                       </div>
                     )}
                     {project.isOngoing && (
-                      <div className="px-3 py-1 rounded-full bg-turquoise/20 backdrop-blur-md border border-turquoise/30 flex items-center gap-2 shadow-[0_0_15px_rgba(44,231,241,0.2)]">
-                        <div className="w-1.5 h-1.5 rounded-full bg-turquoise animate-pulse shadow-[0_0_8px_rgba(44,231,241,1)]" />
+                      <div className="px-3 py-1 rounded-full bg-turquoise/20 backdrop-blur-md border border-turquoise/30 flex items-center gap-2 shadow-[0_0_15px_rgb(var(--accent-color)/0.2)]">
+                        <div className="w-1.5 h-1.5 rounded-full bg-turquoise animate-pulse shadow-[0_0_8px_rgb(var(--accent-color)/1)]" />
                         <span className="text-[10px] font-black text-turquoise uppercase tracking-widest">In Development</span>
                       </div>
                     )}
@@ -108,7 +108,7 @@ export default function ProjectPage() {
                 <div className="p-8">
                   {/* Title & Metadata */}
                   <div className="flex items-start gap-4 mb-6">
-                    <div className="w-1.5 h-8 bg-turquoise rounded-full shadow-[0_0_10px_rgba(44,231,241,0.5)] flex-shrink-0 mt-1" />
+                    <div className="w-1.5 h-8 bg-turquoise rounded-full shadow-[0_0_10px_rgb(var(--accent-color)/0.5)] flex-shrink-0 mt-1" />
                     <div className="flex flex-col gap-1">
                       <h3 className="text-2xl font-black text-foreground tracking-tight group-hover:text-turquoise transition-colors leading-tight">
                         {project.name}
@@ -140,7 +140,7 @@ export default function ProjectPage() {
                       <ul className="flex flex-col gap-2">
                         {project.jobDesc.map((job: string, jobIdx: number) => (
                           <li key={jobIdx} className="flex items-start gap-3 text-xs text-foreground/80 font-medium">
-                            <span className="w-1.5 h-1.5 rounded-full bg-turquoise mt-1.5 flex-shrink-0 shadow-[0_0_5px_rgba(44,231,241,0.5)]" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-turquoise mt-1.5 flex-shrink-0 shadow-[0_0_5px_rgb(var(--accent-color)/0.5)]" />
                             {job}
                           </li>
                         ))}
@@ -157,7 +157,7 @@ export default function ProjectPage() {
                     as="a"
                     href={project.link}
                     target="_blank"
-                    className="flex-1 bg-turquoise text-white dark:text-black font-black shadow-[0_0_20px_rgba(44,231,241,0.2)] hover:shadow-[0_0_30px_rgba(44,231,241,0.4)] transition-all duration-300 h-12 rounded-xl"
+                    className="flex-1 bg-turquoise text-white dark:text-black font-black shadow-[0_0_20px_rgb(var(--accent-color)/0.2)] hover:shadow-[0_0_30px_rgb(var(--accent-color)/0.4)] transition-all duration-300 h-12 rounded-xl"
                     startContent={<GithubIcon size={20} />}
                   >
                     Source Code

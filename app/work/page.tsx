@@ -84,9 +84,9 @@ export default function WorkPage() {
                     onClick={() => setActiveCompany(activeCompany === item.company ? "" : item.company)}
                     className={`flex items-center gap-4 p-4 rounded-2xl w-full border transition-all duration-300 backdrop-blur-md ${
                       activeCompany === item.company 
-                        ? "bg-turquoise/10 border-turquoise/30 shadow-[0_0_20px_rgba(44,231,241,0.1)]" 
+                        ? "bg-turquoise/10 border-turquoise/30 shadow-[0_0_20px_rgb(var(--accent-color)/0.1)]" 
                         : "bg-white/50 dark:bg-default-100/30 border-black/5 dark:border-white/10 hover:bg-white/5"
-                    }`}
+                    } shadow-lg`}
                   >
                     <Avatar 
                       src={item.image} 
@@ -103,7 +103,7 @@ export default function WorkPage() {
                     </div>
                     <div className={`transition-transform duration-300 ${activeCompany === item.company ? "rotate-180" : ""}`}>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 9L12 15L18 9" stroke={activeCompany === item.company ? "#2CE7F1" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M6 9L12 15L18 9" stroke="rgb(var(--accent-color))" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
                   </button>
@@ -127,7 +127,7 @@ export default function WorkPage() {
                                   <div className="absolute left-[15px] top-4 bottom-0 w-[2px] bg-turquoise/20" />
                                 )}
                                 {/* Timeline Dot */}
-                                <div className="absolute left-[16px] top-2 -translate-x-1/2 w-3 h-3 rounded-full bg-turquoise shadow-[0_0_10px_rgba(44,231,241,0.6)] z-10 border-2 border-background" />
+                                <div className="absolute left-[16px] top-2 -translate-x-1/2 w-3 h-3 rounded-full bg-turquoise shadow-[0_0_10px_rgb(var(--accent-color)/0.6)] z-10 border-2 border-background" />
 
                                 <div className="flex flex-col">
                                   <h4 className="text-lg font-bold text-foreground/90 leading-tight">
@@ -168,7 +168,7 @@ export default function WorkPage() {
                   onClick={() => setActiveCompany(item.company)}
                   className={`flex items-center gap-5 p-5 rounded-3xl w-full border transition-all duration-500 text-left group relative overflow-hidden ${
                     activeCompany === item.company 
-                      ? "bg-turquoise/10 border-turquoise/30 shadow-[0_0_30px_rgba(44,231,241,0.15)] scale-[1.02]" 
+                      ? "bg-turquoise/10 border-turquoise/30 shadow-[0_0_30px_rgb(var(--accent-color)/0.15)] scale-[1.02]" 
                       : "bg-white/50 dark:bg-default-100/30 border-black/5 dark:border-white/10 hover:bg-white/[0.05] hover:translate-x-2"
                   }`}
                 >
@@ -176,7 +176,7 @@ export default function WorkPage() {
                   {activeCompany === item.company && (
                     <motion.div 
                       layoutId="active-pill"
-                      className="absolute left-0 top-0 bottom-0 w-1.5 bg-turquoise shadow-[0_0_15px_rgba(44,231,241,0.8)]"
+                      className="absolute left-0 top-0 bottom-0 w-1.5 bg-turquoise shadow-[0_0_15px_rgb(var(--accent-color)/0.8)]"
                     />
                   )}
                   
@@ -256,7 +256,7 @@ export default function WorkPage() {
                               
                               {/* Timeline Dot with Multi-layered Glow */}
                               <div className="absolute left-[40px] top-3 -translate-x-1/2 z-10">
-                                <div className="w-4 h-4 rounded-full bg-turquoise shadow-[0_0_20px_rgba(44,231,241,0.8)] border-4 border-background group-hover/exp:scale-125 transition-transform duration-300" />
+                                <div className="w-4 h-4 rounded-full bg-turquoise shadow-[0_0_20px_rgb(var(--accent-color)/0.8)] border-4 border-background group-hover/exp:scale-125 transition-transform duration-300" />
                                 <div className="absolute inset-0 w-4 h-4 rounded-full bg-turquoise animate-ping opacity-20" />
                               </div>
 

@@ -12,9 +12,9 @@ module.exports = {
     extend: {
       colors: {
         turquoise: {
-          light: '#2CE7F1',
-          DEFAULT: '#2CE7F1',
-          dark: '#2CE7F1',
+          light: 'rgb(var(--accent-color) / <alpha-value>)',
+          DEFAULT: 'rgb(var(--accent-color) / <alpha-value>)',
+          dark: 'rgb(var(--accent-color) / <alpha-value>)',
         },
       },
     },
