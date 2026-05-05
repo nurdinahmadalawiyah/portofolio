@@ -85,6 +85,40 @@ export const siteConfig = {
 	],
 	project: [
 		{
+			name: "Workshop Management System",
+			desc: "WMS is a microservice-based product for vehicle workshops, featuring body repair and service management. Built with high-performance Spring Boot and Next.js technology.",
+			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
+			link: "#",
+			isPrivate: true,
+			date: "June 2023 - March 2024",
+			customer: "PT. Layanan Prima Setia Jaya",
+			role: "Fullstack Developer",
+			jobDesc: [
+				"Implementing MINIO for image and video cloud storage (Backend)",
+				"Designing and creating Microservice REST APIs (Backend)",
+				"Implementing Figma designs into Next.js 13 web application (Frontend)",
+				"Integrating complex REST APIs for seamless functionality (Frontend)"
+			],
+			tech: [
+				{
+					name: "Next.js",
+					image: "/icons/next-icon.svg"
+				},
+				{
+					name: "Spring Boot",
+					image: "/icons/spring-icon.svg"
+				},
+				{
+					name: "Java",
+					image: "/icons/java-icon.svg"
+				},
+				{
+					name: "PostgreSQL",
+					image: "/icons/postgresql-icon.svg"
+				}
+			]
+		},
+		{
 			name: "Aplikasi Praktik Kerja Lapangan Berbasis Mobile",
 			desc: "A mobile application developed as my final project during my university studies. This application was created to facilitate students in reporting their internship activities and monitoring progress.",
 			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
