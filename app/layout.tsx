@@ -5,6 +5,7 @@ import { fontSans } from "@/config/fonts";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { ScrollToTop } from "@/components/scrollToTop";
 import clsx from "clsx";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -47,6 +48,7 @@ export default function RootLayout({
               <Analytics />
             </main>
             <Footer />
+            <ScrollToTop />
           </div>
         </Providers>
       </body>

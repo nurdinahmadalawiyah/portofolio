@@ -30,24 +30,29 @@ export default function ProjectPage() {
   useEffect(() => {
     const updateConstraints = () => {
       if (containerRef.current) {
-        const { scrollWidth, offsetWidth } = containerRef.current;
-        setConstraints({ left: Math.min(0, -(scrollWidth - offsetWidth)), right: 0 });
+        const scrollWidth = containerRef.current.scrollWidth;
+        const offsetWidth = containerRef.current.offsetWidth;
+        // Add a bit of padding to the constraints to account for shadows
+        setConstraints({ left: Math.min(0, -(scrollWidth - offsetWidth + 16)), right: 8 });
       }
     };
 
     updateConstraints();
-    const timer = setTimeout(updateConstraints, 100);
+    const timer = setTimeout(updateConstraints, 500);
     window.addEventListener("resize", updateConstraints);
     return () => {
       window.removeEventListener("resize", updateConstraints);
       clearTimeout(timer);
     };
-  }, []);
+  }, [siteConfig.project.length]);
 
   const scrollToPage = (page: number) => {
     if (containerRef.current) {
       const containerWidth = containerRef.current.offsetWidth;
-      const targetX = -page * (containerWidth + 40); // 40 is the gap
+      // Precision offset calculation: (CardWidth * 2) + Gap
+      // Since each card is 50% - 20px and gap is 40px
+      // targetX should be exactly the container width
+      const targetX = -page * containerWidth; 
       
       animate(x, targetX, {
         type: "spring",
@@ -79,7 +84,7 @@ export default function ProjectPage() {
       
       if (containerRef.current) {
         const containerWidth = containerRef.current.offsetWidth;
-        const page = Math.round(Math.abs(limitedX) / (containerWidth + 40));
+        const page = Math.round(Math.abs(limitedX) / containerWidth);
         if (page !== currentPage) setCurrentPage(page);
       }
     }
@@ -304,7 +309,7 @@ export default function ProjectPage() {
           {/* Carousel Content Container */}
           <div 
             ref={containerRef}
-            className="overflow-hidden px-1 cursor-grab active:cursor-grabbing"
+            className="overflow-hidden px-4 -mx-4 cursor-grab active:cursor-grabbing"
           >
             <motion.div 
               drag={totalPages > 1 ? "x" : false}
@@ -313,6 +318,7 @@ export default function ProjectPage() {
               className="flex gap-10"
               onDragEnd={(e, info) => {
                 if (containerRef.current && totalPages > 1) {
+                  const containerWidth = containerRef.current.offsetWidth;
                   const velocity = info.velocity.x;
                   const offset = info.offset.x;
                   

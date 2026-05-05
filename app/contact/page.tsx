@@ -71,6 +71,28 @@ export default function ContactPage() {
     },
   ];
 
+  const inputClasses = "w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-sm outline-none ring-0 focus:ring-0 focus:outline-none focus:border-turquoise/50 transition-colors duration-200 text-foreground placeholder:text-default-400";
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: { duration: 0.5, ease: "easeOut" }
+    }
+  };
+
   return (
     <section id="contact" className="flex flex-col items-center justify-center gap-12 py-16 md:py-24 max-w-6xl mx-auto px-6">
       <motion.div 
@@ -78,6 +100,7 @@ export default function ContactPage() {
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
       >
         <h1 className={title({ color: "turqoise", size: "sm" })}>Get In Touch</h1>
         <h2 className={subtitle({ className: "mt-4 max-w-2xl mx-auto" })}>
@@ -89,10 +112,10 @@ export default function ContactPage() {
         {/* Social Cards Grid */}
         <motion.div 
           className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
         >
           {contactItems.map((item, index) => (
             <motion.a
@@ -100,6 +123,7 @@ export default function ContactPage() {
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
+              variants={itemVariants}
               whileHover={{ scale: 1.02, translateY: -5 }}
               className="flex items-center gap-4 p-5 rounded-2xl border border-black/5 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md hover:border-turquoise/50 hover:shadow-[0_0_20px_rgba(44,231,241,0.1)] transition-all duration-300 group overflow-hidden"
             >
@@ -121,7 +145,7 @@ export default function ContactPage() {
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
           className="w-full"
         >
           <Card className="border border-black/5 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md p-2">
@@ -134,7 +158,7 @@ export default function ContactPage() {
                     placeholder="Enter your name"
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
-                    className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-turquoise/50 focus:bg-turquoise/5 transition-all text-foreground"
+                    className={inputClasses}
                   />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -144,7 +168,7 @@ export default function ContactPage() {
                     placeholder="Enter your email"
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
-                    className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-turquoise/50 focus:bg-turquoise/5 transition-all text-foreground"
+                    className={inputClasses}
                   />
                 </div>
               </div>
@@ -156,7 +180,7 @@ export default function ContactPage() {
                   placeholder="What is this about?"
                   value={formData.subject}
                   onChange={(e) => handleInputChange("subject", e.target.value)}
-                  className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-turquoise/50 focus:bg-turquoise/5 transition-all text-foreground"
+                  className={inputClasses}
                 />
               </div>
 
@@ -167,16 +191,21 @@ export default function ContactPage() {
                   placeholder="Write your message here..."
                   value={formData.message}
                   onChange={(e) => handleInputChange("message", e.target.value)}
-                  className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-turquoise/50 focus:bg-turquoise/5 transition-all resize-none text-foreground"
+                  className={`${inputClasses} resize-none`}
                 />
               </div>
 
-              <Button
-                onPress={handleSendMessage}
-                className="w-full bg-turquoise text-white dark:text-black font-black uppercase tracking-widest py-6 rounded-xl shadow-[0_0_20px_rgba(44,231,241,0.3)] hover:shadow-[0_0_30px_rgba(44,231,241,0.5)] transition-all duration-300"
+              <motion.div
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
               >
-                Send Message
-              </Button>
+                <Button
+                  onPress={handleSendMessage}
+                  className="w-full bg-turquoise text-white dark:text-black font-black uppercase tracking-widest py-6 rounded-xl shadow-[0_0_20px_rgba(44,231,241,0.3)] hover:shadow-[0_0_30px_rgba(44,231,241,0.5)] transition-all duration-300"
+                >
+                  Send Message
+                </Button>
+              </motion.div>
             </CardBody>
           </Card>
         </motion.div>

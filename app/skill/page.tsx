@@ -36,23 +36,24 @@ export default function SkillPage() {
   ];
 
   const containerVars = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.6,
-        staggerChildren: 0.1,
+        staggerChildren: 0.05,
+        ease: "easeOut"
       },
     },
   };
 
   const itemVars = {
-    hidden: { scale: 0.8, opacity: 0 },
+    hidden: { scale: 0, opacity: 0 },
     visible: { 
       scale: 1, 
       opacity: 1,
-      transition: { type: "spring", stiffness: 200, damping: 10 }
+      transition: { type: "spring", stiffness: 260, damping: 20 }
     },
   };
 
@@ -63,6 +64,7 @@ export default function SkillPage() {
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
       >
         <h1 className={title({ color: "turqoise", size: "sm" })}>My Skills</h1>
         <h2 className={subtitle({ className: "mt-4 max-w-2xl mx-auto" })}>
@@ -71,12 +73,12 @@ export default function SkillPage() {
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full mt-8">
-        {categories.map((category) => (
+        {categories.map((category, catIdx) => (
           <motion.div
             key={category.name}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             variants={containerVars}
           >
             <Card 
@@ -105,8 +107,8 @@ export default function SkillPage() {
                       >
                         <motion.div
                           variants={itemVars}
-                          whileHover={{ y: -5, scale: 1.1 }}
-                          className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-turquoise/40 hover:bg-turquoise/5 transition-all duration-300 group/skill cursor-pointer aspect-square"
+                          whileHover={{ y: -8, scale: 1.1 }}
+                          className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-turquoise/40 hover:bg-turquoise/5 transition-all duration-300 group/skill cursor-pointer aspect-square shadow-sm"
                         >
                           <Image
                             width={32}
