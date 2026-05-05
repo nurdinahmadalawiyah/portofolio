@@ -177,7 +177,7 @@ export default function AboutPage() {
                 </div>
                 
                 <div className="mt-8 p-5 rounded-2xl bg-black/5 dark:bg-white/5 border border-white/5 italic text-default-500 text-xs md:text-sm leading-relaxed text-center md:text-left">
-                  "{edu.desc}"
+                  &quot;{edu.desc}&quot;
                 </div>
               </CardBody>
             </Card>
