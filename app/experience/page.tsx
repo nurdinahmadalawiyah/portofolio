@@ -96,9 +96,9 @@ export default function ExperiencePage() {
                     onClick={() => setActiveCompany(activeCompany === item.company ? "" : item.company)}
                     className={`flex items-center gap-4 p-4 rounded-2xl w-full border transition-all duration-300 backdrop-blur-md ${
                       activeCompany === item.company 
-                        ? "bg-turquoise/10 border-turquoise/30 shadow-[0_0_20px_rgb(var(--accent-color)/0.1)]" 
-                        : "bg-white/50 dark:bg-default-100/30 border-black/5 dark:border-white/10 hover:bg-white/5"
-                    } shadow-lg`}
+                        ? "bg-turquoise/10 border-turquoise/30 shadow-none" 
+                        : "bg-white/50 dark:bg-default-100/30 border-black/10 dark:border-white/10 hover:bg-white/5"
+                    } shadow-none`}
                   >
                     <Avatar 
                       src={item.image} 
@@ -129,7 +129,7 @@ export default function ExperiencePage() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <Card className="border border-white/10 bg-background/60 dark:bg-default-100/30 backdrop-blur-md mb-4">
+                      <Card className="border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md mb-4 shadow-none">
                         <CardBody className="p-6">
                           <div className="flex flex-col relative">
                             {item.experience.map((experience, idx) => (
@@ -180,8 +180,8 @@ export default function ExperiencePage() {
                   onClick={() => setActiveCompany(item.company)}
                   className={`flex items-center gap-5 p-5 rounded-3xl w-full border transition-all duration-500 text-left group relative overflow-hidden ${
                     activeCompany === item.company 
-                      ? "bg-turquoise/10 border-turquoise/30 shadow-[0_0_30px_rgb(var(--accent-color)/0.15)] scale-[1.02]" 
-                      : "bg-white/50 dark:bg-default-100/30 border-black/5 dark:border-white/10 hover:bg-white/[0.05] hover:translate-x-2"
+                      ? "bg-turquoise/10 border-turquoise/30 shadow-none scale-[1.02]" 
+                      : "bg-white/50 dark:bg-default-100/30 border-black/10 dark:border-white/10 hover:bg-white/[0.05] hover:translate-x-2"
                   }`}
                 >
                   {/* Active Indicator Line */}
@@ -224,7 +224,7 @@ export default function ExperiencePage() {
                     transition={{ duration: 0.5, ease: "easeOut" }}
                     className="w-full"
                   >
-                    <Card className="border border-black/5 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md shadow-2xl overflow-visible">
+                    <Card className="border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md shadow-none overflow-visible transition-all duration-300">
                       <CardBody className="p-12">
                         {/* Company Header Detail - Aligned with Timeline */}
                         <div className="flex gap-8 items-center mb-16 relative">

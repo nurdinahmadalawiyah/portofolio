@@ -61,8 +61,8 @@ export default function AboutPage() {
       >
         <Card
           isBlurred
-          className="border border-white/10 bg-background/60 dark:bg-default-100/30 backdrop-blur-md overflow-hidden"
-          shadow="lg"
+          className="border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md overflow-hidden"
+          shadow="none"
         >
           <CardBody className="p-8 md:p-12">
             <div className="flex flex-col lg:flex-row gap-12 items-center lg:items-start">
@@ -134,7 +134,7 @@ export default function AboutPage() {
             <Card 
               key={idx}
               isBlurred
-              className="border border-white/5 bg-white/5 dark:bg-default-100/10 backdrop-blur-sm overflow-hidden hover:border-turquoise/20 transition-all duration-500 group"
+              className="border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md overflow-hidden hover:border-turquoise/20 transition-all duration-500 group shadow-none"
             >
               <CardBody className="p-6 md:p-8">
                 <div className="flex flex-col md:flex-row justify-between items-center md:items-center gap-8">

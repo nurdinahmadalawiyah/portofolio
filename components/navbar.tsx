@@ -52,7 +52,7 @@ export const Navbar = () => {
         isBlurred={true}
         isMenuOpen={isMenuOpen}
         onMenuOpenChange={setIsMenuOpen}
-        className="pointer-events-auto h-16 rounded-2xl border border-white/10 bg-background/70 shadow-lg transition-all duration-300 px-4"
+        className="pointer-events-auto h-16 rounded-2xl border border-black/10 dark:border-white/10 bg-background/70 shadow-none transition-all duration-300 px-4"
       >
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
           <NavbarBrand as="li" className="gap-3 max-w-fit">
@@ -111,7 +111,7 @@ export const Navbar = () => {
             <Button
               isExternal
               as={Link}
-              className="text-sm font-bold text-white dark:text-black bg-turquoise shadow-lg shadow-turquoise/20 px-6 h-10 rounded-xl"
+              className="text-sm font-bold text-white dark:text-black bg-turquoise px-6 h-10 rounded-xl shadow-none"
               href={siteConfig.links.cv}
               startContent={<DownloadIcon size={20} />}
               variant="flat"
@@ -135,7 +135,7 @@ export const Navbar = () => {
               animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: -20, x: 20 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="fixed top-24 right-4 w-[280px] p-6 rounded-[2.5rem] bg-background/90 backdrop-blur-[64px] backdrop-saturate-150 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] z-[100] lg:hidden flex flex-col gap-6"
+              className="fixed top-24 right-4 w-[280px] p-6 rounded-[2.5rem] bg-background/90 backdrop-blur-[64px] backdrop-saturate-150 border border-black/10 dark:border-white/10 shadow-none z-[100] lg:hidden flex flex-col gap-6"
               style={{ pointerEvents: "auto" }}
             >
               <div className="flex flex-col gap-3">
@@ -178,7 +178,7 @@ export const Navbar = () => {
               <Button
                 isExternal
                 as={Link}
-                className="w-full bg-turquoise text-white dark:text-black font-black h-14 rounded-2xl shadow-lg shadow-turquoise/20"
+                className="w-full bg-turquoise text-white dark:text-black font-black h-14 rounded-2xl shadow-none"
                 href={siteConfig.links.cv}
                 startContent={<DownloadIcon size={22} />}
                 onClick={() => setIsMenuOpen(false)}

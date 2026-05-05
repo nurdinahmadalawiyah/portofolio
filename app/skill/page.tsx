@@ -83,7 +83,7 @@ export default function SkillPage() {
           >
             <Card 
               isBlurred
-              className="border border-black/5 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md shadow-2xl h-full overflow-hidden group/card"
+              className="border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md shadow-none h-full overflow-hidden group/card transition-all duration-300"
             >
               <CardBody className="p-8">
                 <div className="flex items-center gap-3 mb-8">

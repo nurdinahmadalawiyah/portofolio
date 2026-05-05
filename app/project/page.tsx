@@ -32,8 +32,7 @@ export default function ProjectPage() {
       if (containerRef.current) {
         const scrollWidth = containerRef.current.scrollWidth;
         const offsetWidth = containerRef.current.offsetWidth;
-        // Add a bit of padding to the constraints to account for shadows
-        setConstraints({ left: Math.min(0, -(scrollWidth - offsetWidth + 16)), right: 8 });
+        setConstraints({ left: Math.min(0, -(scrollWidth - offsetWidth)), right: 0 });
       }
     };
 
@@ -93,7 +92,7 @@ export default function ProjectPage() {
   const ProjectCard = ({ project }: { project: any }) => (
     <Card 
       isBlurred
-      className="border border-black/5 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md shadow-2xl h-full flex flex-col overflow-hidden group/card select-none"
+      className="border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md shadow-none h-full flex flex-col overflow-hidden group/card select-none transition-all duration-300"
     >
       <CardBody className="p-0 flex flex-col flex-grow">
         <div className="relative h-36 md:h-44 w-full bg-gradient-to-br from-turquoise/20 to-blue-500/10 overflow-hidden flex-shrink-0">
@@ -306,10 +305,9 @@ export default function ProjectPage() {
             </>
           )}
 
-          {/* Carousel Content Container */}
           <div 
             ref={containerRef}
-            className="overflow-hidden px-4 -mx-4 cursor-grab active:cursor-grabbing"
+            className="overflow-hidden cursor-grab active:cursor-grabbing"
           >
             <motion.div 
               drag={totalPages > 1 ? "x" : false}
