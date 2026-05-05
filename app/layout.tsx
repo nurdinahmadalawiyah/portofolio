@@ -4,6 +4,7 @@ import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 import clsx from "clsx";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -39,12 +40,13 @@ export default function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <div className="relative flex flex-col h-screen">
+          <div className="relative flex flex-col min-h-screen">
             <Navbar />
             <main className="container mx-auto max-w-6xl pt-16 px-4 flex-grow">
               {children}
               <Analytics />
             </main>
+            <Footer />
           </div>
         </Providers>
       </body>
