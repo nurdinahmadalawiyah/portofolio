@@ -17,9 +17,11 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo, DownloadIcon } from "@/components/icons";
+import { useLenis } from "lenis/react";
 
 export const Navbar = () => {
   const [activeItem, setActiveItem] = useState("#home");
+  const lenis = useLenis();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,7 +71,15 @@ export const Navbar = () => {
                       isActive ? "text-turquoise" : "text-default-500 hover:text-turquoise/80"
                     }`}
                     href={item.href}
-                    onClick={() => setActiveItem(item.href)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveItem(item.href);
+                      lenis?.scrollTo(item.href, {
+                        offset: -80,
+                        duration: 1.5,
+                        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+                      });
+                    }}
                   >
                     {item.label}
                     {isActive && (
@@ -121,7 +131,14 @@ export const Navbar = () => {
                   }`}
                   href={item.href}
                   size="lg"
-                  onClick={() => setActiveItem(item.href)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveItem(item.href);
+                    lenis?.scrollTo(item.href, {
+                      offset: -80,
+                      duration: 1.5
+                    });
+                  }}
                 >
                   {item.label}
                 </Link>

@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@nextui-org/button";
 import { ChevronUpIcon } from "./icons";
+import { useLenis } from "lenis/react";
 
 export const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const lenis = useLenis();
 
   // Show button when page is scrolled up to given distance
   const toggleVisibility = () => {
@@ -20,9 +22,9 @@ export const ScrollToTop = () => {
   // Set the top cordinate to 0
   // make scrolling smooth
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
+    lenis?.scrollTo(0, {
+      duration: 2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
     });
   };
 

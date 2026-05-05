@@ -6,6 +6,7 @@ import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scrollToTop";
+import SmoothScroll from "@/components/smoothScroll";
 import clsx from "clsx";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -32,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className="scroll-smooth">
+    <html lang="en" suppressHydrationWarning className="antialiased selection:bg-turquoise selection:text-black">
       <head />
       <body
         className={clsx(
@@ -41,15 +42,17 @@ export default function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <div className="relative flex flex-col min-h-screen">
-            <Navbar />
-            <main className="container mx-auto max-w-6xl pt-16 px-4 flex-grow">
-              {children}
-              <Analytics />
-            </main>
-            <Footer />
-            <ScrollToTop />
-          </div>
+          <SmoothScroll>
+            <div className="relative flex flex-col min-h-screen">
+              <Navbar />
+              <main className="container mx-auto max-w-6xl pt-16 px-4 flex-grow">
+                {children}
+                <Analytics />
+              </main>
+              <Footer />
+              <ScrollToTop />
+            </div>
+          </SmoothScroll>
         </Providers>
       </body>
     </html>
