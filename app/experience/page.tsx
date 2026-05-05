@@ -64,16 +64,28 @@ export default function ExperiencePage() {
 
   return (
     <section id="experience" className="flex flex-col items-center justify-center gap-8 py-12 md:py-16">
-      <div className="max-w-2xl text-center mb-12 md:mb-16">
+      <motion.div 
+        className="max-w-2xl text-center mb-12 md:mb-16"
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
         <h1 className={title({ color: "turqoise", size: "sm" })}>
           Work Experience
         </h1>
         <h2 className={subtitle({ class: "mt-4" })}>
           A Journey Through Professional Growth and Achievements
         </h2>
-      </div>
+      </motion.div>
 
-      <div className="flex w-full flex-col gap-8">
+      <motion.div 
+        className="flex w-full flex-col gap-8"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
         {tabSize === "sm" ? (
           <div className="w-full">
             <div className="flex flex-col gap-4">
@@ -295,7 +307,7 @@ export default function ExperiencePage() {
             </div>
           </div>
         )}
-      </div>
+      </motion.div>
     </section>
   );
 }

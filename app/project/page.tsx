@@ -5,8 +5,8 @@ import { Card, CardBody, CardFooter } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
 import { Tooltip } from "@nextui-org/tooltip";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, useMotionValue, useSpring, animate } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
 import { siteConfig } from "@/config/site";
 import { 
   GithubIcon, 
@@ -17,29 +17,80 @@ import {
 } from "@/components/icons";
 
 export default function ProjectPage() {
-  const itemsPerPage = 2;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const springX = useSpring(x, { stiffness: 300, damping: 30 });
+  
   const [currentPage, setCurrentPage] = useState(0);
+  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
+  const itemsPerPage = 2;
   const totalPages = Math.ceil(siteConfig.project.length / itemsPerPage);
+
+  // Calculate constraints for dragging
+  useEffect(() => {
+    const updateConstraints = () => {
+      if (containerRef.current) {
+        const { scrollWidth, offsetWidth } = containerRef.current;
+        setConstraints({ left: Math.min(0, -(scrollWidth - offsetWidth)), right: 0 });
+      }
+    };
+
+    updateConstraints();
+    const timer = setTimeout(updateConstraints, 100);
+    window.addEventListener("resize", updateConstraints);
+    return () => {
+      window.removeEventListener("resize", updateConstraints);
+      clearTimeout(timer);
+    };
+  }, []);
+
+  const scrollToPage = (page: number) => {
+    if (containerRef.current) {
+      const containerWidth = containerRef.current.offsetWidth;
+      const targetX = -page * (containerWidth + 40); // 40 is the gap
+      
+      animate(x, targetX, {
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+        onUpdate: (latest) => x.set(latest)
+      });
+      setCurrentPage(page);
+    }
+  };
 
   const nextSlide = () => {
     if (currentPage < totalPages - 1) {
-      setCurrentPage((prev) => prev + 1);
+      scrollToPage(currentPage + 1);
     }
   };
 
   const prevSlide = () => {
     if (currentPage > 0) {
-      setCurrentPage((prev) => prev - 1);
+      scrollToPage(currentPage - 1);
+    }
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      const newX = x.get() - e.deltaX;
+      const limitedX = Math.max(constraints.left, Math.min(constraints.right, newX));
+      x.set(limitedX);
+      
+      if (containerRef.current) {
+        const containerWidth = containerRef.current.offsetWidth;
+        const page = Math.round(Math.abs(limitedX) / (containerWidth + 40));
+        if (page !== currentPage) setCurrentPage(page);
+      }
     }
   };
 
   const ProjectCard = ({ project }: { project: any }) => (
     <Card 
       isBlurred
-      className="border border-black/5 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md shadow-2xl h-full flex flex-col overflow-hidden group/card"
+      className="border border-black/5 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md shadow-2xl h-full flex flex-col overflow-hidden group/card select-none"
     >
       <CardBody className="p-0 flex flex-col flex-grow">
-        {/* Project Image Header - Slim Design */}
         <div className="relative h-36 md:h-44 w-full bg-gradient-to-br from-turquoise/20 to-blue-500/10 overflow-hidden flex-shrink-0">
           <div className="absolute inset-0 bg-black/20 group-hover/card:bg-transparent transition-colors duration-500" />
           
@@ -62,7 +113,7 @@ export default function ProjectPage() {
             <Image
               src={project.image}
               alt={project.name}
-              className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700"
+              className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700 pointer-events-none"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
@@ -78,7 +129,7 @@ export default function ProjectPage() {
                   whileHover={{ y: -5, scale: 1.1 }}
                   className="p-2 rounded-xl bg-black/40 backdrop-blur-md border border-white/10 shadow-xl cursor-help transition-colors hover:border-turquoise/50"
                 >
-                  <Image src={tech.image} width={18} height={18} alt={tech.name} className="object-contain" />
+                  <Image src={tech.image} width={18} height={18} alt={tech.name} className="object-contain pointer-events-none" />
                 </motion.div>
               </Tooltip>
             ))}
@@ -176,6 +227,7 @@ export default function ProjectPage() {
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
       >
         <h1 className={title({ color: "turqoise", size: "sm" })}>Selected Projects</h1>
         <h2 className={subtitle({ className: "mt-4 max-w-2xl mx-auto" })}>
@@ -183,77 +235,127 @@ export default function ProjectPage() {
         </h2>
       </motion.div>
 
-      {/* MOBILE VIEW */}
-      <div className="flex lg:hidden flex-col gap-12 w-full mt-4">
-        {siteConfig.project.map((project: any, index) => (
-          <div key={index} className="w-full">
-            <ProjectCard project={project} />
-          </div>
-        ))}
-      </div>
-
-      {/* DESKTOP VIEW: Horizontal Carousel (2 items per page) */}
-      <div className="hidden lg:block relative w-full group mt-4 overflow-visible">
-        {/* Navigation Buttons */}
-        <div className="absolute top-1/2 -left-12 -translate-y-1/2 z-30 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300">
-          <Button
-            isIconOnly
-            radius="full"
-            variant="flat"
-            disabled={currentPage === 0}
-            onClick={prevSlide}
-            className={`pointer-events-auto bg-background/60 backdrop-blur-md border border-white/10 shadow-2xl h-14 w-14 flex items-center justify-center ${currentPage === 0 ? 'opacity-20 cursor-not-allowed' : 'hover:scale-110 hover:border-turquoise/50 hover:bg-turquoise/10 active:scale-95 text-turquoise'}`}
-          >
-            <ChevronLeftIcon size={28} />
-          </Button>
-        </div>
-
-        <div className="absolute top-1/2 -right-12 -translate-y-1/2 z-30 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300">
-          <Button
-            isIconOnly
-            radius="full"
-            variant="flat"
-            disabled={currentPage === totalPages - 1}
-            onClick={nextSlide}
-            className={`pointer-events-auto bg-background/60 backdrop-blur-md border border-white/10 shadow-2xl h-14 w-14 flex items-center justify-center ${currentPage === totalPages - 1 ? 'opacity-20 cursor-not-allowed' : 'hover:scale-110 hover:border-turquoise/50 hover:bg-turquoise/10 active:scale-95 text-turquoise'}`}
-          >
-            <ChevronRightIcon size={28} />
-          </Button>
-        </div>
-
-        {/* Carousel Content Container */}
-        <div className="overflow-hidden px-1">
-          <motion.div 
-            className="flex gap-10"
-            animate={{ x: `calc(-${currentPage * 100}% - ${currentPage * 40}px)` }}
-            transition={{ type: "spring", stiffness: 200, damping: 25 }}
-          >
-            {siteConfig.project.map((project: any, index) => (
-              <div 
-                key={index} 
-                className="flex-shrink-0 w-[calc(50%-20px)]"
-              >
-                <ProjectCard project={project} />
-              </div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Pagination Dots */}
-        <div className="flex justify-center gap-4 mt-8">
-          {Array.from({ length: totalPages }).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentPage(i)}
-              className={`h-2.5 rounded-full transition-all duration-500 ${
-                currentPage === i 
-                  ? "w-10 bg-turquoise shadow-[0_0_15px_rgb(var(--accent-color)/0.8)]" 
-                  : "w-2.5 bg-default-300 hover:bg-default-400"
-              }`}
-            />
+      {/* PROJECT LIST / CAROUSEL */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="w-full"
+      >
+        {/* MOBILE VIEW */}
+        <div className="flex lg:hidden flex-col gap-12 w-full mt-4">
+          {siteConfig.project.map((project: any, index) => (
+            <motion.div 
+              key={index} 
+              className="w-full"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <ProjectCard project={project} />
+            </motion.div>
           ))}
         </div>
-      </div>
+
+        {/* DESKTOP VIEW: Horizontal Draggable/Swipable Carousel */}
+        <div 
+          className="hidden lg:block relative w-full group mt-4"
+          onWheel={handleWheel}
+        >
+          {/* Navigation Buttons */}
+          {totalPages > 1 && (
+            <>
+              <div className="absolute top-1/2 -left-12 -translate-y-1/2 z-50 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <Button
+                  isIconOnly
+                  radius="full"
+                  variant="flat"
+                  disabled={currentPage === 0}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    prevSlide();
+                  }}
+                  className={`bg-background/60 backdrop-blur-md border border-white/10 shadow-2xl h-14 w-14 flex items-center justify-center ${currentPage === 0 ? 'opacity-20 cursor-not-allowed' : 'hover:scale-110 hover:border-turquoise/50 hover:bg-turquoise/10 active:scale-95 text-turquoise'}`}
+                >
+                  <ChevronLeftIcon size={28} />
+                </Button>
+              </div>
+
+              <div className="absolute top-1/2 -right-12 -translate-y-1/2 z-50 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <Button
+                  isIconOnly
+                  radius="full"
+                  variant="flat"
+                  disabled={currentPage === totalPages - 1}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextSlide();
+                  }}
+                  className={`bg-background/60 backdrop-blur-md border border-white/10 shadow-2xl h-14 w-14 flex items-center justify-center ${currentPage === totalPages - 1 ? 'opacity-20 cursor-not-allowed' : 'hover:scale-110 hover:border-turquoise/50 hover:bg-turquoise/10 active:scale-95 text-turquoise'}`}
+                >
+                  <ChevronRightIcon size={28} />
+                </Button>
+              </div>
+            </>
+          )}
+
+          {/* Carousel Content Container */}
+          <div 
+            ref={containerRef}
+            className="overflow-hidden px-1 cursor-grab active:cursor-grabbing"
+          >
+            <motion.div 
+              drag={totalPages > 1 ? "x" : false}
+              dragConstraints={constraints}
+              style={{ x: springX }}
+              className="flex gap-10"
+              onDragEnd={(e, info) => {
+                if (containerRef.current && totalPages > 1) {
+                  const velocity = info.velocity.x;
+                  const offset = info.offset.x;
+                  
+                  let page = currentPage;
+                  if (offset < -100 || velocity < -500) {
+                    page = Math.min(totalPages - 1, currentPage + 1);
+                  } else if (offset > 100 || velocity > 500) {
+                    page = Math.max(0, currentPage - 1);
+                  }
+                  
+                  scrollToPage(page);
+                }
+              }}
+            >
+              {siteConfig.project.map((project: any, index) => (
+                <div 
+                  key={index} 
+                  className={`flex-shrink-0 ${siteConfig.project.length === 1 ? 'w-full max-w-2xl mx-auto' : 'w-[calc(50%-20px)]'}`}
+                >
+                  <ProjectCard project={project} />
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Pagination Dots */}
+          {totalPages > 1 && (
+            <div className="flex justify-center gap-4 mt-8">
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => scrollToPage(i)}
+                  className={`h-2.5 rounded-full transition-all duration-500 ${
+                    currentPage === i 
+                      ? "w-10 bg-turquoise shadow-[0_0_15px_rgb(var(--accent-color)/0.8)]" 
+                      : "w-2.5 bg-default-300 hover:bg-default-400"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </motion.div>
       
       <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
