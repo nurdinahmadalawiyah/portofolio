@@ -2,9 +2,7 @@
 import { useState } from "react";
 import { title, subtitle } from "@/components/primitives";
 import { Card, CardBody } from "@nextui-org/card";
-import { Input, Textarea } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
-import { Link } from "@nextui-org/link";
 import { siteConfig } from "@/config/site";
 import { 
   GithubIcon, 
@@ -36,177 +34,153 @@ export default function ContactPage() {
 
   const contactItems = [
     {
-      icon: <WhatsAppIcon className="text-success" size={24} />,
+      icon: <WhatsAppIcon size={24} />,
       label: "WhatsApp",
       value: siteConfig.contact.whatsapp.split("/").pop(),
       href: siteConfig.contact.whatsapp,
-      color: "bg-green-500/10",
     },
     {
-      icon: <LinkedInIcon className="text-primary" size={24} />,
+      icon: <LinkedInIcon size={24} />,
       label: "LinkedIn",
       value: "Nurdin Ahmad Alawiyah",
       href: siteConfig.contact.linkedin,
-      color: "bg-blue-600/10",
     },
     {
-      icon: <InstagramIcon className="text-danger" size={24} />,
+      icon: <InstagramIcon size={24} />,
       label: "Instagram",
       value: "@nurdin_ahmad_alawiyah",
       href: siteConfig.contact.instagram,
-      color: "bg-pink-500/10",
     },
     {
-      icon: <GithubIcon className="text-default-500" size={24} />,
+      icon: <GithubIcon size={24} />,
       label: "GitHub",
       value: "nurdinahmadalawiyah",
       href: siteConfig.contact.github,
-      color: "bg-default-500/10",
     },
     {
-      icon: <MapPinIcon className="text-warning" size={24} />,
+      icon: <MapPinIcon size={24} />,
       label: "Location",
       value: siteConfig.contact.location,
       href: siteConfig.contact.maps,
-      color: "bg-yellow-500/10",
     },
     {
-      icon: <MailIcon className="text-primary" size={24} />,
+      icon: <MailIcon size={24} />,
       label: "Quick Email",
       value: siteConfig.contact.email,
       href: `mailto:${siteConfig.contact.email}`,
-      color: "bg-blue-500/10",
     },
   ];
 
   return (
-    <section id="contact" className="flex flex-col items-center justify-center gap-8 py-12 md:py-20">
-      <div className="inline-block max-w-3xl text-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h1 className={title({ color: "turqoise", size: "sm" })}>Get In Touch</h1>
-          <h2 className={subtitle({ className: "mt-4" })}>
-            I&apos;m always open to new opportunities, collaborations, or just a friendly chat.
-          </h2>
-        </motion.div>
-      </div>
+    <section id="contact" className="flex flex-col items-center justify-center gap-12 py-16 md:py-24 max-w-6xl mx-auto px-6">
+      <motion.div 
+        className="text-center"
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <h1 className={title({ color: "turqoise", size: "sm" })}>Get In Touch</h1>
+        <h2 className={subtitle({ className: "mt-4 max-w-2xl mx-auto" })}>
+          I&apos;m always open to new opportunities, collaborations, or just a friendly chat.
+        </h2>
+      </motion.div>
 
-      <div className="flex flex-col gap-16 w-full max-w-6xl px-4 mt-12 mx-auto">
-        {/* Social Links Section */}
+      <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 mt-8">
+        {/* Social Cards Grid */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-col items-center w-full"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
-            {contactItems.map((item, index) => (
-              <Link
-                key={index}
-                href={item.href}
-                isExternal
-                className="w-full"
-              >
-                <Card 
-                  isPressable 
-                  className="w-full border-none bg-background/60 dark:bg-default-100/50 backdrop-blur-md shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <CardBody className="flex flex-row items-center gap-4 p-4">
-                    <div className={`p-3 rounded-2xl ${item.color}`}>
-                      {item.icon}
-                    </div>
-                    <div className="flex flex-col items-start min-w-0">
-                      <span className="text-xs text-default-500">{item.label}</span>
-                      <span className="text-sm font-medium break-words">
-                        {item.value}
-                      </span>
-                    </div>
-                  </CardBody>
-                </Card>
-              </Link>
-            ))}
-          </div>
+          {contactItems.map((item, index) => (
+            <motion.a
+              key={index}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.02, translateY: -5 }}
+              className="flex items-center gap-4 p-5 rounded-2xl border border-black/5 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md hover:border-turquoise/50 hover:shadow-[0_0_20px_rgba(44,231,241,0.1)] transition-all duration-300 group overflow-hidden"
+            >
+              <div className={`p-3 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 group-hover:border-turquoise/30 transition-colors flex-shrink-0`}>
+                {item.icon}
+              </div>
+              <div className="flex flex-col min-w-0 flex-1">
+                <span className="text-[10px] uppercase tracking-widest text-default-500 dark:text-default-400 font-bold truncate">{item.label}</span>
+                <span className="text-sm font-semibold text-foreground group-hover:text-turquoise transition-colors truncate" title={item.value}>
+                  {item.value}
+                </span>
+              </div>
+            </motion.a>
+          ))}
         </motion.div>
 
         {/* Contact Form Section */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
           className="w-full"
         >
-          <div className="flex flex-col gap-6 items-center">
-            <div className="flex items-center gap-2 w-full">
-               <div className="h-[1px] bg-default-200 flex-1"></div>
-               <span className="text-default-400 text-sm font-medium px-4">OR SEND A MESSAGE</span>
-               <div className="h-[1px] bg-default-200 flex-1"></div>
-            </div>
-            
-            <Card className="p-6 border-none bg-background/60 dark:bg-default-100/50 backdrop-blur-md shadow-lg w-full">
-              <CardBody className="flex flex-col gap-4">
-                <div className="flex flex-col gap-4">
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Input
-                      label="Name"
-                      placeholder="Enter your name"
-                      variant="bordered"
-                      className="flex-1"
-                      classNames={{
-                        inputWrapper: "group-data-[focus=true]:border-turquoise",
-                      }}
-                      value={formData.name}
-                      onValueChange={(val) => handleInputChange("name", val)}
-                    />
-                    <Input
-                      label="Email"
-                      placeholder="Enter your email"
-                      variant="bordered"
-                      className="flex-1"
-                      classNames={{
-                        inputWrapper: "group-data-[focus=true]:border-turquoise",
-                      }}
-                      value={formData.email}
-                      onValueChange={(val) => handleInputChange("email", val)}
-                    />
-                  </div>
-                  <Input
-                    label="Subject"
-                    placeholder="What is this about?"
-                    variant="bordered"
-                    classNames={{
-                      inputWrapper: "group-data-[focus=true]:border-turquoise",
-                    }}
-                    value={formData.subject}
-                    onValueChange={(val) => handleInputChange("subject", val)}
+          <Card className="border border-black/5 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md p-2">
+            <CardBody className="p-8 flex flex-col gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-2">
+                  <label className="text-[10px] uppercase tracking-widest text-turquoise font-black ml-1">Name</label>
+                  <input 
+                    type="text" 
+                    placeholder="Enter your name"
+                    value={formData.name}
+                    onChange={(e) => handleInputChange("name", e.target.value)}
+                    className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-turquoise/50 focus:bg-turquoise/5 transition-all text-foreground"
                   />
-                  <Textarea
-                    label="Message"
-                    placeholder="Write your message here..."
-                    variant="bordered"
-                    minRows={4}
-                    classNames={{
-                      inputWrapper: "group-data-[focus=true]:border-turquoise",
-                    }}
-                    value={formData.message}
-                    onValueChange={(val) => handleInputChange("message", val)}
-                  />
-                  <Button 
-                    size="lg" 
-                    className="font-bold text-white dark:text-black bg-turquoise shadow-lg shadow-cyan-500/30 mt-2 w-full"
-                    onPress={handleSendMessage}
-                  >
-                    Send Message
-                  </Button>
                 </div>
-              </CardBody>
-            </Card>
-          </div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-[10px] uppercase tracking-widest text-turquoise font-black ml-1">Email</label>
+                  <input 
+                    type="email" 
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
+                    className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-turquoise/50 focus:bg-turquoise/5 transition-all text-foreground"
+                  />
+                </div>
+              </div>
+              
+              <div className="flex flex-col gap-2">
+                <label className="text-[10px] uppercase tracking-widest text-turquoise font-black ml-1">Subject</label>
+                <input 
+                  type="text" 
+                  placeholder="What is this about?"
+                  value={formData.subject}
+                  onChange={(e) => handleInputChange("subject", e.target.value)}
+                  className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-turquoise/50 focus:bg-turquoise/5 transition-all text-foreground"
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label className="text-[10px] uppercase tracking-widest text-turquoise font-black ml-1">Message</label>
+                <textarea 
+                  rows={4}
+                  placeholder="Write your message here..."
+                  value={formData.message}
+                  onChange={(e) => handleInputChange("message", e.target.value)}
+                  className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-turquoise/50 focus:bg-turquoise/5 transition-all resize-none text-foreground"
+                />
+              </div>
+
+              <Button
+                onPress={handleSendMessage}
+                className="w-full bg-turquoise text-white dark:text-black font-black uppercase tracking-widest py-6 rounded-xl shadow-[0_0_20px_rgba(44,231,241,0.3)] hover:shadow-[0_0_30px_rgba(44,231,241,0.5)] transition-all duration-300"
+              >
+                Send Message
+              </Button>
+            </CardBody>
+          </Card>
         </motion.div>
       </div>
     </section>
   );
 }
-
