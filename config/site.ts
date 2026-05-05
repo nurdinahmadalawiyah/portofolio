@@ -122,6 +122,40 @@ export const siteConfig = {
 			]
 		},
 		{
+			name: "E-Recruitment",
+			desc: "A website application for talent recruitment that can be used by users who will apply for jobs and human resources who select prospective employee.",
+			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
+			link: "#",
+			isPrivate: true,
+			date: "March 2023 - June 2023",
+			customer: "PT. Padepokan Tujuh Sembilan",
+			role: "Frontend Developer",
+			jobDesc: [
+				"Designing the user interface according to the pre-existing design",
+				"Create Screen Daftar Candidate & Detail Candidate",
+				"Create Screen Dashboard - List Contract Candidate",
+				"Integrating REST API provided by the backend"
+			],
+			tech: [
+				{
+					name: "React",
+					image: "/icons/react-icon.svg"
+				},
+				{
+					name: "Java",
+					image: "/icons/java-icon.svg"
+				},
+				{
+					name: "Spring Boot",
+					image: "/icons/spring-icon.svg"
+				},
+				{
+					name: "PostgreSQL",
+					image: "/icons/postgresql-icon.svg"
+				}
+			]
+		},
+		{
 			name: "Internal Management Web Application Office",
 			desc: "A mobile application that can manage various websites owned by the office. This application can manage login activities for each of its web applications.",
 			image: "https://nextui-docs-v2.vercel.app/images/fruit-4.jpeg",
