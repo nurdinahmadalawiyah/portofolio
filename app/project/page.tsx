@@ -199,7 +199,7 @@ export default function ProjectPage() {
           <Button
             isIconOnly
             radius="full"
-            variant="blur"
+            variant="flat"
             disabled={currentPage === 0}
             onClick={prevSlide}
             className={`pointer-events-auto bg-background/60 backdrop-blur-md border border-white/10 shadow-2xl h-14 w-14 flex items-center justify-center ${currentPage === 0 ? 'opacity-20 cursor-not-allowed' : 'hover:scale-110 hover:border-turquoise/50 hover:bg-turquoise/10 active:scale-95 text-turquoise'}`}
@@ -212,7 +212,7 @@ export default function ProjectPage() {
           <Button
             isIconOnly
             radius="full"
-            variant="blur"
+            variant="flat"
             disabled={currentPage === totalPages - 1}
             onClick={nextSlide}
             className={`pointer-events-auto bg-background/60 backdrop-blur-md border border-white/10 shadow-2xl h-14 w-14 flex items-center justify-center ${currentPage === totalPages - 1 ? 'opacity-20 cursor-not-allowed' : 'hover:scale-110 hover:border-turquoise/50 hover:bg-turquoise/10 active:scale-95 text-turquoise'}`}
