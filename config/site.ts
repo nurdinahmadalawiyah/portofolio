@@ -31,7 +31,7 @@ export const siteConfig = {
 		{
 			image: "/images/padepokan.png",
 			company: "Padepokan Tujuh Sembilan",
-			alamat: "Bandung, Jawa Barat, Indonesia",
+			alamat: "Bandung, West Java, Indonesia",
 			experience:
 				[
 					{
@@ -55,9 +55,23 @@ export const siteConfig = {
 				]
 		},
 		{
+			image: "/images/victoria.png",
+			company: "PT. Victoria Investama, Tbk",
+			alamat: "South Jakarta, Jakarta, Indonesia",
+			experience:
+				[
+					{
+						position: "Full Stack Developer",
+						type: "Contract",
+						date: "June 2024 - May 2025",
+						duration: "1 Year"
+					}
+				]
+		},
+		{
 			image: "/images/crop.png",
 			company: "Crop Inspirasi Digital",
-			alamat: "Bandung, Jawa Barat, Indonesia",
+			alamat: "Bandung, West Java, Indonesia",
 			experience:
 				[
 					{
