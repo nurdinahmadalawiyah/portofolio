@@ -85,6 +85,40 @@ export const siteConfig = {
 	],
 	project: [
 		{
+			name: "Victoria Life Insurance Core System",
+			desc: "A high-performance core system managing critical insurance operations like policy issuance and claims. Engineered to handle high transaction volumes of up to 8,000 certificates daily.",
+			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
+			link: "#",
+			isPrivate: true,
+			date: "June 2024 - May 2025",
+			customer: "PT Victoria Alife Indonesia",
+			role: "Fullstack Developer",
+			jobDesc: [
+				"Developing core modules: Product Setup, Policy, Billing, and Claims",
+				"Implementing BullMQ for high-speed Excel data processing to MongoDB",
+				"Optimizing system performance using Redis caching mechanisms",
+				"Building robust Backend with NestJS 10 and Frontend with AngularJS 16"
+			],
+			tech: [
+				{
+					name: "NestJS",
+					image: "/icons/nestjs-icon.svg"
+				},
+				{
+					name: "Angular",
+					image: "/icons/angular-icon.svg"
+				},
+				{
+					name: "MongoDB",
+					image: "/icons/mongodb-icon.svg"
+				},
+				{
+					name: "MySQL",
+					image: "/icons/mysql-icon.svg"
+				}
+			]
+		},
+		{
 			name: "Workshop Management System",
 			desc: "WMS is a microservice-based product for vehicle workshops, featuring body repair and service management. Built with high-performance Spring Boot and Next.js technology.",
 			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
