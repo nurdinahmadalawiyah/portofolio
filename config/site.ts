@@ -463,8 +463,8 @@ export const siteConfig = {
 			href: "#skill",
 		},
 		{
-			label: "Work",
-			href: "#work",
+			label: "Experience",
+			href: "#experience",
 		},
 		{
 			label: "About",
@@ -489,8 +489,8 @@ export const siteConfig = {
 			href: "/skill",
 		},
 		{
-			label: "Work",
-			href: "/work",
+			label: "Experience",
+			href: "/experience",
 		},
 		{
 			label: "About",

@@ -1,8 +1,8 @@
 "use client";
 import AboutPage from "./about/page";
 import AboutLayout from "./about/layout";
-import WorkPage from "./work/page";
-import WorkLayout from "./work/layout";
+import ExperiencePage from "./experience/page";
+import ExperienceLayout from "./experience/layout";
 import ProjectPage from "./project/page";
 import ProjectLayout from "./project/layout";
 import SkillLayout from "./skill/layout";
@@ -27,9 +27,9 @@ export default function Home() {
         <SkillPage />
       </SkillLayout>
 
-      <WorkLayout>
-        <WorkPage />
-      </WorkLayout>
+      <ExperienceLayout>
+        <ExperiencePage />
+      </ExperienceLayout>
 
       <AboutLayout>
         <AboutPage />

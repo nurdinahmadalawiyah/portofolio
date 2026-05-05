@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Avatar } from "@nextui-org/avatar";
 import { motion } from "framer-motion";
 
-export default function WorkPage() {
+export default function ExperiencePage() {
   const [tabSize, setTabSize] = useState<"lg" | "sm" | "md" | undefined>("lg");
   const [activeCompany, setActiveCompany] = useState<string>("Padepokan Tujuh Sembilan");
 
@@ -63,8 +63,8 @@ export default function WorkPage() {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center gap-8 py-12 md:py-16">
-      <div className="max-w-2xl text-center">
+    <section id="experience" className="flex flex-col items-center justify-center gap-8 py-12 md:py-16">
+      <div className="max-w-2xl text-center mb-12 md:mb-16">
         <h1 className={title({ color: "turqoise", size: "sm" })}>
           Work Experience
         </h1>
