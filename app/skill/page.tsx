@@ -19,15 +19,15 @@ export default function SkillPage() {
     },
     {
       name: "Backend",
-      skills: ["Spring Boot", "Laravel", "Express.js", "NestJS", "Node JS"],
+      skills: ["Spring Boot", "Laravel", "Express.js", "NestJS", "Node JS", "Redis"],
     },
     {
       name: "Mobile",
       skills: ["Flutter", "Jetpack Compose", "React Native", "Expo"],
     },
     {
-      name: "Database",
-      skills: ["MySQL", "MongoDB", "PostgreSQL"],
+      name: "Database & Cloud",
+      skills: ["MySQL", "MongoDB", "PostgreSQL", "Firebase"],
     },
     {
       name: "Design",

@@ -61,13 +61,21 @@ export default function ProjectPage() {
                 <div className="relative h-72 w-full bg-gradient-to-br from-turquoise/20 to-blue-500/10 overflow-hidden">
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                   
-                  {/* Private Badge */}
-                  {project.isPrivate && (
-                    <div className="absolute top-4 right-4 z-20 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-                      <span className="text-[10px] font-black text-white uppercase tracking-widest">Private Repo</span>
-                    </div>
-                  )}
+                  {/* Status Badges */}
+                  <div className="absolute top-4 right-4 z-20 flex flex-col gap-2 items-end">
+                    {project.isPrivate && (
+                      <div className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                        <span className="text-[10px] font-black text-white uppercase tracking-widest">Private Repo</span>
+                      </div>
+                    )}
+                    {project.isOngoing && (
+                      <div className="px-3 py-1 rounded-full bg-turquoise/20 backdrop-blur-md border border-turquoise/30 flex items-center gap-2 shadow-[0_0_15px_rgba(44,231,241,0.2)]">
+                        <div className="w-1.5 h-1.5 rounded-full bg-turquoise animate-pulse shadow-[0_0_8px_rgba(44,231,241,1)]" />
+                        <span className="text-[10px] font-black text-turquoise uppercase tracking-widest">In Development</span>
+                      </div>
+                    )}
+                  </div>
 
                   {project.image ? (
                     <Image

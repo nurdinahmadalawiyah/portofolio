@@ -115,8 +115,46 @@ export const siteConfig = {
 					image: "/icons/next-icon.svg"
 				},
 				{
+					name: "Spring Boot",
+					image: "/icons/spring-icon.svg"
+				},
+				{
+					name: "Firebase",
+					image: "/icons/firebase-icon.svg"
+				},
+				{
 					name: "MongoDB",
 					image: "/icons/mongodb-icon.svg"
+				}
+			]
+		},
+		{
+			name: "ZenDo",
+			desc: "A modern Android productivity app combining Pomodoro Technique with efficient Task Management. Built using the latest Android standards for a seamless focused experience.",
+			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
+			link: "https://github.com/nurdinahmadalawiyah/ZenDo",
+			isOngoing: true,
+			date: "Present",
+			role: "Android Developer",
+			customer: "Personal Project",
+			jobDesc: [
+				"Implementing Clean Architecture & MVVM for scalable code",
+				"Building modern UI with 100% Jetpack Compose (Material 3)",
+				"Integrating Firebase Firestore for real-time cloud data sync",
+				"Implementing ambient sounds with Media3 ExoPlayer for focus"
+			],
+			tech: [
+				{
+					name: "Kotlin",
+					image: "/icons/kotlin-icon.svg"
+				},
+				{
+					name: "Jetpack Compose",
+					image: "/icons/jetpack-compose-icon.svg"
+				},
+				{
+					name: "Firebase",
+					image: "/icons/firebase-icon.svg"
 				}
 			]
 		},
@@ -151,6 +189,10 @@ export const siteConfig = {
 				{
 					name: "MySQL",
 					image: "/icons/mysql-icon.svg"
+				},
+				{
+					name: "Redis",
+					image: "/icons/redis-icon.svg"
 				}
 			]
 		},
@@ -384,6 +426,14 @@ export const siteConfig = {
 		{
 			name: "PostgreSQL",
 			image: "/icons/postgresql-icon.svg",
+		},
+		{
+			name: "Redis",
+			image: "/icons/redis-icon.svg",
+		},
+		{
+			name: "Firebase",
+			image: "/icons/firebase-icon.svg",
 		},
 		{
 			name: "Figma",
