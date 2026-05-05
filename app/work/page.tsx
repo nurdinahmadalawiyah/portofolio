@@ -85,7 +85,7 @@ export default function WorkPage() {
                     className={`flex items-center gap-4 p-4 rounded-2xl w-full border transition-all duration-300 backdrop-blur-md ${
                       activeCompany === item.company 
                         ? "bg-turquoise/10 border-turquoise/30 shadow-[0_0_20px_rgba(44,231,241,0.1)]" 
-                        : "bg-background/60 dark:bg-default-100/30 border-white/10 hover:bg-white/5"
+                        : "bg-white/50 dark:bg-default-100/30 border-black/5 dark:border-white/10 hover:bg-white/5"
                     }`}
                   >
                     <Avatar 
@@ -94,16 +94,16 @@ export default function WorkPage() {
                       radius="md"
                     />
                     <div className="flex flex-col items-start text-left flex-1">
-                      <span className={`font-bold text-sm ${activeCompany === item.company ? "text-turquoise" : "text-white"}`}>
+                      <span className={`font-bold text-sm ${activeCompany === item.company ? "text-turquoise" : "text-foreground"}`}>
                         {item.company}
                       </span>
-                      <span className="text-default-400 text-[10px]">
+                      <p className="text-default-500 text-[10px] font-medium">
                         {item.alamat}
-                      </span>
+                      </p>
                     </div>
                     <div className={`transition-transform duration-300 ${activeCompany === item.company ? "rotate-180" : ""}`}>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 9L12 15L18 9" stroke={activeCompany === item.company ? "#2CE7F1" : "white"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M6 9L12 15L18 9" stroke={activeCompany === item.company ? "#2CE7F1" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
                   </button>
@@ -169,7 +169,7 @@ export default function WorkPage() {
                   className={`flex items-center gap-5 p-5 rounded-3xl w-full border transition-all duration-500 text-left group relative overflow-hidden ${
                     activeCompany === item.company 
                       ? "bg-turquoise/10 border-turquoise/30 shadow-[0_0_30px_rgba(44,231,241,0.15)] scale-[1.02]" 
-                      : "bg-background/60 dark:bg-default-100/30 border-white/10 hover:bg-white/[0.05] hover:translate-x-2"
+                      : "bg-white/50 dark:bg-default-100/30 border-black/5 dark:border-white/10 hover:bg-white/[0.05] hover:translate-x-2"
                   }`}
                 >
                   {/* Active Indicator Line */}
@@ -189,11 +189,11 @@ export default function WorkPage() {
                   />
                   <div className="flex flex-col flex-1">
                     <span className={`font-black text-lg tracking-tight transition-colors duration-300 ${
-                      activeCompany === item.company ? "text-turquoise" : "text-white/80"
+                      activeCompany === item.company ? "text-turquoise" : "text-foreground"
                     }`}>
                       {item.company}
                     </span>
-                    <span className="text-default-400 text-xs font-medium uppercase tracking-widest mt-1">
+                    <span className="text-default-500 text-xs font-medium uppercase tracking-widest mt-1">
                       {item.alamat.split(',')[0]}
                     </span>
                   </div>
@@ -212,7 +212,7 @@ export default function WorkPage() {
                     transition={{ duration: 0.5, ease: "easeOut" }}
                     className="w-full"
                   >
-                    <Card className="border border-white/10 bg-background/60 dark:bg-default-100/30 backdrop-blur-md shadow-2xl overflow-visible">
+                    <Card className="border border-black/5 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md shadow-2xl overflow-visible">
                       <CardBody className="p-12">
                         {/* Company Header Detail - Aligned with Timeline */}
                         <div className="flex gap-8 items-center mb-16 relative">
@@ -226,7 +226,7 @@ export default function WorkPage() {
                           />
                           
                           <div className="flex flex-col gap-2 z-10">
-                            <h1 className="text-5xl font-black text-white tracking-tighter leading-none">
+                            <h1 className="text-5xl font-black text-foreground tracking-tighter leading-none">
                               {item.company}
                             </h1>
                             <div className="flex items-center gap-3">
@@ -262,7 +262,7 @@ export default function WorkPage() {
 
                               <div className="flex flex-col transition-transform duration-300 group-hover/exp:translate-x-2">
                                 <div className="flex items-center justify-between mb-1">
-                                  <h4 className="text-3xl font-black text-white/90 tracking-tight">
+                                  <h4 className="text-3xl font-black text-foreground tracking-tight">
                                     {experience.position}
                                   </h4>
                                   <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-turquoise text-[10px] font-black uppercase tracking-[0.2em] shadow-lg">
