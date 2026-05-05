@@ -44,7 +44,7 @@ export default function ProjectPage() {
       window.removeEventListener("resize", updateConstraints);
       clearTimeout(timer);
     };
-  }, [siteConfig.project.length]);
+  }, []);
 
   const scrollToPage = (page: number) => {
     if (containerRef.current) {

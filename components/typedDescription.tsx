@@ -2,6 +2,7 @@
 
 import { siteConfig } from '@/config/site';
 import React, { useEffect, useRef } from 'react';
+// @ts-expect-error: typed.js has issues with type resolution in modern moduleResolution settings
 import Typed from 'typed.js';
 
 const TypedDescription = () => {
