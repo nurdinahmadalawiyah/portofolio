@@ -109,14 +109,34 @@ export const siteConfig = {
 			]
 		},
 		{
-			name: "Futoboru",
-			desc: "Futoboru is the ultimate mobile application designed exclusively for football enthusiasts. With Futoboru, you'll experience the thrill of football at your fingertips.",
+			name: "Internal Management Web Application Office",
+			desc: "A mobile application that can manage various websites owned by the office. This application can manage login activities for each of its web applications.",
 			image: "https://nextui-docs-v2.vercel.app/images/fruit-4.jpeg",
-			link: "https://github.com/nurdinahmadalawiyah/Futoboru",
+			link: "#",
+			isPrivate: true,
+			date: "July 2022 - December 2022",
+			customer: "PT. Crop Inspirasi Digital",
+			role: "Mobile Developer",
+			jobDesc: [
+				"Implement login feature",
+				"Implement screen manage web internal office"
+			],
 			tech: [
 				{
 					name: "Flutter",
 					image: "/icons/flutter-icon.svg"
+				},
+				{
+					name: "Dart",
+					image: "/icons/dart-icon.svg"
+				},
+				{
+					name: "Laravel",
+					image: "/icons/laravel-icon.svg"
+				},
+				{
+					name: "MySQL",
+					image: "/icons/mysql-icon.svg"
 				}
 			]
 		},
