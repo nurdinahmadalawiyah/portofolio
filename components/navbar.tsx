@@ -18,9 +18,11 @@ import { motion } from "framer-motion";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo, DownloadIcon } from "@/components/icons";
 import { useLenis } from "lenis/react";
+import { AnimatePresence } from "framer-motion";
 
 export const Navbar = () => {
   const [activeItem, setActiveItem] = useState("#home");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const lenis = useLenis();
 
   useEffect(() => {
@@ -43,11 +45,14 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <div className="fixed top-6 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
+    <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-6xl pointer-events-none">
       <NextUINavbar 
         maxWidth="full" 
         position="static"
-        className="pointer-events-auto h-16 rounded-2xl border bg-background/60 backdrop-blur-md border-white/10 shadow-lg w-full max-w-6xl transition-all duration-300"
+        isBlurred={true}
+        isMenuOpen={isMenuOpen}
+        onMenuOpenChange={setIsMenuOpen}
+        className="pointer-events-auto h-16 rounded-2xl border border-white/10 bg-background/70 shadow-lg transition-all duration-300 px-4"
       >
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
           <NavbarBrand as="li" className="gap-3 max-w-fit">
@@ -118,43 +123,71 @@ export const Navbar = () => {
 
         <NavbarContent className="lg:hidden basis-1" justify="end">
           <ThemeSwitch />
-          <NavbarMenuToggle className="text-default-500 w-10 h-10" />
+          <NavbarMenuToggle 
+            className="text-default-500 w-10 h-10" 
+          />
         </NavbarContent>
 
-        <NavbarMenu className="mt-4 rounded-3xl bg-background/95 backdrop-blur-xl border border-white/10 p-6 shadow-2xl overflow-hidden">
-          <div className="flex flex-col gap-4">
-            {siteConfig.navMenuItems.map((item, index) => (
-              <NavbarMenuItem key={`${item}-${index}`}>
-                <Link
-                  className={`w-full text-lg py-2 ${
-                    activeItem === item.href ? "text-turquoise font-bold" : "text-default-600"
-                  }`}
-                  href={item.href}
-                  size="lg"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveItem(item.href);
-                    lenis?.scrollTo(item.href, {
-                      offset: -80,
-                      duration: 1.5
-                    });
-                  }}
-                >
-                  {item.label}
-                </Link>
-              </NavbarMenuItem>
-            ))}
-            <Button
-              isExternal
-              as={Link}
-              className="mt-4 w-full bg-turquoise text-white dark:text-black font-bold h-12 rounded-2xl"
-              href={siteConfig.links.cv}
-              startContent={<DownloadIcon />}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: -20, x: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: -20, x: 20 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              className="fixed top-24 right-4 w-[280px] p-6 rounded-[2.5rem] bg-background/90 backdrop-blur-[64px] backdrop-saturate-150 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] z-[100] lg:hidden flex flex-col gap-6"
+              style={{ pointerEvents: "auto" }}
             >
-              Download CV
-            </Button>
-          </div>
-        </NavbarMenu>
+              <div className="flex flex-col gap-3">
+                {siteConfig.navMenuItems.map((item, index) => (
+                  <motion.div
+                    key={item.href}
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <Link
+                      className={`w-full text-lg py-2 flex items-center justify-between group ${
+                        activeItem === item.href ? "text-turquoise font-black" : "text-default-600 font-bold"
+                      }`}
+                      href={item.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setActiveItem(item.href);
+                        setIsMenuOpen(false);
+                        lenis?.scrollTo(item.href, {
+                          offset: -80,
+                          duration: 1.5
+                        });
+                      }}
+                    >
+                      <span>{item.label}</span>
+                      {activeItem === item.href && (
+                        <motion.div 
+                          layoutId="active-dot"
+                          className="w-2 h-2 rounded-full bg-turquoise shadow-[0_0_10px_rgb(var(--accent-color))]" 
+                        />
+                      )}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+              
+              <div className="h-px bg-white/10 w-full" />
+              
+              <Button
+                isExternal
+                as={Link}
+                className="w-full bg-turquoise text-white dark:text-black font-black h-14 rounded-2xl shadow-lg shadow-turquoise/20"
+                href={siteConfig.links.cv}
+                startContent={<DownloadIcon size={22} />}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Download CV
+              </Button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </NextUINavbar>
     </div>
   );

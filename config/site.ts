@@ -59,7 +59,7 @@ export const siteConfig = {
 					},
 					{
 						position: "Frontend Web Developer",
-						type: "Intership",
+						type: "Internship",
 						date: "March 2023 - May 2023",
 						duration: "3 Months"
 					}
@@ -87,7 +87,7 @@ export const siteConfig = {
 				[
 					{
 						position: "Mobile Developer",
-						type: "Intership",
+						type: "Internship",
 						date: "July 2022 - December 2022",
 						duration: "6 Months"
 					}
@@ -457,7 +457,7 @@ export const siteConfig = {
 		instagram: "https://www.instagram.com/nurdin_ahmad_alawiyah/",
 		github: "https://github.com/nurdinahmadalawiyah",
 		whatsapp: "https://wa.me/628977612607",
-		location: "Bandung",
+		location: "Bandung, Indonesia",
 		maps: "https://www.google.com/maps/search/?api=1&query=Bandung",
 	},
 	navItems: [
@@ -487,30 +487,12 @@ export const siteConfig = {
 		}
 	],
 	navMenuItems: [
-		{
-			label: "Home",
-			href: "/",
-		},
-		{
-			label: "Project",
-			href: "/project",
-		},
-		{
-			label: "Skill",
-			href: "/skill",
-		},
-		{
-			label: "Experience",
-			href: "/experience",
-		},
-		{
-			label: "About",
-			href: "/about",
-		},
-		{
-			label: "Contact",
-			href: "/contact",
-		},
+		{ label: "Home", href: "#home" },
+		{ label: "Project", href: "#project" },
+		{ label: "Skill", href: "#skill" },
+		{ label: "Experience", href: "#experience" },
+		{ label: "About", href: "#about" },
+		{ label: "Contact", href: "#contact" },
 	],
 	links: {
 		github: "https://github.com/nurdinahmadalawiyah",

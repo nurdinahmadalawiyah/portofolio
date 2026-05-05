@@ -226,7 +226,7 @@ export default function ProjectPage() {
   );
 
   return (
-    <section id="project" className="flex flex-col items-center justify-center gap-12 py-16 md:py-24 w-full max-w-7xl mx-auto px-6">
+    <section id="project" className="flex flex-col items-center justify-center gap-12 py-16 md:py-24 w-full max-w-6xl mx-auto px-6">
       <motion.div 
         className="text-center mb-4"
         initial={{ opacity: 0, y: -20 }}

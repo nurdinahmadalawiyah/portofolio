@@ -9,9 +9,11 @@ import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import TypedDescription from "@/components/typedDescription";
 import { GithubIcon, LinkedInIcon, WhatsAppIcon, MailIcon } from "@/components/icons";
+import { useLenis } from "lenis/react";
 
 export default function HomePage() {
   const controls = useAnimation();
+  const lenis = useLenis();
 
   useEffect(() => {
     controls.start({ x: 0 });
@@ -50,15 +52,20 @@ export default function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <Link as={NextLink} href={siteConfig.navItems[1].href}>
-            <Button
-              variant="shadow"
-              size="lg"
-              className="bg-turquoise text-white dark:text-black shadow-lg shadow-turquoise/20 font-bold px-8 h-14"
-            >
-              Explore Project →
-            </Button>
-          </Link>
+          <Button
+            variant="shadow"
+            size="lg"
+            className="bg-turquoise text-white dark:text-black shadow-lg shadow-turquoise/20 font-bold px-8 h-14"
+            onClick={() => {
+              lenis?.scrollTo("#project", {
+                offset: -80,
+                duration: 1.5,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+              });
+            }}
+          >
+            Explore Project →
+          </Button>
           
           <div className="flex items-center gap-5 px-4 mt-4 sm:mt-0">
             <Link isExternal href={siteConfig.contact.github} className="text-default-400 hover:text-turquoise transition-colors">
