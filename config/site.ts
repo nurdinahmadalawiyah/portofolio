@@ -85,10 +85,19 @@ export const siteConfig = {
 	],
 	project: [
 		{
-			name: "Aplikasi Praktik Kerja Lapangan Berbasis Mobile (Studi Kasus: Politeknik TEDC Bandung)",
-			desc: "PKL APP is a cutting-edge mobile application designed to streamline and simplify the process of managing internships and student placements.",
+			name: "Aplikasi Praktik Kerja Lapangan Berbasis Mobile",
+			desc: "A mobile application developed as my final project during my university studies. This application was created to facilitate students in reporting their internship activities and monitoring progress.",
 			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
 			link: "https://github.com/nurdinahmadalawiyah/pkl-app",
+			customer: "Politeknik TEDC Bandung",
+			role: "Fullstack Developer",
+			date: "March 2023 - August 2023",
+			jobDesc: [
+				"Planning and designing frontend interface using Next.js",
+				"Implementing secure authentication system with JWT",
+				"Integrating real-time notifications through OneSignal API",
+				"Designing and developing backend RESTful API using Laravel"
+			],
 			tech: [
 				{
 					name: "Flutter",
@@ -103,9 +112,13 @@ export const siteConfig = {
 					image: "/icons/laravel-icon.svg"
 				},
 				{
+					name: "PHP",
+					image: "/icons/php-icon.svg"
+				},
+				{
 					name: "MySql",
 					image: "/icons/mysql-icon.svg"
-				},
+				}
 			]
 		},
 		{

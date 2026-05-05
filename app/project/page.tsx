@@ -137,24 +137,15 @@ export default function ProjectPage() {
               </CardBody>
               
               {!project.isPrivate && (
-                <CardFooter className="px-8 pb-8 pt-4 flex gap-4">
+                <CardFooter className="px-8 pb-8 pt-4">
                   <Button
                     as="a"
                     href={project.link}
                     target="_blank"
-                    className="flex-1 bg-turquoise text-white dark:text-black font-black shadow-[0_0_20px_rgba(44,231,241,0.2)] hover:shadow-[0_0_30px_rgba(44,231,241,0.4)] transition-all duration-300 h-12 rounded-xl"
+                    className="w-full bg-turquoise text-white dark:text-black font-black shadow-[0_0_20px_rgba(44,231,241,0.2)] hover:shadow-[0_0_30px_rgba(44,231,241,0.4)] transition-all duration-300 h-12 rounded-xl"
                     startContent={<GithubIcon size={20} />}
                   >
                     Source Code
-                  </Button>
-                  <Button
-                    as="a"
-                    href={project.link}
-                    target="_blank"
-                    className="flex-1 bg-white/5 dark:bg-white/5 border border-black/10 dark:border-white/10 hover:border-turquoise/50 text-foreground font-bold transition-all duration-300 h-12 rounded-xl"
-                    startContent={<ExternalLinkIcon size={20} />}
-                  >
-                    View Details
                   </Button>
                 </CardFooter>
               )}
