@@ -85,6 +85,42 @@ export const siteConfig = {
 	],
 	project: [
 		{
+			name: "Ardan Digital Platform",
+			desc: "A comprehensive digital transformation project for Ardan Radio, featuring a cross-platform mobile app and web integration to enhance listener community engagement.",
+			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
+			link: "#",
+			isPrivate: true,
+			appStore: "https://apps.apple.com/id/app/ardan-super-apps/id6755988577",
+			playStore: "https://play.google.com/store/apps/details?id=com.mobile.ardan",
+			date: "May 2025 - April 2026",
+			customer: "PT. Radio Ardan Swaratama",
+			role: "Mobile Developer",
+			jobDesc: [
+				"Designing and implementing responsive UI using Flutter & Bloc",
+				"Integrating complex RESTful APIs with efficient state management",
+				"Optimizing cross-platform performance for iOS and Android",
+				"Implementing real-time features and community-driven modules"
+			],
+			tech: [
+				{
+					name: "Flutter",
+					image: "/icons/flutter-icon.svg"
+				},
+				{
+					name: "Dart",
+					image: "/icons/dart-icon.svg"
+				},
+				{
+					name: "Next.js",
+					image: "/icons/next-icon.svg"
+				},
+				{
+					name: "MongoDB",
+					image: "/icons/mongodb-icon.svg"
+				}
+			]
+		},
+		{
 			name: "Victoria Life Insurance Core System",
 			desc: "A high-performance core system managing critical insurance operations like policy issuance and claims. Engineered to handle high transaction volumes of up to 8,000 certificates daily.",
 			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",

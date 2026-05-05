@@ -7,7 +7,7 @@ import { Image } from "@nextui-org/image";
 import { Tooltip } from "@nextui-org/tooltip";
 import { motion } from "framer-motion";
 import { siteConfig } from "@/config/site";
-import { GithubIcon, ExternalLinkIcon, MapPinIcon } from "@/components/icons";
+import { GithubIcon, ExternalLinkIcon, MapPinIcon, AppleIcon, PlayStoreIcon } from "@/components/icons";
 
 export default function ProjectPage() {
   const containerVars = {
@@ -142,19 +142,46 @@ export default function ProjectPage() {
                 </div>
               </CardBody>
               
-              {!project.isPrivate && (
-                <CardFooter className="px-8 pb-8 pt-4">
+              <CardFooter className="px-8 pb-8 pt-4 flex flex-wrap gap-3">
+                {/* Regular Project Links */}
+                {!project.isPrivate && (
                   <Button
                     as="a"
                     href={project.link}
                     target="_blank"
-                    className="w-full bg-turquoise text-white dark:text-black font-black shadow-[0_0_20px_rgba(44,231,241,0.2)] hover:shadow-[0_0_30px_rgba(44,231,241,0.4)] transition-all duration-300 h-12 rounded-xl"
+                    className="flex-1 bg-turquoise text-white dark:text-black font-black shadow-[0_0_20px_rgba(44,231,241,0.2)] hover:shadow-[0_0_30px_rgba(44,231,241,0.4)] transition-all duration-300 h-12 rounded-xl"
                     startContent={<GithubIcon size={20} />}
                   >
                     Source Code
                   </Button>
-                </CardFooter>
-              )}
+                )}
+
+                {/* App Store Link */}
+                {project.appStore && (
+                  <Button
+                    as="a"
+                    href={project.appStore}
+                    target="_blank"
+                    className="flex-1 min-w-[140px] bg-black text-white border border-white/20 hover:border-white/50 font-bold transition-all duration-300 h-12 rounded-xl"
+                    startContent={<AppleIcon size={20} />}
+                  >
+                    App Store
+                  </Button>
+                )}
+
+                {/* Play Store Link */}
+                {project.playStore && (
+                  <Button
+                    as="a"
+                    href={project.playStore}
+                    target="_blank"
+                    className="flex-1 min-w-[140px] bg-black text-white border border-white/20 hover:border-white/50 font-bold transition-all duration-300 h-12 rounded-xl"
+                    startContent={<PlayStoreIcon size={20} />}
+                  >
+                    Play Store
+                  </Button>
+                )}
+              </CardFooter>
             </Card>
           </motion.div>
         ))}
