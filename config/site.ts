@@ -12,7 +12,7 @@ export const siteConfig = {
 		highlights: [
 			{
 				label: "Experience",
-				value: "2+ Years",
+				value: "3+ Years",
 				icon: "Briefcase"
 			},
 			{
