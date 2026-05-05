@@ -84,11 +84,15 @@ export default function HomePage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="absolute -inset-4 bg-turquoise/20 rounded-full blur-2xl animate-pulse" />
+          {/* Dual-tone Glow Effect (Turquoise + Deep Cyan) */}
+          <div className="absolute -inset-6 bg-turquoise/20 rounded-full blur-3xl group-hover:bg-turquoise/40 transition-all duration-500 animate-pulse" />
+          <div className="absolute -inset-12 bg-cyan-600/20 rounded-full blur-[120px] group-hover:bg-cyan-600/30 transition-all duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-turquoise/20 to-cyan-600/20 rounded-2xl blur-xl transition-all duration-500" />
+
           <motion.img
             alt="Nurdin A. Alawiyah"
-            className="relative object-cover rounded-2xl shadow-2xl z-10 border-4 border-white/5 w-full max-w-[420px] h-auto"
-            src="/images/nurdin1.png"
+            className="relative object-cover rounded-2xl shadow-[0_0_50px_rgba(8,145,178,0.3)] z-10 border-4 border-white/10 w-full max-w-[420px] h-auto backdrop-brightness-110"
+            src="/images/nurdin1-new.jpeg"
             whileHover={{ scale: 1.05, rotate: 2 }}
             animate={{ y: [15, -15, 15] }}
             transition={{
