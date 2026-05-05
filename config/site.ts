@@ -17,13 +17,24 @@ export const siteConfig = {
 			},
 			{
 				label: "Education",
-				value: "Politeknik TEDC",
+				value: "S.Tr.T Informatics",
 				icon: "GraduationCap"
 			},
 			{
 				label: "Focus",
 				value: "Web & Mobile",
 				icon: "Code2"
+			}
+		],
+		education: [
+			{
+				school: "Politeknik TEDC Bandung",
+				logo: "/images/tedc.png",
+				degree: "Bachelor of Applied Technology (S.Tr.T) in Informatics Engineering",
+				duration: "Sep 2019 - Aug 2023",
+				gpa: "3.87 / 4.00",
+				status: "Graduated with Cum Laude Honors",
+				desc: "Focused on Software Engineering, Web Development, and Mobile Application systems."
 			}
 		]
 	},

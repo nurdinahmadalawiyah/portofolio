@@ -40,7 +40,7 @@ export default function AboutPage() {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center gap-12 py-16 md:py-20 max-w-5xl mx-auto px-6">
+    <section id="about" className="flex flex-col items-center justify-center gap-12 py-16 md:py-24 max-w-5xl mx-auto px-6">
       <motion.div 
         className="text-center"
         initial={{ opacity: 0, y: -20 }}
@@ -51,11 +51,13 @@ export default function AboutPage() {
         <h2 className={subtitle({ class: "mt-4" })}>Get to know Nurdin in brief</h2>
       </motion.div>
 
+      {/* Profile Section */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
+        className="w-full"
       >
         <Card
           isBlurred
@@ -107,6 +109,80 @@ export default function AboutPage() {
             </div>
           </CardBody>
         </Card>
+      </motion.div>
+
+      {/* Education Section */}
+      <motion.div 
+        className="w-full"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <div className="flex items-center gap-4 mb-12">
+          <div className="h-px bg-turquoise/20 flex-grow" />
+          <h3 className="text-2xl font-black text-foreground tracking-tight flex items-center gap-3">
+            Education
+          </h3>
+          <div className="h-px bg-turquoise/20 flex-grow" />
+        </div>
+
+        <div className="grid grid-cols-1 gap-6">
+          {siteConfig.about.education?.map((edu: any, idx: number) => (
+            <Card 
+              key={idx}
+              isBlurred
+              className="border border-white/5 bg-white/5 dark:bg-default-100/10 backdrop-blur-sm overflow-hidden hover:border-turquoise/20 transition-all duration-500 group"
+            >
+              <CardBody className="p-6 md:p-8">
+                <div className="flex flex-col md:flex-row justify-between items-center md:items-center gap-8">
+                  <div className="flex flex-col md:flex-row gap-6 items-center text-center md:text-left">
+                    <div className="w-20 h-20 md:w-16 md:h-16 rounded-2xl bg-white/10 flex items-center justify-center border border-white/10 shadow-xl flex-shrink-0 group-hover:scale-110 transition-all duration-500 overflow-hidden p-2">
+                      {edu.logo ? (
+                        <Image 
+                          src={edu.logo} 
+                          alt={edu.school} 
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M22 10L12 5L2 10L12 15L22 10Z" stroke="rgb(var(--accent-color))" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M6 12.5V16C6 16 8.5 19 12 19C15.5 19 18 16 18 16V12.5" stroke="rgb(var(--accent-color))" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <h4 className="text-xl md:text-2xl font-black text-foreground tracking-tight group-hover:text-turquoise transition-colors">
+                        {edu.school}
+                      </h4>
+                      <p className="text-turquoise font-bold text-xs md:text-sm uppercase tracking-widest leading-relaxed px-4 md:px-0">
+                        {edu.degree}
+                      </p>
+                      <p className="text-default-500 text-[10px] md:text-xs font-medium">
+                        {edu.duration}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col items-center md:items-end gap-3 w-full md:w-auto">
+                    <div className="px-5 py-3 rounded-2xl bg-black/20 dark:bg-white/5 border border-white/10 flex flex-col items-center md:items-end w-full md:w-auto shadow-inner">
+                      <span className="text-[9px] uppercase tracking-[0.2em] text-default-400 font-black mb-1">Grade (GPA)</span>
+                      <span className="text-3xl font-black text-turquoise shadow-turquoise/20 drop-shadow-md">
+                        {edu.gpa}
+                      </span>
+                    </div>
+                    <span className="px-4 py-1.5 rounded-full bg-turquoise/10 text-turquoise text-[10px] font-black uppercase tracking-widest border border-turquoise/20 shadow-sm">
+                      {edu.status}
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="mt-8 p-5 rounded-2xl bg-black/5 dark:bg-white/5 border border-white/5 italic text-default-500 text-xs md:text-sm leading-relaxed text-center md:text-left">
+                  "{edu.desc}"
+                </div>
+              </CardBody>
+            </Card>
+          ))}
+        </div>
       </motion.div>
     </section>
   );
