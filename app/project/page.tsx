@@ -313,7 +313,7 @@ export default function ProjectPage() {
               drag={totalPages > 1 ? "x" : false}
               dragConstraints={constraints}
               style={{ x: springX }}
-              className="flex gap-10"
+              className="flex"
               onDragEnd={(e, info) => {
                 if (containerRef.current && totalPages > 1) {
                   const containerWidth = containerRef.current.offsetWidth;
@@ -334,7 +334,7 @@ export default function ProjectPage() {
               {siteConfig.project.map((project: any, index) => (
                 <div 
                   key={index} 
-                  className={`flex-shrink-0 ${siteConfig.project.length === 1 ? 'w-full max-w-2xl mx-auto' : 'w-[calc(50%-20px)]'}`}
+                  className={`flex-shrink-0 px-5 ${siteConfig.project.length === 1 ? 'w-full max-w-2xl mx-auto' : 'w-1/2'}`}
                 >
                   <ProjectCard project={project} />
                 </div>
