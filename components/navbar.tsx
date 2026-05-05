@@ -43,9 +43,9 @@ export const Navbar = () => {
   return (
     <div className="fixed top-6 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
       <NextUINavbar 
-        maxWidth="xl" 
+        maxWidth="full" 
         position="static"
-        className="pointer-events-auto h-16 rounded-2xl border bg-background/60 backdrop-blur-md border-white/10 shadow-lg w-full max-w-[1200px] transition-all duration-300"
+        className="pointer-events-auto h-16 rounded-2xl border bg-background/60 backdrop-blur-md border-white/10 shadow-lg w-full max-w-6xl transition-all duration-300"
       >
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
           <NavbarBrand as="li" className="gap-3 max-w-fit">

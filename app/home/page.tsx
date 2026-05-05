@@ -18,7 +18,7 @@ export default function HomePage() {
   }, [controls]);
 
   return (
-    <section className="relative grid grid-cols-1 lg:grid-cols-[50%_50%] gap-12 py-20 min-h-[90vh] items-center w-full">
+    <section className="relative grid grid-cols-1 lg:grid-cols-[50%_50%] gap-12 py-20 min-h-[90vh] items-center w-full max-w-6xl mx-auto">
       {/* Background Glow Container (Handles overflow for glows only) */}
       <div className="absolute inset-0 overflow-hidden -z-10 pointer-events-none">
         <div className="absolute top-1/4 left-0 w-72 h-72 bg-turquoise/20 rounded-full blur-[120px] animate-pulse" />
@@ -87,9 +87,8 @@ export default function HomePage() {
           <div className="absolute -inset-4 bg-turquoise/20 rounded-full blur-2xl animate-pulse" />
           <motion.img
             alt="Nurdin A. Alawiyah"
-            className="relative object-cover rounded-2xl shadow-2xl z-10 border-4 border-white/5"
+            className="relative object-cover rounded-2xl shadow-2xl z-10 border-4 border-white/5 w-full max-w-[420px] h-auto"
             src="/images/nurdin1.png"
-            width={420}
             whileHover={{ scale: 1.05, rotate: 2 }}
             animate={{ y: [15, -15, 15] }}
             transition={{
