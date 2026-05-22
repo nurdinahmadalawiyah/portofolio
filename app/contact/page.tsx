@@ -101,7 +101,7 @@ export default function ContactPage() {
       </div>
 
       <div className="relative z-10 w-full mb-4 flex flex-col items-start">
-        <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">Let's connect</h2>
+        <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">Let&apos;s connect</h2>
         <h3 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
           Get In <span className="text-turquoise italic font-serif font-light">Touch.</span>
         </h3>
