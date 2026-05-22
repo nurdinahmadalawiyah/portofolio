@@ -97,22 +97,56 @@ export default function HomePage() {
           <div className="absolute -inset-12 bg-cyan-600/20 rounded-full blur-[120px] group-hover:bg-cyan-600/30 transition-all duration-500" />
           <div className="absolute inset-0 bg-gradient-to-tr from-turquoise/20 to-cyan-600/20 rounded-2xl blur-xl transition-all duration-500" />
 
-          <motion.img
-            alt="Nurdin A. Alawiyah"
-            className="relative object-cover rounded-2xl shadow-[0_0_50px_rgba(8,145,178,0.3)] z-10 border-4 border-white/10 w-full max-w-[420px] h-auto backdrop-brightness-110"
-            src="/images/nurdin1-new.jpeg"
-            whileHover={{ scale: 1.05, rotate: 2 }}
-            animate={{ y: [15, -15, 15] }}
-            transition={{
-              y: {
-                repeat: Infinity,
-                duration: 5,
-                ease: "easeInOut",
-              },
-              scale: { duration: 0.3 },
-              rotate: { duration: 0.3 }
-            }}
-          />
+          <div className="relative w-[280px] h-[280px] md:w-[380px] md:h-[380px] z-10 mx-auto">
+            {/* Morphing Blob Image */}
+            <motion.img
+              alt="Nurdin A. Alawiyah"
+              className="absolute inset-0 object-cover shadow-[0_0_40px_rgba(44,231,241,0.2)] border-[3px] border-turquoise/40 w-full h-full"
+              src="/images/nurdin1-new.jpeg"
+              animate={{ 
+                borderRadius: [
+                  "60% 40% 30% 70% / 60% 30% 70% 40%",
+                  "30% 60% 70% 40% / 50% 60% 30% 60%",
+                  "60% 40% 30% 70% / 60% 30% 70% 40%"
+                ],
+                y: [0, -10, 0]
+              }}
+              transition={{
+                borderRadius: { repeat: Infinity, duration: 8, ease: "easeInOut" },
+                y: { repeat: Infinity, duration: 5, ease: "easeInOut" }
+              }}
+            />
+
+            {/* Chat Balloon 1: Top Right */}
+            <motion.div
+              className="absolute -top-4 -right-4 md:-right-12 bg-background/80 backdrop-blur-md border border-white/10 shadow-xl rounded-2xl rounded-bl-sm px-4 py-2 flex items-center gap-2 z-20"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: 0.5 }}
+            >
+              <span className="text-xl">👋</span>
+              <span className="text-sm font-bold">Hi there!</span>
+            </motion.div>
+
+            {/* Chat Balloon 2: Bottom Left */}
+            <motion.div
+              className="absolute bottom-12 -left-6 md:-left-16 bg-turquoise/10 backdrop-blur-md border border-turquoise/30 shadow-[0_0_20px_rgba(44,231,241,0.15)] rounded-2xl rounded-tr-sm px-4 py-2 flex items-center gap-2 z-20"
+              animate={{ y: [0, 8, 0] }}
+              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
+            >
+              <span className="text-turquoise text-sm font-mono font-bold">&lt;/&gt;</span>
+              <span className="text-sm font-semibold text-foreground/90">ships clean code</span>
+            </motion.div>
+
+            {/* Chat Balloon 3: Bottom Right */}
+            <motion.div
+              className="absolute -bottom-6 right-4 md:-right-2 bg-background/80 backdrop-blur-md border border-white/10 shadow-xl rounded-2xl rounded-tl-sm px-4 py-2 flex items-center gap-2 z-20"
+              animate={{ y: [0, -6, 0] }}
+              transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut", delay: 0.2 }}
+            >
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-xs font-semibold text-default-500">open for work</span>
+            </motion.div>
+          </div>
         </motion.div>
       </div>
 
