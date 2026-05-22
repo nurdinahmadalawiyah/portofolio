@@ -54,11 +54,11 @@ export default function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row items-center gap-4">
             <Button
               variant="shadow"
               size="lg"
-              className="bg-turquoise text-white dark:text-black shadow-lg shadow-turquoise/20 font-bold px-8 h-14 flex-1 sm:flex-none"
+              className="bg-turquoise text-white dark:text-black shadow-lg shadow-turquoise/20 font-bold px-8 h-14"
               onClick={() => {
                 lenis?.scrollTo("#project", {
                   offset: -80,
@@ -74,7 +74,7 @@ export default function HomePage() {
               isExternal
               as={Link}
               size="lg"
-              className="bg-turquoise/10 border border-turquoise/50 hover:border-turquoise hover:bg-turquoise/20 text-turquoise shadow-[0_0_20px_rgba(44,231,241,0.15)] hover:shadow-[0_0_30px_rgba(44,231,241,0.3)] font-bold px-8 h-14 flex-1 sm:flex-none transition-all duration-300"
+              className="bg-turquoise/10 border border-turquoise/50 hover:border-turquoise hover:bg-turquoise/20 text-turquoise shadow-[0_0_20px_rgba(44,231,241,0.15)] hover:shadow-[0_0_30px_rgba(44,231,241,0.3)] font-bold px-8 h-14 transition-all duration-300"
               href={siteConfig.links.cv}
               startContent={<DownloadIcon size={20} />}
             >
