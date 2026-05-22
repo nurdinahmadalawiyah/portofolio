@@ -3,12 +3,12 @@ export type SiteConfig = typeof siteConfig;
 export const siteConfig = {
 	name: "Nurdin A. Alawiyah",
 	home: {
-		greatings: "Hi, my name is Nurdin",
+		greatings: "Hi, I'm Nurdin A. Alawiyah",
 		role: ["I'm a Frontend Developer", "I'm a Mobile Developer", "I'm a Backend Developer", "I'm a Fullstack Developer"],
-		description: "I'm passionate about creating innovative and user-friendly web applications, and my enthusiasm extends to crafting intuitive and seamless mobile applications as well.I believe in delivering exceptional digital experiences across all platforms.",
+		description: "A fullstack developer with a strong passion for mobile development. I love turning ideas into real products and I'm always excited to learn new technologies along the way.",
 	},
 	about: {
-		desc: "I am Nurdin A. Alawiyah, and I possess a deep passion for the realm of programming. Leveraging my accumulated experience in web and mobile application development, I remain highly enthusiastic and fully committed to the continuous expansion of my skills and knowledge within the dynamic landscape of technology and programming. Beyond my working hours, I diligently engage in online courses to further enrich my expertise in this ever-evolving field.",
+		desc: "I'm Nurdin A. Alawiyah a fullstack developer who genuinely enjoys building things with code. My strongest area is mobile development, but I'm equally comfortable working across web and backend. I believe the best way to grow is by staying curious, so I'm always picking up new tools and technologies through online courses and side projects outside of work.",
 		highlights: [
 			{
 				label: "Experience",
@@ -110,7 +110,7 @@ export const siteConfig = {
 				"Designing and implementing responsive UI using Flutter & Bloc",
 				"Integrating complex RESTful APIs with efficient state management",
 				"Optimizing cross-platform performance for iOS and Android",
-				"Implementing real-time features and community-driven modules"
+				"Implementing real-time features and community driven modules"
 			],
 			tech: [
 				{
@@ -171,7 +171,7 @@ export const siteConfig = {
 		},
 		{
 			name: "Victoria Life Insurance Core System",
-			desc: "A high-performance core system managing critical insurance operations like policy issuance and claims. Engineered to handle high transaction volumes of up to 8,000 certificates daily.",
+			desc: "A high performance core system managing critical insurance operations like policy issuance and claims. Engineered to handle high transaction volumes of up to 8,000 certificates daily.",
 			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
 			link: "#",
 			isPrivate: true,
@@ -180,7 +180,7 @@ export const siteConfig = {
 			role: "Fullstack Developer",
 			jobDesc: [
 				"Developing core modules: Product Setup, Policy, Billing, and Claims",
-				"Implementing BullMQ for high-speed Excel data processing to MongoDB",
+				"Implementing BullMQ for high speed Excel data processing to MongoDB",
 				"Optimizing system performance using Redis caching mechanisms",
 				"Building robust Backend with NestJS 10 and Frontend with AngularJS 16"
 			],
@@ -209,7 +209,7 @@ export const siteConfig = {
 		},
 		{
 			name: "Workshop Management System",
-			desc: "WMS is a microservice-based product for vehicle workshops, featuring body repair and service management. Built with high-performance Spring Boot and Next.js technology.",
+			desc: "WMS is a microservice based product for vehicle workshops, featuring body repair and service management. Built with high performance Spring Boot and Next.js technology.",
 			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
 			link: "#",
 			isPrivate: true,

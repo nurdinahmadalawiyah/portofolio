@@ -9,11 +9,13 @@ import { motion } from "framer-motion";
 export default function AboutPage() {
   const highlightKeywords = (text: string) => {
     const keywords = [
-      "programming", 
-      "web and mobile application development", 
-      "online courses", 
       "Nurdin A. Alawiyah",
-      "Informatics Engineering"
+      "fullstack developer",
+      "mobile development", 
+      "web and backend",
+      "staying curious",
+      "online courses",
+      "side projects"
     ];
     
     let parts = [text];

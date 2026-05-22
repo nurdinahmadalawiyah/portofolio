@@ -33,16 +33,22 @@ export default function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className={subtitle({ class: "text-turquoise font-medium mb-2" })}>
-            {siteConfig.home.greatings}
-          </h2>
-          <div className="min-h-[160px] md:min-h-[140px] flex items-center justify-center lg:justify-start overflow-visible py-2">
-            <h1 className={`${title({ color: "turqoise", size: "xl" })} leading-[1.2] pb-2`}>
+          <h1 className={`${title({ size: "sm" })} leading-[1.2] block`}>
+            Hi, I&apos;m <span className={title({ color: "turqoise", size: "md" })}>Nurdin A. Alawiyah</span>
+          </h1>
+          <div className="mt-4 md:mt-5 min-h-[32px] md:min-h-[40px] flex items-center justify-center lg:justify-start overflow-visible">
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-medium text-foreground/80 tracking-tight">
               <TypedDescription />
-            </h1>
+            </h2>
           </div>
-          <p className="mt-6 text-lg text-default-600 leading-relaxed w-full">
-            {siteConfig.home.description}
+          <p className="mt-4 md:mt-5 text-base md:text-lg text-default-500 leading-[1.8] w-full max-w-lg lg:max-w-none">
+            A{" "}
+            <span className="text-foreground font-semibold">fullstack developer</span>{" "}
+            with a strong passion for{" "}
+            <span className="text-turquoise font-semibold">mobile development</span>.
+            I love turning ideas into real products and I&apos;m always excited to{" "}
+            <span className="text-turquoise font-semibold">learn new technologies</span>{" "}
+            along the way.
           </p>
         </motion.div>
 
