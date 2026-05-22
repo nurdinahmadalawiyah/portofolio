@@ -42,10 +42,16 @@ export default function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "system", enableSystem: true, storageKey: "portofolio-theme" }}>
+          {/* Global Ambient Glows */}
+          <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+            <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-turquoise/20 rounded-full blur-[120px] animate-glow-1" />
+            <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-turquoise/10 rounded-full blur-[120px] animate-glow-2" />
+          </div>
+          
           <Navbar />
           <ScrollToTop />
           <SmoothScroll>
-            <div className="relative flex flex-col min-h-screen">
+            <div className="relative z-10 flex flex-col min-h-screen bg-transparent">
               <main className="container mx-auto max-w-6xl pt-16 px-4 flex-grow">
                 {children}
                 <Analytics />

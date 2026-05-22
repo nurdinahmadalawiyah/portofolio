@@ -21,11 +21,7 @@ export default function HomePage() {
 
   return (
     <section className="relative grid grid-cols-1 lg:grid-cols-[50%_50%] gap-12 py-20 min-h-[90vh] items-center w-full max-w-6xl mx-auto">
-      {/* Background Glow Container (Handles overflow for glows only) */}
-      <div className="absolute inset-0 overflow-hidden -z-10 pointer-events-none">
-        <div className="absolute top-1/4 left-0 w-72 h-72 bg-turquoise/20 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-turquoise/10 rounded-full blur-[150px]" />
-      </div>
+
 
       <div className="w-full text-center lg:text-start z-10 overflow-visible">
         <motion.div
