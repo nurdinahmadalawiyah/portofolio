@@ -10,4 +10,16 @@
   .dark {
     --accent-color: 44 231 241; /* Turquoise: #2CE7F1 */
   }
+
+  html, body {
+    overflow-x: hidden;
+  }
+}
+
+/* Prevent NextUI Navbar from forcing width beyond viewport */
+@layer components {
+  [data-slot="base"].navbar {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
 }

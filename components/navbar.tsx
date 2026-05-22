@@ -45,7 +45,7 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-6xl pointer-events-none">
+    <div className="fixed top-6 left-0 right-0 z-50 mx-auto w-full max-w-6xl px-4 pointer-events-none">
       <NextUINavbar 
         maxWidth="full" 
         position="static"

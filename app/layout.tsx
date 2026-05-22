@@ -42,15 +42,15 @@ export default function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "system", enableSystem: true, storageKey: "portofolio-theme" }}>
+          <Navbar />
+          <ScrollToTop />
           <SmoothScroll>
             <div className="relative flex flex-col min-h-screen">
-              <Navbar />
               <main className="container mx-auto max-w-6xl pt-16 px-4 flex-grow">
                 {children}
                 <Analytics />
               </main>
               <Footer />
-              <ScrollToTop />
             </div>
           </SmoothScroll>
         </Providers>
