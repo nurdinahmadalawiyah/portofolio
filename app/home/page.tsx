@@ -8,7 +8,7 @@ import { title, subtitle } from "@/components/primitives";
 import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import TypedDescription from "@/components/typedDescription";
-import { GithubIcon, LinkedInIcon, WhatsAppIcon, MailIcon } from "@/components/icons";
+import { DownloadIcon } from "@/components/icons";
 import { useLenis } from "lenis/react";
 
 export default function HomePage() {
@@ -53,40 +53,39 @@ export default function HomePage() {
         </motion.div>
 
         <motion.div 
-          className="mt-10 flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start"
+          className="mt-10 flex flex-col gap-8 items-center lg:items-start"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <Button
-            variant="shadow"
-            size="lg"
-            className="bg-turquoise text-white dark:text-black shadow-lg shadow-turquoise/20 font-bold px-8 h-14"
-            onClick={() => {
-              lenis?.scrollTo("#project", {
-                offset: -80,
-                duration: 1.5,
-                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-              });
-            }}
-          >
-            Explore Project →
-          </Button>
-          
-          <div className="flex items-center gap-5 px-4 mt-4 sm:mt-0">
-            <Link isExternal href={siteConfig.contact.github} className="text-default-400 hover:text-turquoise transition-colors">
-              <GithubIcon size={24} />
-            </Link>
-            <Link isExternal href={siteConfig.contact.linkedin} className="text-default-400 hover:text-turquoise transition-colors">
-              <LinkedInIcon size={24} />
-            </Link>
-            <Link isExternal href={siteConfig.contact.whatsapp} className="text-default-400 hover:text-turquoise transition-colors">
-              <WhatsAppIcon size={24} />
-            </Link>
-            <Link isExternal href={`mailto:${siteConfig.contact.email}`} className="text-default-400 hover:text-turquoise transition-colors">
-              <MailIcon size={24} />
-            </Link>
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <Button
+              variant="shadow"
+              size="lg"
+              className="bg-turquoise text-white dark:text-black shadow-lg shadow-turquoise/20 font-bold px-8 h-14 flex-1 sm:flex-none"
+              onClick={() => {
+                lenis?.scrollTo("#project", {
+                  offset: -80,
+                  duration: 1.5,
+                  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+                });
+              }}
+            >
+              Explore Project →
+            </Button>
+
+            <Button
+              isExternal
+              as={Link}
+              size="lg"
+              className="bg-turquoise/10 border border-turquoise/50 hover:border-turquoise hover:bg-turquoise/20 text-turquoise shadow-[0_0_20px_rgba(44,231,241,0.15)] hover:shadow-[0_0_30px_rgba(44,231,241,0.3)] font-bold px-8 h-14 flex-1 sm:flex-none transition-all duration-300"
+              href={siteConfig.links.cv}
+              startContent={<DownloadIcon size={20} />}
+            >
+              Download CV
+            </Button>
           </div>
+
         </motion.div>
       </div>
 

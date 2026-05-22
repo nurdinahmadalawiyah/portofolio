@@ -16,7 +16,7 @@ import NextLink from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ThemeSwitch } from "@/components/theme-switch";
-import { Logo, DownloadIcon } from "@/components/icons";
+import { Logo } from "@/components/icons";
 import { useLenis } from "lenis/react";
 import { AnimatePresence } from "framer-motion";
 
@@ -108,16 +108,6 @@ export const Navbar = () => {
         <NavbarContent className="basis-1/5 sm:basis-full" justify="end">
           <NavbarItem className="hidden lg:flex gap-4 items-center">
             <ThemeSwitch />
-            <Button
-              isExternal
-              as={Link}
-              className="text-sm font-bold text-white dark:text-black bg-turquoise px-6 h-10 rounded-xl shadow-none"
-              href={siteConfig.links.cv}
-              startContent={<DownloadIcon size={20} />}
-              variant="flat"
-            >
-              Download CV
-            </Button>
           </NavbarItem>
         </NavbarContent>
 
@@ -172,19 +162,6 @@ export const Navbar = () => {
                   </motion.div>
                 ))}
               </div>
-              
-              <div className="h-px bg-white/10 w-full" />
-              
-              <Button
-                isExternal
-                as={Link}
-                className="w-full bg-turquoise text-white dark:text-black font-black h-14 rounded-2xl shadow-none"
-                href={siteConfig.links.cv}
-                startContent={<DownloadIcon size={22} />}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Download CV
-              </Button>
             </motion.div>
           )}
         </AnimatePresence>
