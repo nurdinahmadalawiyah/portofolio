@@ -225,19 +225,18 @@ export default function ProjectPage() {
   );
 
   return (
-    <section id="project" className="flex flex-col items-center justify-center gap-12 py-16 md:py-24 w-full max-w-6xl mx-auto px-6">
-      <motion.div 
-        className="text-center mb-4"
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <h1 className={title({ color: "turqoise", size: "sm" })}>Selected Projects</h1>
-        <h2 className={subtitle({ className: "mt-4 max-w-2xl mx-auto" })}>
-          From Ideas to Solutions: A Collection of My Recent Work
-        </h2>
-      </motion.div>
+    <section id="project" className="relative flex flex-col items-center justify-center gap-12 py-16 md:py-24 w-full max-w-6xl mx-auto px-6 overflow-hidden">
+      {/* Giant Background Text Watermark */}
+      <div className="absolute top-10 left-1/2 -translate-x-1/2 pointer-events-none select-none z-0 opacity-[0.04] dark:opacity-[0.08]">
+        <h1 className="text-[12rem] md:text-[20rem] font-black tracking-tighter leading-none text-foreground whitespace-nowrap">PROJECTS</h1>
+      </div>
+
+      <div className="relative z-10 w-full mb-4 flex flex-col items-start">
+        <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">Selected Works</h2>
+        <h3 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
+          Recent <span className="text-turquoise italic font-serif font-light">Projects.</span>
+        </h3>
+      </div>
 
       {/* PROJECT LIST / CAROUSEL */}
       <motion.div 
@@ -271,7 +270,7 @@ export default function ProjectPage() {
           {/* Navigation Buttons */}
           {totalPages > 1 && (
             <>
-              <div className="absolute top-1/2 -left-12 -translate-y-1/2 z-50 opacity-0 group-hover:opacity-100 transition-all duration-300">
+              <div className="absolute top-1/2 left-0 md:-left-4 -translate-y-1/2 z-50 opacity-0 group-hover:opacity-100 transition-all duration-300">
                 <Button
                   isIconOnly
                   radius="full"
@@ -287,7 +286,7 @@ export default function ProjectPage() {
                 </Button>
               </div>
 
-              <div className="absolute top-1/2 -right-12 -translate-y-1/2 z-50 opacity-0 group-hover:opacity-100 transition-all duration-300">
+              <div className="absolute top-1/2 right-0 md:-right-4 -translate-y-1/2 z-50 opacity-0 group-hover:opacity-100 transition-all duration-300">
                 <Button
                   isIconOnly
                   radius="full"

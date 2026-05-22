@@ -58,19 +58,18 @@ export default function SkillPage() {
   };
 
   return (
-    <section id="skill" className="flex flex-col items-center justify-center gap-12 py-16 md:py-24 max-w-6xl mx-auto px-6">
-      <motion.div 
-        className="text-center"
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <h1 className={title({ color: "turqoise", size: "sm" })}>My Skills</h1>
-        <h2 className={subtitle({ className: "mt-4 max-w-2xl mx-auto" })}>
-          Shaping My Expertise with Modern Technologies and Frameworks
-        </h2>
-      </motion.div>
+    <section id="skill" className="relative flex flex-col items-center justify-center gap-12 py-16 md:py-24 w-full max-w-6xl mx-auto px-6 overflow-hidden">
+      {/* Giant Background Text Watermark */}
+      <div className="absolute top-10 left-1/2 -translate-x-1/2 pointer-events-none select-none z-0 opacity-[0.04] dark:opacity-[0.08]">
+        <h1 className="text-[12rem] md:text-[20rem] font-black tracking-tighter leading-none text-foreground whitespace-nowrap">SKILLS</h1>
+      </div>
+
+      <div className="relative z-10 w-full mb-4 flex flex-col items-start">
+        <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">Tech Stack</h2>
+        <h3 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
+          My <span className="text-turquoise italic font-serif font-light">Skills.</span>
+        </h3>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full mt-8">
         {categories.map((category, catIdx) => (

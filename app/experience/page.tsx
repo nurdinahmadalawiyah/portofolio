@@ -63,21 +63,18 @@ export default function ExperiencePage() {
   };
 
   return (
-    <section id="experience" className="flex flex-col items-center justify-center gap-8 py-12 md:py-16">
-      <motion.div 
-        className="max-w-2xl text-center mb-12 md:mb-16"
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <h1 className={title({ color: "turqoise", size: "sm" })}>
-          Work Experience
-        </h1>
-        <h2 className={subtitle({ class: "mt-4" })}>
-          A Journey Through Professional Growth and Achievements
-        </h2>
-      </motion.div>
+    <section id="experience" className="relative flex flex-col items-center justify-center gap-8 py-12 md:py-24 w-full max-w-6xl mx-auto px-6 overflow-hidden">
+      {/* Giant Background Text Watermark */}
+      <div className="absolute top-10 left-1/2 -translate-x-1/2 pointer-events-none select-none z-0 opacity-[0.04] dark:opacity-[0.08]">
+        <h1 className="text-[12rem] md:text-[20rem] font-black tracking-tighter leading-none text-foreground whitespace-nowrap">EXPERIENCE</h1>
+      </div>
+
+      <div className="relative z-10 w-full mb-12 flex flex-col items-start">
+        <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">Professional Journey</h2>
+        <h3 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
+          Work <span className="text-turquoise italic font-serif font-light">Experience.</span>
+        </h3>
+      </div>
 
       <motion.div 
         className="flex w-full flex-col gap-8"
