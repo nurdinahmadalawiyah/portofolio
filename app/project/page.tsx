@@ -13,7 +13,8 @@ import {
   AppleIcon, 
   PlayStoreIcon,
   ChevronLeftIcon,
-  ChevronRightIcon 
+  ChevronRightIcon,
+  ExternalLinkIcon
 } from "@/components/icons";
 
 export default function ProjectPage() {
@@ -196,6 +197,17 @@ export default function ProjectPage() {
             startContent={<GithubIcon size={20} />}
           >
             Source Code
+          </Button>
+        )}
+        {project.web && (
+          <Button
+            as="a"
+            href={project.web}
+            target="_blank"
+            className="flex-1 min-w-[120px] bg-black text-white border border-white/20 hover:border-white/50 font-bold transition-all duration-300 h-12 rounded-xl"
+            startContent={<ExternalLinkIcon size={20} />}
+          >
+            Open Web
           </Button>
         )}
         {project.appStore && (

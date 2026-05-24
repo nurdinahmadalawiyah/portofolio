@@ -96,6 +96,32 @@ export const siteConfig = {
 	],
 	project: [
 		{
+			name: "Deep Link Diagnostics Tool",
+			desc: "A modern Next.js SPA that helps mobile developers instantly validate their server-side configurations for iOS Universal Links and Android App Links.",
+			image: "/images/project/deep_link/Screenshot 2026-05-24 162132.png",
+			link: "https://github.com/nurdinahmadalawiyah/deep-link-diagnostics-tool",
+			web: "https://deep-link-diagnostics-tool.vercel.app",
+			date: "May 2026",
+			role: "Fullstack Developer",
+			customer: "Personal Project",
+			jobDesc: [
+				"Building a beautifully designed Next.js Single Page Application (SPA)",
+				"Validating .well-known configuration files with JSON Schema",
+				"Integrating Apple CDN and Google Digital Asset Links API checks",
+				"Generating CLI commands (xcrun, adb) for local path testing"
+			],
+			tech: [
+				{
+					name: "Next.js",
+					image: "/icons/next-icon.svg"
+				},
+				{
+					name: "TypeScript",
+					image: "/icons/typescript-icon.svg"
+				}
+			]
+		},
+		{
 			name: "Ardan Digital Platform",
 			desc: "A comprehensive digital transformation project for Ardan Radio, featuring a cross-platform mobile app and web integration to enhance listener community engagement.",
 			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
