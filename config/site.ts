@@ -124,7 +124,7 @@ export const siteConfig = {
 		{
 			name: "Ardan Digital Platform",
 			desc: "A comprehensive digital transformation project for Ardan Radio, featuring a cross-platform mobile app and web integration to enhance listener community engagement.",
-			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
+			image: "/images/project/ardan/Gemini_Generated_Image_3jolgw3jolgw3jol.png",
 			link: "#",
 			isPrivate: true,
 			appStore: "https://apps.apple.com/id/app/ardan-super-apps/id6755988577",
@@ -168,7 +168,7 @@ export const siteConfig = {
 		{
 			name: "ZenDo",
 			desc: "A modern Android productivity app combining Pomodoro Technique with efficient Task Management. Built using the latest Android standards for a seamless focused experience.",
-			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
+			image: "/images/project/zendo/Gemini_Generated_Image_mly7xjmly7xjmly7.png",
 			link: "https://github.com/nurdinahmadalawiyah/ZenDo",
 			isOngoing: true,
 			date: "Present",
@@ -198,7 +198,7 @@ export const siteConfig = {
 		{
 			name: "Victoria Life Insurance Core System",
 			desc: "A high performance core system managing critical insurance operations like policy issuance and claims. Engineered to handle high transaction volumes of up to 8,000 certificates daily.",
-			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
+			image: "/images/project/victoria/Gemini_Generated_Image_7o4eyx7o4eyx7o4e.png",
 			link: "#",
 			isPrivate: true,
 			date: "June 2024 - May 2025",
@@ -236,7 +236,7 @@ export const siteConfig = {
 		{
 			name: "Workshop Management System",
 			desc: "WMS is a microservice based product for vehicle workshops, featuring body repair and service management. Built with high performance Spring Boot and Next.js technology.",
-			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
+			image: "/images/project/wms/Gemini_Generated_Image_61srkt61srkt61sr.png",
 			link: "#",
 			isPrivate: true,
 			date: "June 2023 - March 2024",
@@ -270,7 +270,7 @@ export const siteConfig = {
 		{
 			name: "Aplikasi Praktik Kerja Lapangan Berbasis Mobile",
 			desc: "A mobile application developed as my final project during my university studies. This application was created to facilitate students in reporting their internship activities and monitoring progress.",
-			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
+			image: "/images/project/magang/Gemini_Generated_Image_cz6726cz6726cz67.png",
 			link: "https://github.com/nurdinahmadalawiyah/pkl-app",
 			customer: "Politeknik TEDC Bandung",
 			role: "Fullstack Developer",
