@@ -307,7 +307,7 @@ export const siteConfig = {
 		{
 			name: "E-Recruitment",
 			desc: "A website application for talent recruitment that can be used by users who will apply for jobs and human resources who select prospective employee.",
-			image: "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg",
+			image: "/images/project/e-recruitment/Gemini_Generated_Image_s1agm4s1agm4s1ag.png",
 			link: "#",
 			isPrivate: true,
 			date: "March 2023 - June 2023",
@@ -341,7 +341,7 @@ export const siteConfig = {
 		{
 			name: "Internal Management Web Application Office",
 			desc: "A mobile application that can manage various websites owned by the office. This application can manage login activities for each of its web applications.",
-			image: "https://nextui-docs-v2.vercel.app/images/fruit-4.jpeg",
+			image: "/images/project/crop/Gemini_Generated_Image_qk6nexqk6nexqk6n.png",
 			link: "#",
 			isPrivate: true,
 			date: "July 2022 - December 2022",
