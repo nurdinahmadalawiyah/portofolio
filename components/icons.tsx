@@ -5,6 +5,7 @@ export const Logo: React.FC<IconSvgProps> = ({
   size = 36,
   width,
   height,
+  className,
   ...props
 }) => (
   <svg
@@ -13,13 +14,17 @@ export const Logo: React.FC<IconSvgProps> = ({
     viewBox="0 0 32 32"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    className={["text-white dark:text-black", className].filter(Boolean).join(" ")}
     {...props}
   >
-    <circle cx="16" cy="16" r="14" stroke="rgb(var(--accent-color))" strokeWidth="2" />
-    <g transform="translate(7.45, 5.3) scale(0.6)">
+    <rect x="1" y="1" width="30" height="30" rx="10" fill="rgb(var(--accent-color))" />
+    <g transform="translate(8.1, 6.1) scale(0.56)">
       <path
         d="M27.824 35H22.784L4.448 6.536H4.256C4.288 7.112 4.32 7.752 4.352 8.456C4.416 9.16 4.464 9.928 4.496 10.76C4.528 11.56 4.56 12.392 4.592 13.256C4.624 14.12 4.64 14.984 4.64 15.848V35H0.656V0.727998H5.648L23.936 29.096H24.128C24.096 28.712 24.064 28.184 24.032 27.512C24 26.808 23.968 26.04 23.936 25.208C23.904 24.344 23.872 23.464 23.84 22.568C23.808 21.672 23.792 20.84 23.792 20.072V0.727998H27.824V35Z"
-        fill="rgb(var(--accent-color))"
+        fill="currentColor"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
       />
     </g>
   </svg>

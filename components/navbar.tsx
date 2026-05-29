@@ -56,11 +56,24 @@ export const Navbar = () => {
       >
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
           <NavbarBrand as="li" className="gap-3 max-w-fit">
-            <NextLink className="flex justify-start items-center gap-3 group" href="/">
-              <Logo size={32} />
-              <p className="font-bold text-inherit hidden sm:block group-hover:text-turquoise transition-colors text-lg">
-                <span className="text-turquoise">N</span>urdin <span className="hidden lg:inline">A. Alawiyah</span>
-              </p>
+            <NextLink
+              className="flex justify-start items-center gap-3 group"
+              href="#home"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveItem("#home");
+                setIsMenuOpen(false);
+                lenis?.scrollTo("#home", {
+                  offset: -80,
+                  duration: 1.5,
+                  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                });
+              }}
+            >
+              <Logo
+                size={32}
+                className="transition-transform duration-300 ease-out group-hover:scale-110 group-hover:-rotate-3 group-active:scale-95 group-hover:drop-shadow-[0_0_18px_rgba(44,231,241,0.45)]"
+              />
             </NextLink>
           </NavbarBrand>
         </NavbarContent>
