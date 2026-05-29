@@ -122,11 +122,11 @@ export const Navbar = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: -20, x: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: -20, x: 20 }}
-              transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="fixed top-24 right-4 w-[280px] p-6 rounded-[2.5rem] bg-background/90 backdrop-blur-[64px] backdrop-saturate-150 border border-black/10 dark:border-white/10 shadow-none z-[100] lg:hidden flex flex-col gap-6"
+              initial={{ opacity: 0, y: -14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -14 }}
+              transition={{ type: "spring", stiffness: 420, damping: 34 }}
+              className="fixed top-24 left-4 right-4 w-auto p-6 rounded-2xl bg-background/70 backdrop-blur-md border border-black/10 dark:border-white/10 shadow-none ring-1 ring-black/5 dark:ring-white/10 z-[100] lg:hidden flex flex-col gap-6 isolate"
               style={{ pointerEvents: "auto" }}
             >
               <div className="flex flex-col gap-3">
