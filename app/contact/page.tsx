@@ -1,8 +1,5 @@
 "use client";
-import { useState } from "react";
-import { title, subtitle } from "@/components/primitives";
 import { Card, CardBody } from "@heroui/card";
-import { Button } from "@heroui/button";
 import { siteConfig } from "@/config/site";
 import { 
   GithubIcon, 
@@ -15,22 +12,10 @@ import {
 import { motion, Variants } from "framer-motion";
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: ""
-  });
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleSendMessage = () => {
-    const { name, subject, message } = formData;
-    const body = `Name: ${name}%0D%0AMessage: ${message}`;
-    window.location.href = `mailto:${siteConfig.contact.email}?subject=${encodeURIComponent(subject)}&body=${body}`;
-  };
+  const defaultSubject = "Hello Nurdin";
+  const defaultBody = "Hi Nurdin,%0D%0A%0D%0AI'm reaching out regarding...";
+  const emailHref = `mailto:${siteConfig.contact.email}?subject=${encodeURIComponent(defaultSubject)}&body=${defaultBody}`;
+  const whatsappHref = `${siteConfig.contact.whatsapp}?text=${encodeURIComponent("Hi Nurdin, I’d like to connect.")}`;
 
   const contactItems = [
     {
@@ -70,8 +55,6 @@ export default function ContactPage() {
       href: `mailto:${siteConfig.contact.email}`,
     },
   ];
-
-  const inputClasses = "w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-sm outline-none ring-0 focus:ring-0 focus:outline-none focus:border-turquoise/50 transition-colors duration-200 text-foreground placeholder:text-default-400";
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -139,7 +122,7 @@ export default function ContactPage() {
           ))}
         </motion.div>
 
-        {/* Contact Form Section */}
+        {/* Direct Contact Section */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -149,62 +132,57 @@ export default function ContactPage() {
         >
           <Card className="border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md p-2 shadow-none transition-all duration-300">
             <CardBody className="p-8 flex flex-col gap-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-2">
-                  <label className="text-[10px] uppercase tracking-widest text-turquoise font-black ml-1">Name</label>
-                  <input 
-                    type="text" 
-                    placeholder="Enter your name"
-                    value={formData.name}
-                    onChange={(e) => handleInputChange("name", e.target.value)}
-                    className={inputClasses}
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-[10px] uppercase tracking-widest text-turquoise font-black ml-1">Email</label>
-                  <input 
-                    type="email" 
-                    placeholder="Enter your email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
-                    className={inputClasses}
-                  />
-                </div>
-              </div>
-              
               <div className="flex flex-col gap-2">
-                <label className="text-[10px] uppercase tracking-widest text-turquoise font-black ml-1">Subject</label>
-                <input 
-                  type="text" 
-                  placeholder="What is this about?"
-                  value={formData.subject}
-                  onChange={(e) => handleInputChange("subject", e.target.value)}
-                  className={inputClasses}
-                />
+                <span className="text-[10px] uppercase tracking-widest text-turquoise font-black ml-1">Direct message</span>
+                <h4 className="text-2xl md:text-3xl font-black tracking-tight text-foreground">
+                  Reach out anytime.
+                </h4>
+                <p className="text-sm text-default-600 dark:text-default-400 leading-relaxed mt-1">
+                  Pick the channel you prefer and I&apos;ll get back to you as soon as possible.
+                </p>
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label className="text-[10px] uppercase tracking-widest text-turquoise font-black ml-1">Message</label>
-                <textarea 
-                  rows={4}
-                  placeholder="Write your message here..."
-                  value={formData.message}
-                  onChange={(e) => handleInputChange("message", e.target.value)}
-                  className={`${inputClasses} resize-none`}
-                />
+              <div className="flex flex-wrap gap-2">
+                <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-black/10 dark:border-white/10 bg-white/60 dark:bg-default-100/40 text-foreground">
+                  Fast reply
+                </span>
+                <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-black/10 dark:border-white/10 bg-white/60 dark:bg-default-100/40 text-foreground">
+                  Open to collaboration
+                </span>
               </div>
 
-              <motion.div
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <motion.a
+                  href={emailHref}
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full bg-turquoise text-white dark:text-black font-black uppercase tracking-widest py-4 rounded-xl shadow-[0_0_20px_rgba(44,231,241,0.3)] hover:shadow-[0_0_30px_rgba(44,231,241,0.5)] transition-all duration-300 flex items-center justify-center gap-2 text-xs"
+                >
+                  <MailIcon size={18} />
+                  Email Me
+                </motion.a>
+                <motion.a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full bg-white/60 dark:bg-default-100/40 border border-black/10 dark:border-white/10 font-black uppercase tracking-widest py-4 rounded-xl hover:border-turquoise/50 transition-all duration-300 flex items-center justify-center gap-2 text-xs text-foreground"
+                >
+                  <WhatsAppIcon size={18} />
+                  WhatsApp
+                </motion.a>
+              </div>
+
+              <motion.a
+                href={`/${siteConfig.links.cv}`}
+                download
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
+                className="w-full bg-white/60 dark:bg-default-100/40 border border-black/10 dark:border-white/10 font-black uppercase tracking-widest py-4 rounded-xl hover:border-turquoise/50 transition-all duration-300 flex items-center justify-center text-xs text-foreground"
               >
-                <Button
-                  onPress={handleSendMessage}
-                  className="w-full bg-turquoise text-white dark:text-black font-black uppercase tracking-widest py-6 rounded-xl shadow-[0_0_20px_rgba(44,231,241,0.3)] hover:shadow-[0_0_30px_rgba(44,231,241,0.5)] transition-all duration-300"
-                >
-                  Send Message
-                </Button>
-              </motion.div>
+                Download CV
+              </motion.a>
             </CardBody>
           </Card>
         </motion.div>
