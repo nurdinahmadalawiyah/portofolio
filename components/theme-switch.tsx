@@ -1,9 +1,10 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import { useIsSSR } from "@react-aria/ssr";
 import { motion, AnimatePresence } from "framer-motion";
+import { createPortal } from "react-dom";
 
 const SunIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -33,6 +34,18 @@ const MoonIcon = () => (
   </svg>
 );
 
+const ChevronDownIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m6 9 6 6 6-6" />
+  </svg>
+);
+
+const CheckIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 6 9 17l-5-5" />
+  </svg>
+);
+
 type ThemeOption = "light" | "system" | "dark";
 
 const THEMES: { value: ThemeOption; icon: React.ReactNode; label: string }[] = [
@@ -46,77 +59,139 @@ export interface ThemeSwitchProps {
 }
 
 export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className }) => {
-  const { theme, setTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
   const isSSR = useIsSSR();
-  const [showTooltip, setShowTooltip] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const menuAnchorRef = useRef<HTMLButtonElement | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [menuPos, setMenuPos] = useState<{ top: number; right: number } | null>(null);
 
-  const currentTheme: ThemeOption =
-    !isSSR && (theme === "light" || theme === "dark" || theme === "system")
-      ? (theme as ThemeOption)
-      : "system";
+  const currentTheme: ThemeOption = useMemo(() => {
+    if (isSSR) return "system";
+    if (theme === "light" || theme === "dark" || theme === "system") return theme;
+    return "system";
+  }, [isSSR, theme]);
 
-  const currentIndex = THEMES.findIndex((t) => t.value === currentTheme);
-
+  const effectiveTheme: "light" | "dark" = useMemo(() => {
+    if (isSSR) return "light";
+    if (resolvedTheme === "light" || resolvedTheme === "dark") return resolvedTheme;
+    return currentTheme === "dark" ? "dark" : "light";
+  }, [currentTheme, isSSR, resolvedTheme]);
 
   useEffect(() => {
-    if (!showTooltip) return;
-    const t = setTimeout(() => setShowTooltip(false), 1500);
-    return () => clearTimeout(t);
-  }, [showTooltip, currentTheme]);
+    if (!isOpen) return;
+    const onPointerDown = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as Node | null;
+      if (!target) return;
+      if (!containerRef.current?.contains(target)) setIsOpen(false);
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("touchstart", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("touchstart", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const update = () => {
+      const anchor = menuAnchorRef.current;
+      if (!anchor) return;
+      const rect = anchor.getBoundingClientRect();
+      setMenuPos({
+        top: rect.bottom + 24,
+        right: window.innerWidth - rect.right,
+      });
+    };
+    update();
+    window.addEventListener("resize", update);
+    window.addEventListener("scroll", update, true);
+    return () => {
+      window.removeEventListener("resize", update);
+      window.removeEventListener("scroll", update, true);
+    };
+  }, [isOpen]);
 
   return (
-    <div className={`relative flex items-center ${className ?? ""}`}>
-      {/* Tooltip */}
-      <AnimatePresence>
-        {showTooltip && (
-          <motion.div
-            initial={{ opacity: 0, y: 4, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 4, scale: 0.9 }}
-            transition={{ duration: 0.15 }}
-            className="absolute -bottom-9 left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] font-semibold px-2 py-1 rounded-lg bg-default-100 border border-black/10 dark:border-white/10 text-default-600 pointer-events-none z-50"
-          >
-            {THEMES[currentIndex].label}
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <div ref={containerRef} className={`relative flex items-center ${className ?? ""}`}>
+      <div className="flex items-center rounded-xl bg-default-100 border border-black/10 dark:border-white/10 p-1">
+        <button
+          type="button"
+          aria-label="Toggle theme"
+          onClick={() => setTheme(effectiveTheme === "dark" ? "light" : "dark")}
+          className="flex items-center justify-center w-9 h-8 rounded-lg text-default-600 hover:text-foreground transition-colors"
+        >
+          {effectiveTheme === "dark" ? <MoonIcon /> : <SunIcon />}
+        </button>
 
-      {/* 3-way pill toggle */}
-      <div
-        className="relative flex items-center gap-0.5 p-1 rounded-xl bg-default-100 border border-black/10 dark:border-white/10"
-        role="group"
-        aria-label="Theme selector"
-      >
-        {/* Sliding background indicator */}
-        <motion.div
-          className="absolute top-1 bottom-1 rounded-lg bg-white dark:bg-default-200 shadow-sm border border-black/5 dark:border-white/10"
-          initial={false}
-          animate={{
-            left: `calc(${currentIndex} * (100% - 0.5rem) / 3 + 0.25rem)`,
-            width: `calc((100% - 0.5rem) / 3)`,
-          }}
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
-        />
+        <div className="w-px h-6 bg-black/10 dark:bg-white/10 mx-1" />
 
-        {THEMES.map((t, i) => (
-          <button
-            key={t.value}
-            aria-label={`Switch to ${t.label} mode`}
-            aria-pressed={currentIndex === i}
-            onClick={() => {
-              setTheme(t.value);
-              setShowTooltip(true);
-            }}
-            className={`relative z-10 flex items-center justify-center w-8 h-7 rounded-lg transition-colors duration-200 cursor-pointer
-              ${currentIndex === i
-                ? "text-foreground"
-                : "text-default-400 hover:text-default-600"
-              }`}
-          >
-            {t.icon}
-          </button>
-        ))}
+        <button
+          type="button"
+          aria-label="Theme options"
+          aria-haspopup="menu"
+          aria-expanded={isOpen}
+          onClick={() => setIsOpen((v) => !v)}
+          ref={menuAnchorRef}
+          className="flex items-center justify-center w-9 h-8 rounded-lg text-default-500 hover:text-foreground transition-colors"
+        >
+          <motion.span animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.15 }}>
+            <ChevronDownIcon />
+          </motion.span>
+        </button>
       </div>
+
+      {typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {isOpen && menuPos && (
+              <motion.div
+                role="menu"
+                aria-label="Theme options"
+                initial={{ opacity: 0, y: 6, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
+                className="fixed w-44 rounded-2xl border border-black/10 dark:border-white/10 bg-background/70 dark:bg-background/60 backdrop-blur-xl shadow-none ring-1 ring-black/5 dark:ring-white/10 overflow-hidden z-[9999]"
+                style={{ top: menuPos.top, right: menuPos.right }}
+              >
+                <div className="p-1">
+                  {THEMES.map((t) => {
+                    const isActive = currentTheme === t.value;
+                    return (
+                      <button
+                        key={t.value}
+                        type="button"
+                        role="menuitem"
+                        onClick={() => {
+                          setTheme(t.value);
+                          setIsOpen(false);
+                        }}
+                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-semibold transition-colors
+                          ${isActive ? "bg-black/5 dark:bg-white/5 text-foreground" : "text-default-600 hover:bg-black/5 dark:hover:bg-white/5 hover:text-foreground"}`}
+                      >
+                        <span className="text-default-500">{t.icon}</span>
+                        <span className="flex-1 text-left">{t.label}</span>
+                        {isActive && (
+                          <span className="text-turquoise">
+                            <CheckIcon />
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
     </div>
   );
 };

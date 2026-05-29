@@ -56,11 +56,24 @@ export const Navbar = () => {
       >
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
           <NavbarBrand as="li" className="gap-3 max-w-fit">
-            <NextLink className="flex justify-start items-center gap-3 group" href="/">
-              <Logo size={32} />
-              <p className="font-bold text-inherit hidden sm:block group-hover:text-turquoise transition-colors text-lg">
-                <span className="text-turquoise">N</span>urdin <span className="hidden lg:inline">A. Alawiyah</span>
-              </p>
+            <NextLink
+              className="flex justify-start items-center gap-3 group"
+              href="#home"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveItem("#home");
+                setIsMenuOpen(false);
+                lenis?.scrollTo("#home", {
+                  offset: -80,
+                  duration: 1.5,
+                  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                });
+              }}
+            >
+              <Logo
+                size={32}
+                className="transition-transform duration-300 ease-out group-hover:scale-110 group-hover:-rotate-3 group-active:scale-95 group-hover:drop-shadow-[0_0_18px_rgba(44,231,241,0.45)]"
+              />
             </NextLink>
           </NavbarBrand>
         </NavbarContent>
@@ -122,11 +135,11 @@ export const Navbar = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: -20, x: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: -20, x: 20 }}
-              transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="fixed top-24 right-4 w-[280px] p-6 rounded-[2.5rem] bg-background/90 backdrop-blur-[64px] backdrop-saturate-150 border border-black/10 dark:border-white/10 shadow-none z-[100] lg:hidden flex flex-col gap-6"
+              initial={{ opacity: 0, y: -14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -14 }}
+              transition={{ type: "spring", stiffness: 420, damping: 34 }}
+              className="fixed top-24 left-4 right-4 w-auto p-6 rounded-2xl bg-background/70 backdrop-blur-md border border-black/10 dark:border-white/10 shadow-none ring-1 ring-black/5 dark:ring-white/10 z-[100] lg:hidden flex flex-col gap-6 isolate"
               style={{ pointerEvents: "auto" }}
             >
               <div className="flex flex-col gap-3">
