@@ -4,6 +4,8 @@ import { siteConfig } from "@/config/site";
 import { Image } from "@heroui/image";
 import { Tooltip } from "@heroui/tooltip";
 import { motion } from "framer-motion";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 
 const BentoCard = ({ children, className, delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) => {
   return (
@@ -22,12 +24,159 @@ const BentoCard = ({ children, className, delay = 0 }: { children: React.ReactNo
   );
 };
 
+type SkillDetailGroup = {
+  title: string;
+  items: string[];
+};
+
+type Skill = {
+  name: string;
+  image: string;
+  highlights?: string[];
+  details?: SkillDetailGroup[];
+};
+
+const SkillDetailModal = ({
+  open,
+  skill,
+  onClose,
+}: {
+  open: boolean;
+  skill: Skill | null;
+  onClose: () => void;
+}) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open, onClose]);
+
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
+
+  if (!mounted || !open || !skill) return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[9999]">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      <div className="absolute inset-0 flex items-center justify-center p-4 md:p-8">
+        <motion.div
+          initial={{ opacity: 0, y: 14, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.2 }}
+          className="relative w-full max-w-2xl rounded-[2rem] border border-black/10 dark:border-white/10 bg-background/90 backdrop-blur-xl shadow-2xl overflow-hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${skill.name} details`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-turquoise/10 via-transparent to-transparent pointer-events-none" />
+
+          <div className="relative z-10 p-6 md:p-8">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex items-center gap-4 min-w-0">
+                <div className="w-16 h-16 md:w-[72px] md:h-[72px] rounded-2xl border border-black/10 dark:border-white/10 bg-white/50 dark:bg-white/5 flex items-center justify-center flex-shrink-0">
+                  <Image
+                    width={64}
+                    height={64}
+                    alt={skill.name}
+                    src={skill.image}
+                    className="object-contain w-14 h-14 md:w-16 md:h-16 rounded-none"
+                  />
+                </div>
+                <div className="min-w-0">
+                  <h4 className="text-2xl md:text-3xl font-black tracking-tight text-foreground truncate">
+                    {skill.name}
+                  </h4>
+                  {skill.highlights?.length ? (
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {skill.highlights.slice(0, 6).map((h) => (
+                        <span
+                          key={h}
+                          className="px-3 py-1 rounded-full bg-turquoise/10 text-turquoise text-xs font-black uppercase tracking-widest border border-turquoise/20"
+                        >
+                          {h}
+                        </span>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={onClose}
+                className="size-11 shrink-0 aspect-square rounded-2xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 transition-all flex items-center justify-center text-foreground shadow-[0_10px_30px_rgba(0,0,0,0.25)] hover:shadow-[0_14px_40px_rgba(0,0,0,0.35)] active:scale-95"
+                aria-label="Close"
+              >
+                <span className="text-2xl leading-[1] -translate-y-[1px]">×</span>
+              </button>
+            </div>
+
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {skill.details?.length ? (
+                skill.details.map((group) => (
+                  <div
+                    key={group.title}
+                    className="rounded-2xl border border-black/5 dark:border-white/5 bg-white/40 dark:bg-default-100/30 p-4"
+                  >
+                    <div className="text-[11px] font-black uppercase tracking-[0.18em] text-turquoise mb-2">
+                      {group.title}
+                    </div>
+                    <ul className="space-y-2">
+                      {group.items.map((item) => (
+                        <li key={item} className="text-sm font-semibold text-foreground/90">
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))
+              ) : (
+                <div className="md:col-span-2 rounded-2xl border border-black/5 dark:border-white/5 bg-white/40 dark:bg-default-100/30 p-4">
+                  <div className="text-sm font-semibold text-foreground/80">
+                    I'm still updating the details of this skill.
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </div>,
+    document.body
+  );
+};
+
 export default function SkillPage() {
+  const allSkills = useMemo(() => siteConfig.skill as Skill[], []);
+  const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
+  const closeModal = useCallback(() => setSelectedSkill(null), []);
+
   const categories = [
     {
-      name: "Programming & Markup",
-      skills: ["HTML", "CSS", "JavaScript", "Java", "Dart", "PHP", "Kotlin", "TypeScript"],
-      className: "md:col-span-2 lg:col-span-2",
+      name: "Mobile",
+      skills: ["Flutter", "Jetpack Compose", "React Native", "Expo",],
+      className: "md:col-span-1 lg:col-span-1",
       delay: 0.1,
     },
     {
@@ -37,26 +186,26 @@ export default function SkillPage() {
       delay: 0.2,
     },
     {
-      name: "Mobile",
-      skills: ["Flutter", "Jetpack Compose", "React Native", "Expo"],
-      className: "md:col-span-1 lg:col-span-1",
-      delay: 0.3,
-    },
-    {
       name: "Backend",
       skills: ["Spring Boot", "Laravel", "Express.js", "NestJS", "Node JS", "Redis"],
       className: "md:col-span-2 lg:col-span-2",
+      delay: 0.3,
+    },
+    {
+      name: "Database",
+      skills: ["MySQL", "MongoDB", "PostgreSQL"],
+      className: "md:col-span-1 lg:col-span-1",
       delay: 0.4,
     },
     {
-      name: "Database & Cloud",
-      skills: ["MySQL", "MongoDB", "PostgreSQL", "Firebase"],
-      className: "md:col-span-1 lg:col-span-1",
+      name: "Language",
+      skills: ["JavaScript", "Java", "Dart", "PHP", "Kotlin", "TypeScript"],
+      className: "md:col-span-2 lg:col-span-2",
       delay: 0.5,
     },
     {
-      name: "Design",
-      skills: ["Figma"],
+      name: "Other",
+      skills: ["Firebase", "Figma"],
       className: "md:col-span-1 lg:col-span-1",
       delay: 0.6,
     },
@@ -88,8 +237,9 @@ export default function SkillPage() {
             
             <div className="flex flex-wrap gap-4">
               {category.skills.map((skillName) => {
-                const skill = siteConfig.skill.find((s) => s.name === skillName);
+                const skill = allSkills.find((s) => s.name === skillName);
                 if (!skill) return null;
+                const hasDetail = Boolean(skill.details?.length);
                 return (
                   <Tooltip 
                     key={skill.name} 
@@ -100,14 +250,28 @@ export default function SkillPage() {
                   >
                     <motion.div
                       whileHover={{ y: -5, scale: 1.1 }}
-                      className="flex flex-col items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-white dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-turquoise/40 hover:bg-turquoise/5 transition-all duration-300 group/skill cursor-pointer shadow-sm flex-shrink-0"
+                      role={hasDetail ? "button" : undefined}
+                      tabIndex={hasDetail ? 0 : -1}
+                      onClick={hasDetail ? () => setSelectedSkill(skill as Skill) : undefined}
+                      onKeyDown={
+                        hasDetail
+                          ? (e) => {
+                              if (e.key === "Enter" || e.key === " ") setSelectedSkill(skill as Skill);
+                            }
+                          : undefined
+                      }
+                      className={`flex flex-col items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-lg bg-white dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-turquoise/40 hover:bg-turquoise/5 transition-all duration-300 group/skill shadow-sm flex-shrink-0 outline-none ${
+                        hasDetail
+                          ? "cursor-pointer focus-visible:ring-2 focus-visible:ring-turquoise/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                          : "cursor-default"
+                      }`}
                     >
                       <Image
-                        width={32}
-                        height={32}
+                        width={38}
+                        height={38}
                         alt={skill.name}
                         src={skill.image}
-                        className="object-contain w-8 h-8 md:w-10 md:h-10 transition-all duration-500"
+                        className="object-contain w-9 h-9 md:w-10 md:h-10 transition-all duration-500 rounded-none"
                       />
                     </motion.div>
                   </Tooltip>
@@ -117,6 +281,8 @@ export default function SkillPage() {
           </BentoCard>
         ))}
       </div>
+
+      <SkillDetailModal open={Boolean(selectedSkill)} skill={selectedSkill} onClose={closeModal} />
     </section>
   );
 }
