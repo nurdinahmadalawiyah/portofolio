@@ -1,8 +1,8 @@
 "use client";
 
 import NextLink from "next/link";
-import { Link } from "@nextui-org/link";
-import { Button } from "@nextui-org/button";
+import { Link } from "@heroui/link";
+import { Button } from "@heroui/button";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { motion, useAnimation } from "framer-motion";

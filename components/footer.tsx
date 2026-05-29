@@ -1,9 +1,9 @@
 "use client";
 
-import { Link } from "@nextui-org/link";
+import { Link } from "@heroui/link";
 import { siteConfig } from "@/config/site";
 import { GithubIcon, LinkedInIcon, WhatsAppIcon, MailIcon, InstagramIcon } from "@/components/icons";
-import { Divider } from "@nextui-org/divider";
+import { Divider } from "@heroui/divider";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();

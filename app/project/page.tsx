@@ -1,10 +1,10 @@
 "use client";
 
 import { title, subtitle } from "@/components/primitives";
-import { Card, CardBody, CardFooter } from "@nextui-org/card";
-import { Button } from "@nextui-org/button";
-import { Image } from "@nextui-org/image";
-import { Tooltip } from "@nextui-org/tooltip";
+import { Card, CardBody, CardFooter } from "@heroui/card";
+import { Button } from "@heroui/button";
+import { Image } from "@heroui/image";
+import { Tooltip } from "@heroui/tooltip";
 import { motion, useMotionValue, useSpring, animate } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { siteConfig } from "@/config/site";

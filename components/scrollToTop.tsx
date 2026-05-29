@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { ChevronUpIcon } from "./icons";
 import { useLenis } from "lenis/react";
 
