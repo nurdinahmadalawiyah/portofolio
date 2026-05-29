@@ -1,7 +1,7 @@
 "use client";
 
 import { siteConfig } from "@/config/site";
-import { Image } from "@nextui-org/image";
+import { Image } from "@heroui/image";
 import { motion } from "framer-motion";
 
 export default function AboutPage() {
@@ -19,13 +19,13 @@ export default function AboutPage() {
     let parts = [text];
     keywords.forEach(keyword => {
       let newParts: any[] = [];
-      parts.forEach(part => {
+      parts.forEach((part, pIndex) => {
         if (typeof part === 'string') {
           const regex = new RegExp(`(${keyword})`, 'gi');
           const split = part.split(regex);
           split.forEach((s, i) => {
             if (s.toLowerCase() === keyword.toLowerCase()) {
-              newParts.push(<span key={i} className="text-turquoise font-semibold">{s}</span>);
+              newParts.push(<span key={`${keyword}-${pIndex}-${i}`} className="text-turquoise font-semibold">{s}</span>);
             } else {
               newParts.push(s);
             }

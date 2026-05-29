@@ -1,11 +1,11 @@
 "use client";
 
 import { title, subtitle } from "@/components/primitives";
-import { Tabs, Tab } from "@nextui-org/tabs";
-import { Card, CardBody } from "@nextui-org/card";
+import { Tabs, Tab } from "@heroui/tabs";
+import { Card, CardBody } from "@heroui/card";
 import { siteConfig } from "@/config/site";
 import { useEffect, useState } from "react";
-import { Avatar } from "@nextui-org/avatar";
+import { Avatar } from "@heroui/avatar";
 import { motion } from "framer-motion";
 
 export default function ExperiencePage() {

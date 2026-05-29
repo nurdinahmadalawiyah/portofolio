@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import { title, subtitle } from "@/components/primitives";
-import { Card, CardBody } from "@nextui-org/card";
-import { Button } from "@nextui-org/button";
+import { Card, CardBody } from "@heroui/card";
+import { Button } from "@heroui/button";
 import { siteConfig } from "@/config/site";
 import { 
   GithubIcon, 
@@ -12,7 +12,7 @@ import {
   MailIcon, 
   MapPinIcon 
 } from "@/components/icons";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -73,7 +73,7 @@ export default function ContactPage() {
 
   const inputClasses = "w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-sm outline-none ring-0 focus:ring-0 focus:outline-none focus:border-turquoise/50 transition-colors duration-200 text-foreground placeholder:text-default-400";
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -84,7 +84,7 @@ export default function ContactPage() {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, x: -20 },
     visible: { 
       opacity: 1, 

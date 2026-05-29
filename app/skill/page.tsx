@@ -1,8 +1,8 @@
 "use client";
 
 import { siteConfig } from "@/config/site";
-import { Image } from "@nextui-org/image";
-import { Tooltip } from "@nextui-org/tooltip";
+import { Image } from "@heroui/image";
+import { Tooltip } from "@heroui/tooltip";
 import { motion } from "framer-motion";
 
 const BentoCard = ({ children, className, delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) => {
