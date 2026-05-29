@@ -373,14 +373,6 @@ export const siteConfig = {
 	],
 	skill: [
 		{
-			name: "HTML",
-			image: "/icons/html-icon.svg",
-		},
-		{
-			name: "CSS",
-			image: "/icons/css-icon.svg",
-		},
-		{
 			name: "JavaScript",
 			image: "/icons/javascript-icon.svg",
 		},
@@ -423,6 +415,33 @@ export const siteConfig = {
 		{
 			name: "Flutter",
 			image: "/icons/flutter-icon.svg",
+			highlights: ["BLoC", "Clean Arch", "GoRouter", "Dio", "Sqflite", "FCM/Crashlytics"],
+			details: [
+				{
+					title: "State Management",
+					items: ["BLoC / Cubit"],
+				},
+				{
+					title: "Architecture",
+					items: ["Clean Architecture", "Feature-first modular structure"],
+				},
+				{
+					title: "Navigation",
+					items: ["go_router (nested routes)", "Deep links (app_links)"],
+				},
+				{
+					title: "Networking",
+					items: ["Dio (interceptors, error handling)", "REST API integration"],
+				},
+				{
+					title: "Local Persistence",
+					items: ["Sqflite", "flutter_secure_storage (tokens)"],
+				},
+				{
+					title: "Firebase",
+					items: ["FCM (firebase_messaging)", "Crashlytics"],
+				},
+			],
 		},
 		{
 			name: "Jetpack Compose",
