@@ -1,10 +1,13 @@
 "use client";
 
 import { siteConfig } from "@/config/site";
-import { Image } from "@heroui/image";
+import Image from "next/image";
 import { motion } from "framer-motion";
+import { usePerformanceMode } from "@/components/usePerformanceMode";
 
 export default function AboutPage() {
+  const isLowPowerMode = usePerformanceMode();
+
   const highlightKeywords = (text: string) => {
     const keywords = [
       "Nurdin A. Alawiyah",
@@ -45,7 +48,7 @@ export default function AboutPage() {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay }}
+      transition={{ duration: isLowPowerMode ? 0.2 : 0.5, delay: isLowPowerMode ? 0 : delay }}
       className={`relative group rounded-[2.5rem] border border-black/5 dark:border-white/5 bg-white/40 dark:bg-default-100/30 overflow-hidden backdrop-blur-xl hover:border-turquoise/30 transition-all duration-500 ${className}`}
     >
       {/* Subtle hover gradient */}
@@ -79,7 +82,14 @@ export default function AboutPage() {
           <div className="flex justify-between items-start mb-8">
             <div className="w-12 h-1 bg-turquoise rounded-full" />
             <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-turquoise/30 shadow-[0_0_20px_rgba(44,231,241,0.2)]">
-              <Image src="images/nurdin-circle-new.jpg" alt="Nurdin" className="w-full h-full object-cover" />
+              <Image
+                src="/images/nurdin-circle-thumb.webp"
+                alt="Nurdin"
+                width={80}
+                height={80}
+                sizes="80px"
+                className="h-full w-full object-cover"
+              />
             </div>
           </div>
           <div className="space-y-4">
@@ -144,7 +154,14 @@ export default function AboutPage() {
             <div key={idx} className="flex flex-col lg:flex-row gap-8 items-center lg:items-center w-full">
               <div className="w-24 h-24 rounded-[1.5rem] bg-white dark:bg-white/5 flex items-center justify-center flex-shrink-0 p-4 border border-black/5 dark:border-white/10 group-hover:scale-105 transition-transform duration-500">
                 {edu.logo ? (
-                  <Image src={edu.logo} alt={edu.school} className="w-full h-full object-contain" />
+                  <Image
+                    src={edu.logo}
+                    alt={edu.school}
+                    width={96}
+                    height={96}
+                    sizes="96px"
+                    className="h-full w-full object-contain"
+                  />
                 ) : (
                   <div className="w-10 h-10 bg-turquoise rounded-full" />
                 )}

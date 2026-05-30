@@ -1,10 +1,9 @@
 "use client";
 
-import { title, subtitle } from "@/components/primitives";
 import { Card, CardBody, CardFooter } from "@heroui/card";
 import { Button } from "@heroui/button";
-import { Image } from "@heroui/image";
 import { Tooltip } from "@heroui/tooltip";
+import Image from "next/image";
 import { motion, useMotionValue, useSpring, animate } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { siteConfig } from "@/config/site";
@@ -16,6 +15,7 @@ import {
   ChevronRightIcon,
   ExternalLinkIcon
 } from "@/components/icons";
+import { usePerformanceMode } from "@/components/usePerformanceMode";
 
 export default function ProjectPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,6 +24,7 @@ export default function ProjectPage() {
   
   const [currentPage, setCurrentPage] = useState(0);
   const [constraints, setConstraints] = useState({ left: 0, right: 0 });
+  const isLowPowerMode = usePerformanceMode();
   const itemsPerPage = 2;
   const totalPages = Math.ceil(siteConfig.project.length / itemsPerPage);
 
@@ -118,7 +119,9 @@ export default function ProjectPage() {
             <Image
               src={project.image}
               alt={project.name}
-              className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700 pointer-events-none"
+              fill
+              sizes="(min-width: 1024px) 540px, calc(100vw - 48px)"
+              className="object-cover group-hover/card:scale-110 transition-transform duration-700 pointer-events-none"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
@@ -131,7 +134,7 @@ export default function ProjectPage() {
             {project.tech.map((tech: any, techIdx: number) => (
               <Tooltip key={techIdx} content={tech.name} closeDelay={0}>
                 <motion.div 
-                  whileHover={{ y: -5, scale: 1.1 }}
+                  whileHover={isLowPowerMode ? undefined : { y: -5, scale: 1.1 }}
                   className="p-2 rounded-xl bg-black/40 backdrop-blur-md border border-white/10 shadow-xl cursor-help transition-colors hover:border-turquoise/50"
                 >
                   <Image src={tech.image} width={18} height={18} alt={tech.name} className="object-contain pointer-events-none" />

@@ -1,23 +1,32 @@
 "use client";
 
-import NextLink from "next/link";
+import Image from "next/image";
 import { Link } from "@heroui/link";
 import { Button } from "@heroui/button";
 import { siteConfig } from "@/config/site";
-import { title, subtitle } from "@/components/primitives";
-import { motion, useAnimation } from "framer-motion";
-import { useEffect } from "react";
+import { title } from "@/components/primitives";
+import { motion } from "framer-motion";
 import TypedDescription from "@/components/typedDescription";
 import { DownloadIcon } from "@/components/icons";
 import { useLenis } from "lenis/react";
+import { usePerformanceMode } from "@/components/usePerformanceMode";
 
 export default function HomePage() {
-  const controls = useAnimation();
   const lenis = useLenis();
+  const isLowPowerMode = usePerformanceMode();
 
-  useEffect(() => {
-    controls.start({ x: 0 });
-  }, [controls]);
+  const scrollToProject = () => {
+    if (lenis) {
+      lenis.scrollTo("#project", {
+        offset: -80,
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+      return;
+    }
+
+    document.getElementById("project")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <section className="relative grid grid-cols-1 lg:grid-cols-[50%_50%] gap-12 py-20 min-h-[90vh] items-center w-full max-w-6xl mx-auto">
@@ -59,13 +68,7 @@ export default function HomePage() {
               variant="shadow"
               size="lg"
               className="bg-turquoise text-white dark:text-black shadow-lg shadow-turquoise/20 font-bold px-8 h-14"
-              onClick={() => {
-                lenis?.scrollTo("#project", {
-                  offset: -80,
-                  duration: 1.5,
-                  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-                });
-              }}
+              onClick={scrollToProject}
             >
               Explore Project →
             </Button>
@@ -99,29 +102,46 @@ export default function HomePage() {
 
           <div className="relative w-[280px] h-[280px] md:w-[380px] md:h-[380px] z-10 mx-auto">
             {/* Morphing Blob Image */}
-            <motion.img
-              alt="Nurdin A. Alawiyah"
-              className="absolute inset-0 object-cover shadow-[0_0_40px_rgba(44,231,241,0.2)] border-[3px] border-turquoise/40 w-full h-full"
-              src="/images/nurdin1-new.jpeg"
-              animate={{ 
-                borderRadius: [
-                  "60% 40% 30% 70% / 60% 30% 70% 40%",
-                  "30% 60% 70% 40% / 50% 60% 30% 60%",
-                  "60% 40% 30% 70% / 60% 30% 70% 40%"
-                ],
-                y: [0, -10, 0]
-              }}
-              transition={{
-                borderRadius: { repeat: Infinity, duration: 8, ease: "easeInOut" },
-                y: { repeat: Infinity, duration: 5, ease: "easeInOut" }
-              }}
-            />
+            <motion.div
+              className="absolute inset-0 overflow-hidden shadow-[0_0_40px_rgba(44,231,241,0.2)] border-[3px] border-turquoise/40"
+              animate={
+                isLowPowerMode
+                  ? {
+                      borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%",
+                    }
+                  : {
+                      borderRadius: [
+                        "60% 40% 30% 70% / 60% 30% 70% 40%",
+                        "30% 60% 70% 40% / 50% 60% 30% 60%",
+                        "60% 40% 30% 70% / 60% 30% 70% 40%",
+                      ],
+                      y: [0, -10, 0],
+                    }
+              }
+              transition={
+                isLowPowerMode
+                  ? undefined
+                  : {
+                      borderRadius: { repeat: Infinity, duration: 8, ease: "easeInOut" },
+                      y: { repeat: Infinity, duration: 5, ease: "easeInOut" },
+                    }
+              }
+            >
+              <Image
+                priority
+                fill
+                alt="Nurdin A. Alawiyah"
+                className="object-cover"
+                src="/images/nurdin1-new.jpeg"
+                sizes="(min-width: 768px) 380px, 280px"
+              />
+            </motion.div>
 
             {/* Chat Balloon 1: Top Right */}
             <motion.div
               className="absolute -top-4 -right-4 md:-right-12 bg-background/80 backdrop-blur-md border border-white/10 shadow-xl rounded-2xl rounded-bl-sm px-4 py-2 flex items-center gap-2 z-20"
-              animate={{ y: [0, -8, 0] }}
-              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: 0.5 }}
+              animate={isLowPowerMode ? undefined : { y: [0, -8, 0] }}
+              transition={isLowPowerMode ? undefined : { repeat: Infinity, duration: 4, ease: "easeInOut", delay: 0.5 }}
             >
               <span className="text-xl">👋</span>
               <span className="text-sm font-bold">Hi there!</span>
@@ -130,8 +150,8 @@ export default function HomePage() {
             {/* Chat Balloon 2: Bottom Left */}
             <motion.div
               className="absolute bottom-12 -left-6 md:-left-16 bg-turquoise/10 backdrop-blur-md border border-turquoise/30 shadow-[0_0_20px_rgba(44,231,241,0.15)] rounded-2xl rounded-tr-sm px-4 py-2 flex items-center gap-2 z-20"
-              animate={{ y: [0, 8, 0] }}
-              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
+              animate={isLowPowerMode ? undefined : { y: [0, 8, 0] }}
+              transition={isLowPowerMode ? undefined : { repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
             >
               <span className="text-turquoise text-sm font-mono font-bold">&lt;/&gt;</span>
               <span className="text-sm font-semibold text-foreground/90">ships clean code</span>
@@ -140,8 +160,8 @@ export default function HomePage() {
             {/* Chat Balloon 3: Bottom Right */}
             <motion.div
               className="absolute -bottom-6 right-4 md:-right-2 bg-background/80 backdrop-blur-md border border-white/10 shadow-xl rounded-2xl rounded-tl-sm px-4 py-2 flex items-center gap-2 z-20"
-              animate={{ y: [0, -6, 0] }}
-              transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut", delay: 0.2 }}
+              animate={isLowPowerMode ? undefined : { y: [0, -6, 0] }}
+              transition={isLowPowerMode ? undefined : { repeat: Infinity, duration: 4.5, ease: "easeInOut", delay: 0.2 }}
             >
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
               <span className="text-xs font-semibold text-default-500">open for work</span>
@@ -160,8 +180,8 @@ export default function HomePage() {
         <span className="text-[10px] uppercase tracking-[0.2em] text-default-400 font-bold">Scroll</span>
         <motion.div 
           className="w-[2px] h-10 bg-gradient-to-b from-turquoise to-transparent rounded-full"
-          animate={{ height: [20, 40, 20], opacity: [0.3, 1, 0.3] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          animate={isLowPowerMode ? undefined : { height: [20, 40, 20], opacity: [0.3, 1, 0.3] }}
+          transition={isLowPowerMode ? undefined : { repeat: Infinity, duration: 2, ease: "easeInOut" }}
         />
       </motion.div>
     </section>

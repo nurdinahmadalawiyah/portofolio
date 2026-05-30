@@ -10,26 +10,33 @@ export const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
   const lenis = useLenis();
 
-  // Show button when page is scrolled up to given distance
-  const toggleVisibility = () => {
-    if (window.pageYOffset > 300) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
-  };
-
-  // Set the top cordinate to 0
-  // make scrolling smooth
   const scrollToTop = () => {
-    lenis?.scrollTo(0, {
-      duration: 2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-    });
+    if (lenis) {
+      lenis.scrollTo(0, {
+        duration: 2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+      return;
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", toggleVisibility);
+    let ticking = false;
+
+    const toggleVisibility = () => {
+      if (ticking) return;
+
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        setIsVisible(window.pageYOffset > 300);
+        ticking = false;
+      });
+    };
+
+    toggleVisibility();
+    window.addEventListener("scroll", toggleVisibility, { passive: true });
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 

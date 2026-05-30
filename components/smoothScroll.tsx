@@ -2,8 +2,15 @@
 
 import React from "react";
 import { ReactLenis } from "lenis/react";
+import { usePerformanceMode } from "./usePerformanceMode";
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
+  const isLowPowerMode = usePerformanceMode();
+
+  if (isLowPowerMode) {
+    return <>{children}</>;
+  }
+
   return (
     <ReactLenis root options={{ 
       duration: 1.2, 

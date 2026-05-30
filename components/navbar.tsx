@@ -25,22 +25,44 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const lenis = useLenis();
 
+  const scrollToSection = (href: string) => {
+    if (lenis) {
+      lenis.scrollTo(href, {
+        offset: -80,
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+      return;
+    }
+
+    const id = href.replace("#", "");
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      // Simple Scroll Spy
-      const sections = siteConfig.navItems.map(item => item.href.replace("#", ""));
-      for (const section of sections.reverse()) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
-            setActiveItem(`#${section}`);
-            break;
+      if (ticking) return;
+
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        const sections = siteConfig.navItems.map(item => item.href.replace("#", ""));
+        for (const section of sections.reverse()) {
+          const element = document.getElementById(section);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            if (rect.top <= 150) {
+              setActiveItem(`#${section}`);
+              break;
+            }
           }
         }
-      }
+        ticking = false;
+      });
     };
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -63,11 +85,7 @@ export const Navbar = () => {
                 e.preventDefault();
                 setActiveItem("#home");
                 setIsMenuOpen(false);
-                lenis?.scrollTo("#home", {
-                  offset: -80,
-                  duration: 1.5,
-                  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                });
+                scrollToSection("#home");
               }}
             >
               <Logo
@@ -92,11 +110,7 @@ export const Navbar = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       setActiveItem(item.href);
-                      lenis?.scrollTo(item.href, {
-                        offset: -80,
-                        duration: 1.5,
-                        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-                      });
+                      scrollToSection(item.href);
                     }}
                   >
                     {isActive && (
@@ -162,10 +176,7 @@ export const Navbar = () => {
                         e.preventDefault();
                         setActiveItem(item.href);
                         setIsMenuOpen(false);
-                        lenis?.scrollTo(item.href, {
-                          offset: -80,
-                          duration: 1.5
-                        });
+                        scrollToSection(item.href);
                       }}
                     >
                       <span>{item.label}</span>
