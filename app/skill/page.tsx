@@ -78,12 +78,12 @@ const SkillDetailModal = ({
         onClick={onClose}
       />
 
-      <div className="absolute inset-0 flex items-center justify-center p-4 md:p-8">
+      <div className="absolute inset-0 flex items-start justify-center overflow-hidden p-3 py-6 sm:items-center sm:p-4 md:p-8">
         <motion.div
           initial={{ opacity: 0, y: 14, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.2 }}
-          className="relative w-full max-w-2xl rounded-[2rem] border border-black/10 dark:border-white/10 bg-background/90 backdrop-blur-xl shadow-2xl overflow-hidden"
+          className="relative flex max-h-[calc(100dvh-3rem)] w-full max-w-2xl flex-col overflow-hidden rounded-[2rem] border border-black/10 bg-background/90 shadow-2xl backdrop-blur-xl dark:border-white/10 sm:max-h-[calc(100dvh-2rem)] md:max-h-[calc(100dvh-4rem)]"
           role="dialog"
           aria-modal="true"
           aria-label={`${skill.name} details`}
@@ -91,8 +91,9 @@ const SkillDetailModal = ({
         >
           <div className="absolute inset-0 bg-gradient-to-br from-turquoise/10 via-transparent to-transparent pointer-events-none" />
 
-          <div className="relative z-10 p-6 md:p-8">
-            <div className="flex items-start justify-between gap-4">
+          <div className="relative z-10 flex min-h-0 flex-1 flex-col">
+            <div className="sticky top-0 z-20 shrink-0 border-b border-black/5 bg-background/90 p-5 pb-4 backdrop-blur-xl dark:border-white/5 md:p-8 md:pb-5">
+              <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-4 min-w-0">
                 <div className="w-16 h-16 md:w-[72px] md:h-[72px] rounded-2xl border border-black/10 dark:border-white/10 bg-white/50 dark:bg-white/5 flex items-center justify-center flex-shrink-0">
                   <Image
@@ -128,11 +129,13 @@ const SkillDetailModal = ({
                 className="size-11 shrink-0 aspect-square rounded-2xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 transition-all flex items-center justify-center text-foreground shadow-[0_10px_30px_rgba(0,0,0,0.25)] hover:shadow-[0_14px_40px_rgba(0,0,0,0.35)] active:scale-95"
                 aria-label="Close"
               >
-                <span className="text-2xl leading-[1] -translate-y-[1px]">×</span>
+                <span className="text-2xl leading-[1] -translate-y-[1px]">&times;</span>
               </button>
+              </div>
             </div>
 
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="skill-detail-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain p-5 pt-4 [scrollbar-gutter:stable] md:p-8 md:pt-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {skill.details?.length ? (
                 skill.details.map((group) => (
                   <div
@@ -158,10 +161,12 @@ const SkillDetailModal = ({
                   </div>
                 </div>
               )}
+              </div>
             </div>
           </div>
         </motion.div>
       </div>
+
     </div>,
     document.body
   );

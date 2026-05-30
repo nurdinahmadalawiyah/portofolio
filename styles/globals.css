@@ -45,3 +45,44 @@
 .animate-glow-2 {
   animation: move-glow-2 25s ease-in-out infinite;
 }
+
+.skill-detail-scrollbar {
+  scrollbar-color: rgb(var(--accent-color) / 0.72) rgb(255 255 255 / 0.04);
+  scrollbar-width: thin;
+}
+
+.skill-detail-scrollbar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.skill-detail-scrollbar::-webkit-scrollbar-track {
+  background: rgb(255 255 255 / 0.04);
+  border-left: 1px solid rgb(255 255 255 / 0.05);
+}
+
+.skill-detail-scrollbar::-webkit-scrollbar-thumb {
+  background:
+    linear-gradient(
+      180deg,
+      rgb(var(--accent-color) / 0.95),
+      rgb(var(--accent-color) / 0.45)
+    ) !important;
+  border: 4px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box !important;
+  box-shadow: 0 0 14px rgb(var(--accent-color) / 0.35);
+}
+
+.skill-detail-scrollbar::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(
+      180deg,
+      rgb(var(--accent-color) / 1),
+      rgb(var(--accent-color) / 0.65)
+    ) !important;
+  background-clip: padding-box !important;
+}
+
+.skill-detail-scrollbar::-webkit-scrollbar-corner {
+  background: transparent;
+}
