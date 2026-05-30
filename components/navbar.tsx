@@ -3,17 +3,14 @@
 import {
   Navbar as NextUINavbar,
   NavbarContent,
-  NavbarMenu,
   NavbarMenuToggle,
   NavbarBrand,
   NavbarItem,
-  NavbarMenuItem,
 } from "@heroui/navbar";
-import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import { siteConfig } from "@/config/site";
 import NextLink from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo } from "@/components/icons";
@@ -22,6 +19,28 @@ import { AnimatePresence } from "framer-motion";
 export const Navbar = () => {
   const [activeItem, setActiveItem] = useState("#home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navPillContainerRef = useRef<HTMLDivElement>(null);
+  const navItemRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const pendingScrollTargetRef = useRef<string | null>(null);
+  const pendingScrollTimerRef = useRef<number | null>(null);
+  const [pillStyle, setPillStyle] = useState({ height: 36, left: 4, top: 4, width: 80 });
+
+  const updatePillPosition = () => {
+    const container = navPillContainerRef.current;
+    const activeLink = navItemRefs.current[activeItem];
+
+    if (!container || !activeLink) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const linkRect = activeLink.getBoundingClientRect();
+
+    setPillStyle({
+      height: linkRect.height,
+      left: linkRect.left - containerRect.left,
+      top: linkRect.top - containerRect.top,
+      width: linkRect.width,
+    });
+  };
 
   const scrollToSection = (href: string) => {
     const id = href.replace("#", "");
@@ -29,9 +48,29 @@ export const Navbar = () => {
 
     if (!element) return;
 
+    pendingScrollTargetRef.current = href;
+    setActiveItem(href);
+
+    if (pendingScrollTimerRef.current) {
+      window.clearTimeout(pendingScrollTimerRef.current);
+    }
+
+    pendingScrollTimerRef.current = window.setTimeout(() => {
+      pendingScrollTargetRef.current = null;
+    }, 1200);
+
     const top = element.getBoundingClientRect().top + window.scrollY - 88;
     window.scrollTo({ top, behavior: "smooth" });
   };
+
+  useLayoutEffect(() => {
+    updatePillPosition();
+  }, [activeItem]);
+
+  useEffect(() => {
+    window.addEventListener("resize", updatePillPosition);
+    return () => window.removeEventListener("resize", updatePillPosition);
+  }, [activeItem]);
 
   useEffect(() => {
     let ticking = false;
@@ -41,6 +80,24 @@ export const Navbar = () => {
 
       ticking = true;
       window.requestAnimationFrame(() => {
+        const pendingTarget = pendingScrollTargetRef.current;
+
+        if (pendingTarget) {
+          const pendingElement = document.getElementById(pendingTarget.replace("#", ""));
+          const pendingTop = pendingElement?.getBoundingClientRect().top ?? 0;
+
+          if (Math.abs(pendingTop - 88) <= 24) {
+            pendingScrollTargetRef.current = null;
+            if (pendingScrollTimerRef.current) {
+              window.clearTimeout(pendingScrollTimerRef.current);
+              pendingScrollTimerRef.current = null;
+            }
+          }
+
+          ticking = false;
+          return;
+        }
+
         const sections = siteConfig.navItems.map(item => item.href.replace("#", ""));
         for (const section of sections.reverse()) {
           const element = document.getElementById(section);
@@ -57,7 +114,12 @@ export const Navbar = () => {
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (pendingScrollTimerRef.current) {
+        window.clearTimeout(pendingScrollTimerRef.current);
+      }
+    };
   }, []);
 
   return (
@@ -91,12 +153,30 @@ export const Navbar = () => {
         </NavbarContent>
 
         <NavbarContent className="hidden lg:flex gap-4" justify="center">
-          <div className="flex items-center gap-1 rounded-full border border-black/10 bg-black/[0.03] p-1 shadow-inner shadow-black/5 backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04]">
+          <div
+            ref={navPillContainerRef}
+            className="relative flex items-center gap-1 rounded-full border border-black/10 bg-black/[0.03] p-1 shadow-inner shadow-black/5 backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04]"
+          >
+            <motion.div
+              aria-hidden
+              className="absolute rounded-full bg-turquoise shadow-[0_0_22px_rgb(var(--accent-color)/0.42)]"
+              animate={pillStyle}
+              initial={false}
+              transition={{
+                type: "spring",
+                stiffness: 520,
+                damping: 42,
+                mass: 0.65,
+              }}
+            />
             {siteConfig.navItems.map((item) => {
               const isActive = activeItem === item.href;
               return (
                 <NavbarItem key={item.href} className="relative">
                   <NextLink
+                    ref={(node) => {
+                      navItemRefs.current[item.href] = node;
+                    }}
                     className={`group relative flex h-9 min-w-20 items-center justify-center rounded-full px-4 text-sm font-semibold transition-colors duration-300 ${
                       isActive ? "text-white dark:text-black" : "text-default-500 hover:text-turquoise"
                     }`}
@@ -107,17 +187,6 @@ export const Navbar = () => {
                       scrollToSection(item.href);
                     }}
                   >
-                    {isActive && (
-                      <motion.div
-                        layoutId="nav-pill"
-                        className="absolute inset-0 rounded-full bg-turquoise shadow-[0_0_22px_rgb(var(--accent-color)/0.42)]"
-                        transition={{
-                          type: "spring",
-                          stiffness: 380,
-                          damping: 30,
-                        }}
-                      />
-                    )}
                     {!isActive && (
                       <span className="absolute inset-0 rounded-full bg-turquoise/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                     )}
