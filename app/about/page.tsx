@@ -3,11 +3,8 @@
 import { siteConfig } from "@/config/site";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { usePerformanceMode } from "@/components/usePerformanceMode";
 
 export default function AboutPage() {
-  const isLowPowerMode = usePerformanceMode();
-
   const highlightKeywords = (text: string) => {
     const keywords = [
       "Nurdin A. Alawiyah",
@@ -48,7 +45,7 @@ export default function AboutPage() {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: isLowPowerMode ? 0.2 : 0.5, delay: isLowPowerMode ? 0 : delay }}
+      transition={{ duration: 0.5, delay }}
       className={`relative group rounded-[2.5rem] border border-black/5 dark:border-white/5 bg-white/40 dark:bg-default-100/30 overflow-hidden backdrop-blur-xl hover:border-turquoise/30 transition-all duration-500 ${className}`}
     >
       {/* Subtle hover gradient */}
@@ -83,7 +80,7 @@ export default function AboutPage() {
             <div className="w-12 h-1 bg-turquoise rounded-full" />
             <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-turquoise/30 shadow-[0_0_20px_rgba(44,231,241,0.2)]">
               <Image
-                src="/images/nurdin-circle-thumb.webp"
+                src="/images/nurdin-circle-new.jpg"
                 alt="Nurdin"
                 width={80}
                 height={80}

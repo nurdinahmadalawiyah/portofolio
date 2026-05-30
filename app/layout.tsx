@@ -6,7 +6,6 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scrollToTop";
 import { SplashScreen } from "@/components/splash-screen";
-import { PerformanceMode } from "@/components/performance-mode";
 import clsx from "clsx";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -46,7 +45,6 @@ export default function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "system", enableSystem: true, storageKey: "portofolio-theme" }}>
-          <PerformanceMode />
           <SplashScreen />
           {/* Global Ambient Glows */}
           <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">

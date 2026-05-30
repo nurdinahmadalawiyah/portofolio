@@ -3,12 +3,10 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { siteConfig } from "@/config/site";
-import { usePerformanceMode } from "./usePerformanceMode";
 
 export const SplashScreen = () => {
   const [isVisible, setIsVisible] = useState(true);
   const prefersReducedMotion = useReducedMotion();
-  const isLowPowerMode = usePerformanceMode();
 
   useEffect(() => {
     // Prevent scrolling while splash screen is active
@@ -17,13 +15,13 @@ export const SplashScreen = () => {
     const timer = setTimeout(() => {
       setIsVisible(false);
       document.body.style.overflow = "";
-    }, isLowPowerMode ? 800 : 1600);
+    }, 1600);
 
     return () => {
       clearTimeout(timer);
       document.body.style.overflow = "";
     };
-  }, [isLowPowerMode]);
+  }, []);
 
   const initials = siteConfig.name
     .split(" ")
@@ -39,13 +37,13 @@ export const SplashScreen = () => {
           key="splash"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: isLowPowerMode ? 0.2 : 0.6, ease: "easeInOut" }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
           className="fixed inset-0 z-[9999] bg-background/80 backdrop-blur-xl flex flex-col items-center justify-center gap-8"
         >
           <motion.div
-            initial={{ scale: 0.95, opacity: 0, filter: isLowPowerMode ? "none" : "blur(10px)" }}
+            initial={{ scale: 0.95, opacity: 0, filter: "blur(10px)" }}
             animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-            transition={{ duration: isLowPowerMode ? 0.2 : 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="relative flex items-center justify-center"
           >
             <div className="relative size-24 rounded-3xl border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md flex items-center justify-center overflow-hidden">
@@ -63,9 +61,9 @@ export const SplashScreen = () => {
                 aria-hidden
                 viewBox="0 0 120 120"
                 className="absolute inset-0 size-full"
-                animate={prefersReducedMotion || isLowPowerMode ? undefined : { rotate: 360 }}
+                animate={prefersReducedMotion ? undefined : { rotate: 360 }}
                 transition={
-                  prefersReducedMotion || isLowPowerMode
+                  prefersReducedMotion
                     ? undefined
                     : { repeat: Infinity, duration: 2.4, ease: "linear" }
                 }
@@ -98,9 +96,9 @@ export const SplashScreen = () => {
                 <motion.span
                   key={i}
                   className="size-2 rounded-full bg-turquoise"
-                  animate={prefersReducedMotion || isLowPowerMode ? undefined : { y: [0, -6, 0], opacity: [0.5, 1, 0.5] }}
+                  animate={prefersReducedMotion ? undefined : { y: [0, -6, 0], opacity: [0.5, 1, 0.5] }}
                   transition={
-                    prefersReducedMotion || isLowPowerMode
+                    prefersReducedMotion
                       ? undefined
                       : { repeat: Infinity, duration: 0.9, ease: "easeInOut", delay: i * 0.12 }
                   }

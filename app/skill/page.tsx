@@ -6,7 +6,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import { usePerformanceMode } from "@/components/usePerformanceMode";
 
 const BentoCard = ({ children, className, delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) => {
   return (
@@ -177,7 +176,6 @@ export default function SkillPage() {
   const allSkills = useMemo(() => siteConfig.skill as Skill[], []);
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
   const closeModal = useCallback(() => setSelectedSkill(null), []);
-  const isLowPowerMode = usePerformanceMode();
 
   const categories = [
     {
@@ -256,7 +254,7 @@ export default function SkillPage() {
                     className="bg-background border border-black/10 dark:border-white/10 text-foreground font-bold"
                   >
                     <motion.div
-                      whileHover={isLowPowerMode ? undefined : { y: -5, scale: 1.1 }}
+                      whileHover={{ y: -5, scale: 1.1 }}
                       role={hasDetail ? "button" : undefined}
                       tabIndex={hasDetail ? 0 : -1}
                       onClick={hasDetail ? () => setSelectedSkill(skill as Skill) : undefined}

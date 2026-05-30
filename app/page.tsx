@@ -1,16 +1,15 @@
 "use client";
-import AboutPage from "./about/page";
-import AboutLayout from "./about/layout";
-import ExperiencePage from "./experience/page";
-import ExperienceLayout from "./experience/layout";
-import ProjectPage from "./project/page";
-import ProjectLayout from "./project/layout";
-import SkillLayout from "./skill/layout";
-import SkillPage from "./skill/page";
-import ContactLayout from "./contact/layout";
-import ContactPage from "./contact/page";
+
+import dynamic from "next/dynamic";
+import { LazySection } from "@/components/lazy-section";
 import HomeLayout from "./home/layout";
 import HomePage from "./home/page";
+
+const ProjectPage = dynamic(() => import("./project/page"), { ssr: false });
+const SkillPage = dynamic(() => import("./skill/page"), { ssr: false });
+const ExperiencePage = dynamic(() => import("./experience/page"), { ssr: false });
+const AboutPage = dynamic(() => import("./about/page"), { ssr: false });
+const ContactPage = dynamic(() => import("./contact/page"), { ssr: false });
 
 export default function Home() {
   return (
@@ -19,25 +18,25 @@ export default function Home() {
         <HomePage />
       </HomeLayout>
 
-      <ProjectLayout>
+      <LazySection id="project" minHeight="900px">
         <ProjectPage />
-      </ProjectLayout>
+      </LazySection>
 
-      <SkillLayout>
+      <LazySection id="skill" minHeight="720px">
         <SkillPage />
-      </SkillLayout>
+      </LazySection>
 
-      <ExperienceLayout>
+      <LazySection id="experience" className="flex flex-col items-center justify-center gap-4 py-8 md:py-0 mb-20" minHeight="760px">
         <ExperiencePage />
-      </ExperienceLayout>
+      </LazySection>
 
-      <AboutLayout>
+      <LazySection id="about" minHeight="900px">
         <AboutPage />
-      </AboutLayout>
+      </LazySection>
 
-      <ContactLayout>
+      <LazySection id="contact" className="flex flex-col items-center justify-center gap-4 py-8 md:py-0 mb-20" minHeight="680px">
         <ContactPage />
-      </ContactLayout>
+      </LazySection>
     </>
   );
 }

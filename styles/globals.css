@@ -109,40 +109,6 @@
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
   }
-
-  .starfield,
-  .starfield::before,
-  .starfield::after {
-    animation: none;
-  }
-}
-
-.performance-lite .starfield {
-  animation: none;
-  opacity: 0.42;
-}
-
-.performance-lite .starfield::before,
-.performance-lite .starfield::after {
-  display: none;
-}
-
-.performance-lite .animate-glow-1,
-.performance-lite .animate-glow-2,
-.performance-lite .animate-pulse {
-  animation: none !important;
-}
-
-.performance-lite .blur-\[120px\] {
-  filter: blur(56px);
-}
-
-.performance-lite .backdrop-blur-xl {
-  backdrop-filter: blur(10px);
-}
-
-.performance-lite .backdrop-blur-md {
-  backdrop-filter: blur(6px);
 }
 
 .skill-detail-scrollbar {

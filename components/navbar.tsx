@@ -98,7 +98,7 @@ export const Navbar = () => {
                 <NavbarItem key={item.href} className="relative">
                   <NextLink
                     className={`group relative flex h-9 min-w-20 items-center justify-center rounded-full px-4 text-sm font-semibold transition-colors duration-300 ${
-                      isActive ? "text-white" : "text-default-500 hover:text-turquoise"
+                      isActive ? "text-white dark:text-black" : "text-default-500 hover:text-turquoise"
                     }`}
                     href={item.href}
                     onClick={(e) => {
