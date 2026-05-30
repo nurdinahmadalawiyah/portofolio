@@ -92,7 +92,7 @@ export default function ProjectPage() {
   const ProjectCard = ({ project }: { project: any }) => (
     <Card 
       isBlurred
-      className="border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md shadow-none h-full flex flex-col overflow-hidden group/card select-none transition-all duration-300"
+      className="glass-card shadow-none h-full flex flex-col overflow-hidden group/card select-none transition-all duration-300"
     >
       <CardBody className="p-0 flex flex-col flex-grow">
         <div className="relative h-36 md:h-44 w-full bg-gradient-to-br from-turquoise/20 to-blue-500/10 overflow-hidden flex-shrink-0">

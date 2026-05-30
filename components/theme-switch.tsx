@@ -3,7 +3,6 @@
 import { FC, useEffect, useMemo, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import { useIsSSR } from "@react-aria/ssr";
-import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
 
 const SunIcon = () => (
@@ -141,24 +140,19 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className }) => {
           ref={menuAnchorRef}
           className="flex items-center justify-center w-9 h-8 rounded-lg text-default-500 hover:text-foreground transition-colors"
         >
-          <motion.span animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.15 }}>
+          <span className={`transition-transform duration-150 ${isOpen ? "rotate-180" : ""}`}>
             <ChevronDownIcon />
-          </motion.span>
+          </span>
         </button>
       </div>
 
       {typeof document !== "undefined" &&
         createPortal(
-          <AnimatePresence>
-            {isOpen && menuPos && (
-              <motion.div
+            isOpen && menuPos ? (
+              <div
                 role="menu"
                 aria-label="Theme options"
-                initial={{ opacity: 0, y: 6, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 6, scale: 0.98 }}
-                transition={{ duration: 0.15, ease: "easeOut" }}
-                className="fixed w-44 rounded-2xl border border-black/10 dark:border-white/10 bg-background/70 dark:bg-background/60 backdrop-blur-xl shadow-none ring-1 ring-black/5 dark:ring-white/10 overflow-hidden z-[9999]"
+                className="fixed w-44 rounded-2xl border border-black/10 dark:border-white/10 bg-background/70 dark:bg-background/60 backdrop-blur-xl shadow-none ring-1 ring-black/5 dark:ring-white/10 overflow-hidden z-[9999] animate-theme-menu-in"
                 style={{ top: menuPos.top, right: menuPos.right }}
               >
                 <div className="p-1">
@@ -187,9 +181,8 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className }) => {
                     );
                   })}
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>,
+              </div>
+            ) : null,
           document.body
         )}
     </div>

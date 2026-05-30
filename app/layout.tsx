@@ -5,7 +5,6 @@ import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scrollToTop";
-import { SplashScreen } from "@/components/splash-screen";
 import clsx from "clsx";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -45,7 +44,6 @@ export default function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "system", enableSystem: true, storageKey: "portofolio-theme" }}>
-          <SplashScreen />
           {/* Global Ambient Glows */}
           <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
             <div className="starfield" />

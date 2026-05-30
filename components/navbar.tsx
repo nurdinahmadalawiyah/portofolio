@@ -10,37 +10,15 @@ import {
 import { Link } from "@heroui/link";
 import { siteConfig } from "@/config/site";
 import NextLink from "next/link";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo } from "@/components/icons";
-import { AnimatePresence } from "framer-motion";
 
 export const Navbar = () => {
   const [activeItem, setActiveItem] = useState("#home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navPillContainerRef = useRef<HTMLDivElement>(null);
-  const navItemRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const pendingScrollTargetRef = useRef<string | null>(null);
   const pendingScrollTimerRef = useRef<number | null>(null);
-  const [pillStyle, setPillStyle] = useState({ height: 36, left: 4, top: 4, width: 80 });
-
-  const updatePillPosition = () => {
-    const container = navPillContainerRef.current;
-    const activeLink = navItemRefs.current[activeItem];
-
-    if (!container || !activeLink) return;
-
-    const containerRect = container.getBoundingClientRect();
-    const linkRect = activeLink.getBoundingClientRect();
-
-    setPillStyle({
-      height: linkRect.height,
-      left: linkRect.left - containerRect.left,
-      top: linkRect.top - containerRect.top,
-      width: linkRect.width,
-    });
-  };
 
   const scrollToSection = (href: string) => {
     const id = href.replace("#", "");
@@ -62,15 +40,6 @@ export const Navbar = () => {
     const top = element.getBoundingClientRect().top + window.scrollY - 88;
     window.scrollTo({ top, behavior: "smooth" });
   };
-
-  useLayoutEffect(() => {
-    updatePillPosition();
-  }, [activeItem]);
-
-  useEffect(() => {
-    window.addEventListener("resize", updatePillPosition);
-    return () => window.removeEventListener("resize", updatePillPosition);
-  }, [activeItem]);
 
   useEffect(() => {
     let ticking = false;
@@ -153,30 +122,12 @@ export const Navbar = () => {
         </NavbarContent>
 
         <NavbarContent className="hidden lg:flex gap-4" justify="center">
-          <div
-            ref={navPillContainerRef}
-            className="relative flex items-center gap-1 rounded-full border border-black/10 bg-black/[0.03] p-1 shadow-inner shadow-black/5 backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04]"
-          >
-            <motion.div
-              aria-hidden
-              className="absolute rounded-full bg-turquoise shadow-[0_0_22px_rgb(var(--accent-color)/0.42)]"
-              animate={pillStyle}
-              initial={false}
-              transition={{
-                type: "spring",
-                stiffness: 520,
-                damping: 42,
-                mass: 0.65,
-              }}
-            />
+          <div className="relative flex items-center gap-1 rounded-full border border-black/10 bg-black/[0.03] p-1 shadow-inner shadow-black/5 backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04]">
             {siteConfig.navItems.map((item) => {
               const isActive = activeItem === item.href;
               return (
                 <NavbarItem key={item.href} className="relative">
                   <NextLink
-                    ref={(node) => {
-                      navItemRefs.current[item.href] = node;
-                    }}
                     className={`group relative flex h-9 min-w-20 items-center justify-center rounded-full px-4 text-sm font-semibold transition-colors duration-300 ${
                       isActive ? "text-white dark:text-black" : "text-default-500 hover:text-turquoise"
                     }`}
@@ -187,7 +138,9 @@ export const Navbar = () => {
                       scrollToSection(item.href);
                     }}
                   >
-                    {!isActive && (
+                    {isActive ? (
+                      <span className="absolute inset-0 rounded-full bg-turquoise shadow-[0_0_22px_rgb(var(--accent-color)/0.42)]" />
+                    ) : (
                       <span className="absolute inset-0 rounded-full bg-turquoise/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                     )}
                     <span className="relative z-10">{item.label}</span>
@@ -212,23 +165,17 @@ export const Navbar = () => {
         </NavbarContent>
 
       </NextUINavbar>
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -14 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -14 }}
-              transition={{ type: "spring", stiffness: 420, damping: 34 }}
+        {isMenuOpen && (
+            <div
               className="fixed top-24 left-4 right-4 w-auto p-6 rounded-2xl bg-background/70 backdrop-blur-md border border-black/10 dark:border-white/10 shadow-none ring-1 ring-black/5 dark:ring-white/10 z-[100] lg:hidden flex flex-col gap-6 isolate"
               style={{ pointerEvents: "auto" }}
             >
               <div className="flex flex-col gap-3">
                 {siteConfig.navMenuItems.map((item, index) => (
-                  <motion.div
+                  <div
                     key={item.href}
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
+                    className="animate-mobile-nav-item"
+                    style={{ animationDelay: `${index * 45}ms` }}
                   >
                     <Link
                       className={`w-full text-lg py-2 flex items-center justify-between group ${
@@ -243,19 +190,13 @@ export const Navbar = () => {
                       }}
                     >
                       <span>{item.label}</span>
-                      {activeItem === item.href && (
-                        <motion.div 
-                          layoutId="active-dot"
-                          className="w-2 h-2 rounded-full bg-turquoise shadow-[0_0_10px_rgb(var(--accent-color))]" 
-                        />
-                      )}
+                      <span className={`w-2 h-2 rounded-full bg-turquoise shadow-[0_0_10px_rgb(var(--accent-color))] transition-opacity duration-200 ${activeItem === item.href ? "opacity-100" : "opacity-0"}`} />
                     </Link>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
     </div>
   );
 };

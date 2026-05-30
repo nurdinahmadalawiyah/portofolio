@@ -46,7 +46,7 @@ export default function AboutPage() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay }}
-      className={`relative group rounded-[2.5rem] border border-black/5 dark:border-white/5 bg-white/40 dark:bg-default-100/30 overflow-hidden backdrop-blur-xl hover:border-turquoise/30 transition-all duration-500 ${className}`}
+      className={`glass-card relative group rounded-[2.5rem] overflow-hidden transition-all duration-500 ${className}`}
     >
       {/* Subtle hover gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-turquoise/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />

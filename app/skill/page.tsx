@@ -14,7 +14,7 @@ const BentoCard = ({ children, className, delay = 0 }: { children: React.ReactNo
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay }}
-      className={`group relative overflow-hidden rounded-[2.5rem] border border-black/5 dark:border-white/5 bg-white/40 dark:bg-default-100/30 backdrop-blur-xl hover:border-turquoise/30 transition-all duration-500 flex flex-col p-6 md:p-8 ${className}`}
+      className={`glass-card group relative overflow-hidden rounded-[2.5rem] transition-all duration-500 flex flex-col p-6 md:p-8 ${className}`}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-turquoise/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       <div className="relative z-10 h-full flex flex-col">
@@ -140,7 +140,7 @@ const SkillDetailModal = ({
                 skill.details.map((group) => (
                   <div
                     key={group.title}
-                    className="rounded-2xl border border-black/5 dark:border-white/5 bg-white/40 dark:bg-default-100/30 p-4"
+                    className="glass-card rounded-2xl p-4"
                   >
                     <div className="text-[11px] font-black uppercase tracking-[0.18em] text-turquoise mb-2">
                       {group.title}
@@ -155,7 +155,7 @@ const SkillDetailModal = ({
                   </div>
                 ))
               ) : (
-                <div className="md:col-span-2 rounded-2xl border border-black/5 dark:border-white/5 bg-white/40 dark:bg-default-100/30 p-4">
+                <div className="glass-card md:col-span-2 rounded-2xl p-4">
                   <div className="text-sm font-semibold text-foreground/80">
                     I'm still updating the details of this skill.
                   </div>

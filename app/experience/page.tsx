@@ -116,7 +116,7 @@ export default function ExperiencePage() {
                   </div>
                 </div>
 
-                <Card className={`col-start-2 row-start-2 overflow-hidden border border-black/10 bg-white/60 shadow-none backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-turquoise/30 dark:border-white/10 dark:bg-default-100/30 ${isRight ? "md:col-start-3" : "md:col-start-1"} md:row-start-1`}>
+                <Card className={`glass-card col-start-2 row-start-2 overflow-hidden shadow-none transition-all duration-300 hover:-translate-y-1 ${isRight ? "md:col-start-3" : "md:col-start-1"} md:row-start-1`}>
                   <CardBody className="p-5 md:p-8">
                     <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                       <div>

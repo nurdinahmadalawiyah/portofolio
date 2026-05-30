@@ -51,6 +51,160 @@
   animation: move-glow-2 25s ease-in-out infinite;
 }
 
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-enter {
+  animation: page-enter 0.5s ease-out both;
+}
+
+@keyframes caret-blink {
+  0%, 45% { opacity: 1; }
+  46%, 100% { opacity: 0; }
+}
+
+.animate-caret {
+  animation: caret-blink 1s steps(1, end) infinite;
+}
+
+@keyframes home-copy-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes home-visual-in {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes hero-portrait {
+  0%, 100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: translateY(0);
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes float-up {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes float-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+@keyframes float-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes scroll-line {
+  0%, 100% { height: 20px; opacity: 0.3; }
+  50% { height: 40px; opacity: 1; }
+}
+
+@keyframes mobile-nav-item {
+  from { opacity: 0; transform: translateX(10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scroll-top-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.5); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes theme-menu-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.animate-home-copy-in {
+  animation: home-copy-in 0.5s ease-out both;
+}
+
+.animate-home-actions-in {
+  animation: home-copy-in 0.5s ease-out 0.2s both;
+}
+
+.animate-home-visual-in {
+  animation: home-visual-in 0.8s ease-out both;
+}
+
+.animate-hero-portrait {
+  animation: hero-portrait 8s ease-in-out infinite;
+}
+
+.animate-float-up {
+  animation: float-up 4s ease-in-out 0.5s infinite;
+}
+
+.animate-float-down {
+  animation: float-down 5s ease-in-out 1s infinite;
+}
+
+.animate-float-subtle {
+  animation: float-subtle 4.5s ease-in-out 0.2s infinite;
+}
+
+.animate-home-scroll-in {
+  animation: home-copy-in 1s ease-out 1s both;
+}
+
+.animate-scroll-line {
+  animation: scroll-line 2s ease-in-out infinite;
+}
+
+.animate-mobile-nav-item {
+  animation: mobile-nav-item 0.22s ease-out both;
+}
+
+.animate-scroll-top-in {
+  animation: scroll-top-in 0.2s ease-out both;
+}
+
+.animate-theme-menu-in {
+  animation: theme-menu-in 0.15s ease-out both;
+}
+
+.glass-card {
+  background:
+    linear-gradient(145deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0.045) 42%, rgb(255 255 255 / 0.02)),
+    rgb(255 255 255 / 0.38) !important;
+  border: 1px solid rgb(255 255 255 / 0.13) !important;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.10),
+    0 20px 60px rgb(0 0 0 / 0.16);
+  backdrop-filter: blur(30px) saturate(155%);
+  -webkit-backdrop-filter: blur(30px) saturate(155%);
+}
+
+.dark .glass-card {
+  background:
+    linear-gradient(145deg, rgb(255 255 255 / 0.06), rgb(255 255 255 / 0.018) 45%, rgb(255 255 255 / 0.008)),
+    rgb(4 6 7 / 0.62) !important;
+  border-color: rgb(255 255 255 / 0.085) !important;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.055),
+    0 20px 60px rgb(0 0 0 / 0.34);
+}
+
+.glass-card:hover {
+  border-color: rgb(var(--accent-color) / 0.18) !important;
+}
+
 .starfield,
 .starfield::before,
 .starfield::after {

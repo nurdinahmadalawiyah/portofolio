@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@heroui/button";
 import { ChevronUpIcon } from "./icons";
 
@@ -32,15 +31,8 @@ export const ScrollToTop = () => {
 
   return (
     <div className="fixed bottom-8 right-8 z-[100]">
-      <AnimatePresence>
-        {isVisible && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.5, y: 20 }}
-            whileHover={{ y: -5 }}
-            whileTap={{ scale: 0.9 }}
-          >
+      {isVisible && (
+          <div className="animate-scroll-top-in transition-transform duration-300 hover:-translate-y-1 active:scale-90">
             <Button
               isIconOnly
               onClick={scrollToTop}
@@ -49,9 +41,8 @@ export const ScrollToTop = () => {
             >
               <ChevronUpIcon className="w-6 h-6 transition-transform duration-300 group-hover:-translate-y-1" />
             </Button>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
     </div>
   );
 };

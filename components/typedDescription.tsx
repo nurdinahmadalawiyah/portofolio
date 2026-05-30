@@ -1,30 +1,45 @@
 "use client";
 
 import { siteConfig } from '@/config/site';
-import React, { useEffect, useRef } from 'react';
-import Typed from 'typed.js';
+import React, { useEffect, useState } from 'react';
 
 const TypedDescription = () => {
-  const typedTextRef = useRef(null);
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const options = {
-      strings: siteConfig.home.role,
-      typeSpeed: 100,
-      backSpeed: 50,
-      showCursor: true,
-      cursorChar: '|',
-      loop: true,
-    };
+    const currentRole = siteConfig.home.role[roleIndex] ?? "";
+    const isComplete = charIndex === currentRole.length;
+    const isEmpty = charIndex === 0;
+    const delay = isComplete && !isDeleting ? 1200 : isDeleting ? 45 : 85;
 
-    const typed = new Typed(typedTextRef.current, options);
+    const timer = window.setTimeout(() => {
+      if (isComplete && !isDeleting) {
+        setIsDeleting(true);
+        return;
+      }
 
-    return () => {
-      typed.destroy();
-    };
-  }, []);
+      if (isEmpty && isDeleting) {
+        setIsDeleting(false);
+        setRoleIndex((index) => (index + 1) % siteConfig.home.role.length);
+        return;
+      }
 
-  return <span ref={typedTextRef}></span>;
+      setCharIndex((index) => index + (isDeleting ? -1 : 1));
+    }, delay);
+
+    return () => window.clearTimeout(timer);
+  }, [charIndex, isDeleting, roleIndex]);
+
+  const currentRole = siteConfig.home.role[roleIndex] ?? "";
+
+  return (
+    <span>
+      {currentRole.slice(0, charIndex)}
+      <span className="animate-caret">|</span>
+    </span>
+  );
 };
 
 export default TypedDescription;
