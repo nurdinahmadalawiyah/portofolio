@@ -46,6 +46,64 @@
   animation: move-glow-2 25s ease-in-out infinite;
 }
 
+.starfield,
+.starfield::before,
+.starfield::after {
+  position: absolute;
+  inset: -20%;
+  content: "";
+  background-repeat: repeat;
+  opacity: 0.72;
+  transform-origin: center;
+}
+
+.starfield {
+  background-image:
+    radial-gradient(circle, rgb(255 255 255 / 0.75) 0 1px, transparent 1.4px),
+    radial-gradient(circle, rgb(var(--accent-color) / 0.45) 0 1px, transparent 1.6px);
+  background-position: 0 0, 70px 90px;
+  background-size: 160px 160px, 230px 230px;
+  animation: star-drift 80s linear infinite;
+  mix-blend-mode: screen;
+}
+
+.starfield::before {
+  background-image:
+    radial-gradient(circle, rgb(255 255 255 / 0.62) 0 1px, transparent 1.5px),
+    radial-gradient(circle, rgb(var(--accent-color) / 0.35) 0 1px, transparent 1.7px);
+  background-position: 30px 45px, 120px 20px;
+  background-size: 280px 280px, 360px 360px;
+  animation: star-drift 120s linear infinite reverse, star-twinkle 4.8s ease-in-out infinite;
+}
+
+.starfield::after {
+  background-image:
+    radial-gradient(circle, rgb(255 255 255 / 0.95) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgb(var(--accent-color) / 0.55) 0 1.2px, transparent 2px);
+  background-position: 90px 20px, 10px 130px;
+  background-size: 420px 420px, 520px 520px;
+  animation: star-drift 160s linear infinite, star-twinkle 6.2s ease-in-out infinite;
+}
+
+@keyframes star-drift {
+  from { transform: translate3d(0, 0, 0) rotate(0deg); }
+  to { transform: translate3d(-8%, -10%, 0) rotate(1turn); }
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.42; filter: drop-shadow(0 0 1px rgb(var(--accent-color) / 0.2)); }
+  45% { opacity: 0.82; filter: drop-shadow(0 0 4px rgb(var(--accent-color) / 0.5)); }
+  70% { opacity: 0.58; filter: drop-shadow(0 0 2px rgb(255 255 255 / 0.35)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .starfield,
+  .starfield::before,
+  .starfield::after {
+    animation: none;
+  }
+}
+
 .skill-detail-scrollbar {
   scrollbar-color: rgb(var(--accent-color) / 0.72) rgb(255 255 255 / 0.04);
   scrollbar-width: thin;

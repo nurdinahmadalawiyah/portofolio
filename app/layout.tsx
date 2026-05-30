@@ -49,6 +49,7 @@ export default function RootLayout({
           <SplashScreen />
           {/* Global Ambient Glows */}
           <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+            <div className="starfield" />
             <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-turquoise/20 rounded-full blur-[120px] animate-glow-1" />
             <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-turquoise/10 rounded-full blur-[120px] animate-glow-2" />
           </div>
