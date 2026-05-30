@@ -8,24 +8,18 @@ import { title } from "@/components/primitives";
 import { motion } from "framer-motion";
 import TypedDescription from "@/components/typedDescription";
 import { DownloadIcon } from "@/components/icons";
-import { useLenis } from "lenis/react";
 import { usePerformanceMode } from "@/components/usePerformanceMode";
 
 export default function HomePage() {
-  const lenis = useLenis();
   const isLowPowerMode = usePerformanceMode();
 
   const scrollToProject = () => {
-    if (lenis) {
-      lenis.scrollTo("#project", {
-        offset: -80,
-        duration: 1.5,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      });
-      return;
-    }
+    const projectSection = document.getElementById("project");
 
-    document.getElementById("project")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!projectSection) return;
+
+    const top = projectSection.getBoundingClientRect().top + window.scrollY - 88;
+    window.scrollTo({ top, behavior: "smooth" });
   };
 
   return (

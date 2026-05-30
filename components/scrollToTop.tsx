@@ -4,21 +4,11 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@heroui/button";
 import { ChevronUpIcon } from "./icons";
-import { useLenis } from "lenis/react";
 
 export const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const lenis = useLenis();
 
   const scrollToTop = () => {
-    if (lenis) {
-      lenis.scrollTo(0, {
-        duration: 2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      });
-      return;
-    }
-
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 

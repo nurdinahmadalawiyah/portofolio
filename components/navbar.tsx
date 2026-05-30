@@ -17,26 +17,20 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo } from "@/components/icons";
-import { useLenis } from "lenis/react";
 import { AnimatePresence } from "framer-motion";
 
 export const Navbar = () => {
   const [activeItem, setActiveItem] = useState("#home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const lenis = useLenis();
 
   const scrollToSection = (href: string) => {
-    if (lenis) {
-      lenis.scrollTo(href, {
-        offset: -80,
-        duration: 1.5,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      });
-      return;
-    }
-
     const id = href.replace("#", "");
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const element = document.getElementById(id);
+
+    if (!element) return;
+
+    const top = element.getBoundingClientRect().top + window.scrollY - 88;
+    window.scrollTo({ top, behavior: "smooth" });
   };
 
   useEffect(() => {

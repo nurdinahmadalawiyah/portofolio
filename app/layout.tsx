@@ -5,7 +5,6 @@ import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scrollToTop";
-import SmoothScroll from "@/components/smoothScroll";
 import { SplashScreen } from "@/components/splash-screen";
 import { PerformanceMode } from "@/components/performance-mode";
 import clsx from "clsx";
@@ -58,15 +57,13 @@ export default function RootLayout({
           
           <Navbar />
           <ScrollToTop />
-          <SmoothScroll>
-            <div className="relative z-10 flex flex-col min-h-screen bg-transparent">
-              <main className="container mx-auto max-w-6xl pt-16 px-4 flex-grow">
-                {children}
-                <Analytics />
-              </main>
-              <Footer />
-            </div>
-          </SmoothScroll>
+          <div className="relative z-10 flex flex-col min-h-screen bg-transparent">
+            <main className="container mx-auto max-w-6xl pt-16 px-4 flex-grow">
+              {children}
+              <Analytics />
+            </main>
+            <Footer />
+          </div>
         </Providers>
       </body>
     </html>
