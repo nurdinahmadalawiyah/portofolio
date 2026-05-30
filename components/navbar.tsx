@@ -79,14 +79,14 @@ export const Navbar = () => {
         </NavbarContent>
 
         <NavbarContent className="hidden lg:flex gap-4" justify="center">
-          <div className="flex gap-8 px-6 py-2">
+          <div className="flex items-center gap-1 rounded-full border border-black/10 bg-black/[0.03] p-1 shadow-inner shadow-black/5 backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04]">
             {siteConfig.navItems.map((item) => {
               const isActive = activeItem === item.href;
               return (
                 <NavbarItem key={item.href} className="relative">
                   <NextLink
-                    className={`text-sm font-semibold transition-all duration-300 relative py-1 ${
-                      isActive ? "text-turquoise" : "text-default-500 hover:text-turquoise/80"
+                    className={`group relative flex h-9 min-w-20 items-center justify-center rounded-full px-4 text-sm font-semibold transition-colors duration-300 ${
+                      isActive ? "text-white" : "text-default-500 hover:text-turquoise"
                     }`}
                     href={item.href}
                     onClick={(e) => {
@@ -99,11 +99,10 @@ export const Navbar = () => {
                       });
                     }}
                   >
-                    {item.label}
                     {isActive && (
                       <motion.div
-                        layoutId="nav-underline"
-                        className="absolute -bottom-1 left-0 right-0 h-[3px] bg-turquoise rounded-full shadow-[0_0_15px_rgb(var(--accent-color)/0.6)]"
+                        layoutId="nav-pill"
+                        className="absolute inset-0 rounded-full bg-turquoise shadow-[0_0_22px_rgb(var(--accent-color)/0.42)]"
                         transition={{
                           type: "spring",
                           stiffness: 380,
@@ -111,6 +110,10 @@ export const Navbar = () => {
                         }}
                       />
                     )}
+                    {!isActive && (
+                      <span className="absolute inset-0 rounded-full bg-turquoise/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    )}
+                    <span className="relative z-10">{item.label}</span>
                   </NextLink>
                 </NavbarItem>
               );
