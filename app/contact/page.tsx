@@ -9,7 +9,6 @@ import {
   MailIcon, 
   MapPinIcon 
 } from "@/components/icons";
-import { motion, Variants } from "framer-motion";
 
 export default function ContactPage() {
   const defaultSubject = "Hello Nurdin";
@@ -56,26 +55,6 @@ export default function ContactPage() {
     },
   ];
 
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { 
-      opacity: 1, 
-      x: 0,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }
-  };
-
   return (
     <section id="contact" className="relative flex flex-col items-center justify-center gap-12 py-16 md:py-24 w-full max-w-6xl mx-auto px-6 overflow-hidden">
       {/* Giant Background Text Watermark */}
@@ -92,22 +71,16 @@ export default function ContactPage() {
 
       <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 mt-8">
         {/* Social Cards Grid */}
-        <motion.div 
+        <div
           className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
         >
           {contactItems.map((item, index) => (
-            <motion.a
+            <a
               key={index}
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              variants={itemVariants}
-              whileHover={{ scale: 1.02, translateY: -5 }}
-              className="glass-card flex items-center gap-4 p-5 rounded-2xl transition-all duration-300 group overflow-hidden shadow-none"
+              className="glass-card flex items-center gap-4 p-5 rounded-2xl transition-all duration-300 group overflow-hidden shadow-none hover:-translate-y-1"
             >
               <div className={`p-3 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 group-hover:border-turquoise/30 transition-colors flex-shrink-0`}>
                 {item.icon}
@@ -118,18 +91,12 @@ export default function ContactPage() {
                   {item.value}
                 </span>
               </div>
-            </motion.a>
+            </a>
           ))}
-        </motion.div>
+        </div>
 
         {/* Direct Contact Section */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="w-full"
-        >
+        <div className="w-full">
           <Card className="glass-card p-2 shadow-none transition-all duration-300">
             <CardBody className="p-8 flex flex-col gap-6">
               <div className="flex flex-col gap-2">
@@ -152,40 +119,34 @@ export default function ContactPage() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <motion.a
+                <a
                   href={emailHref}
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.98 }}
                   className="w-full bg-turquoise text-white dark:text-black font-black uppercase tracking-widest py-4 rounded-xl shadow-[0_0_20px_rgba(44,231,241,0.3)] hover:shadow-[0_0_30px_rgba(44,231,241,0.5)] transition-all duration-300 flex items-center justify-center gap-2 text-xs"
                 >
                   <MailIcon size={18} />
                   Email Me
-                </motion.a>
-                <motion.a
+                </a>
+                <a
                   href={whatsappHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.98 }}
                   className="w-full bg-white/60 dark:bg-default-100/40 border border-black/10 dark:border-white/10 font-black uppercase tracking-widest py-4 rounded-xl hover:border-turquoise/50 transition-all duration-300 flex items-center justify-center gap-2 text-xs text-foreground"
                 >
                   <WhatsAppIcon size={18} />
                   WhatsApp
-                </motion.a>
+                </a>
               </div>
 
-              <motion.a
+              <a
                 href={`/${siteConfig.links.cv}`}
                 download
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
                 className="w-full bg-white/60 dark:bg-default-100/40 border border-black/10 dark:border-white/10 font-black uppercase tracking-widest py-4 rounded-xl hover:border-turquoise/50 transition-all duration-300 flex items-center justify-center text-xs text-foreground"
               >
                 Download CV
-              </motion.a>
+              </a>
             </CardBody>
           </Card>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

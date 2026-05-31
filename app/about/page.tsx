@@ -2,7 +2,6 @@
 
 import { siteConfig } from "@/config/site";
 import Image from "next/image";
-import { motion } from "framer-motion";
 
 export default function AboutPage() {
   const highlightKeywords = (text: string) => {
@@ -40,12 +39,8 @@ export default function AboutPage() {
   };
 
   // Helper component for Bento Cards with hover effect
-  const BentoCard = ({ children, className, delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) => (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay }}
+  const BentoCard = ({ children, className }: { children: React.ReactNode, className?: string }) => (
+    <div
       className={`glass-card relative group rounded-[2.5rem] overflow-hidden transition-all duration-500 ${className}`}
     >
       {/* Subtle hover gradient */}
@@ -53,7 +48,7 @@ export default function AboutPage() {
       <div className="relative z-10 h-full w-full p-8 md:p-10 flex flex-col">
         {children}
       </div>
-    </motion.div>
+    </div>
   );
 
   return (
@@ -75,7 +70,7 @@ export default function AboutPage() {
       <div className="relative z-10 w-full grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(180px,auto)]">
         
         {/* Card 1: Hero Bio (Spans 2x2) */}
-        <BentoCard className="md:col-span-2 md:row-span-2 flex flex-col justify-between" delay={0.1}>
+        <BentoCard className="md:col-span-2 md:row-span-2 flex flex-col justify-between">
           <div className="flex justify-between items-start mb-8">
             <div className="w-12 h-1 bg-turquoise rounded-full" />
             <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-turquoise/30 shadow-[0_0_20px_rgba(44,231,241,0.2)]">
@@ -98,7 +93,7 @@ export default function AboutPage() {
         </BentoCard>
 
         {/* Card 2: Highlight 1 (1x1) */}
-        <BentoCard className="md:col-span-1 md:row-span-1 flex flex-col items-center justify-center text-center" delay={0.2}>
+        <BentoCard className="md:col-span-1 md:row-span-1 flex flex-col items-center justify-center text-center">
           <span className="text-sm uppercase tracking-[0.2em] text-default-400 font-bold mb-2">
             {siteConfig.about.highlights?.[0]?.label}
           </span>
@@ -108,7 +103,7 @@ export default function AboutPage() {
         </BentoCard>
 
         {/* Card 3: Highlight 2 (1x1) */}
-        <BentoCard className="md:col-span-1 md:row-span-1 flex flex-col items-center justify-center text-center" delay={0.3}>
+        <BentoCard className="md:col-span-1 md:row-span-1 flex flex-col items-center justify-center text-center">
           <span className="text-sm uppercase tracking-[0.2em] text-default-400 font-bold mb-2">
             {siteConfig.about.highlights?.[1]?.label}
           </span>
@@ -118,7 +113,7 @@ export default function AboutPage() {
         </BentoCard>
 
         {/* Card 4: Highlight 3 (Spans 2x1 to fill the gap) */}
-        <BentoCard className="md:col-span-2 md:row-span-1 flex flex-col items-start justify-center bg-turquoise/5 border-turquoise/20" delay={0.4}>
+        <BentoCard className="md:col-span-2 md:row-span-1 flex flex-col items-start justify-center bg-turquoise/5 border-turquoise/20">
           <div className="flex w-full items-center justify-between">
             <div>
               <span className="text-sm uppercase tracking-[0.2em] text-turquoise font-bold mb-2 block">
@@ -135,7 +130,7 @@ export default function AboutPage() {
         </BentoCard>
 
         {/* Card 5: Education (Spans 4 columns) */}
-        <BentoCard className="md:col-span-4" delay={0.5}>
+        <BentoCard className="md:col-span-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8 mb-8 text-center md:text-left">
             <div className="flex items-center gap-4">
               <span className="text-sm uppercase tracking-[0.3em] text-turquoise font-black">Academic Background</span>

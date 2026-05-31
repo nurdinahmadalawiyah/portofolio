@@ -3,7 +3,6 @@
 import { Card, CardBody } from "@heroui/card";
 import { siteConfig } from "@/config/site";
 import { Avatar } from "@heroui/avatar";
-import { motion } from "framer-motion";
 
 const experienceStories = [
   {
@@ -68,13 +67,7 @@ export default function ExperiencePage() {
         </h3>
       </div>
 
-      <motion.div
-        className="relative z-10 w-full"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-      >
+      <div className="relative z-10 w-full">
         <div className="absolute left-5 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-turquoise/40 to-transparent md:left-1/2 md:-translate-x-1/2" />
 
         <div className="flex w-full flex-col gap-8 md:gap-12">
@@ -84,13 +77,9 @@ export default function ExperiencePage() {
             const story = experienceStories[index];
 
             return (
-              <motion.div
+              <div
                 key={item.company}
                 className="relative grid w-full grid-cols-[2.5rem_1fr] gap-4 md:grid-cols-[1fr_5rem_1fr] md:gap-8"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
               >
                 <div className="relative z-10 col-start-1 row-start-1 flex justify-center md:col-start-2">
                   <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-turquoise/30 bg-background shadow-[0_0_24px_rgb(var(--accent-color)/0.18)] md:h-16 md:w-16">
@@ -171,11 +160,11 @@ export default function ExperiencePage() {
                     </div>
                   </CardBody>
                 </Card>
-              </motion.div>
+              </div>
             );
           })}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

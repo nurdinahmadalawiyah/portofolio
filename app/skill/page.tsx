@@ -3,24 +3,19 @@
 import { siteConfig } from "@/config/site";
 import { Tooltip } from "@heroui/tooltip";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
-const BentoCard = ({ children, className, delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) => {
+const BentoCard = ({ children, className }: { children: React.ReactNode, className?: string }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay }}
+    <div
       className={`glass-card group relative overflow-hidden rounded-[2.5rem] transition-all duration-500 flex flex-col p-6 md:p-8 ${className}`}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-turquoise/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       <div className="relative z-10 h-full flex flex-col">
         {children}
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -71,18 +66,13 @@ const SkillDetailModal = ({
 
   return createPortal(
     <div className="fixed inset-0 z-[9999]">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+      <div
         className="absolute inset-0 bg-black/70 backdrop-blur-sm"
         onClick={onClose}
       />
 
       <div className="absolute inset-0 flex items-start justify-center overflow-hidden p-3 py-6 sm:items-center sm:p-4 md:p-8">
-        <motion.div
-          initial={{ opacity: 0, y: 14, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.2 }}
+        <div
           className="relative flex max-h-[calc(100dvh-3rem)] w-full max-w-2xl flex-col overflow-hidden rounded-[2rem] border border-black/10 bg-background/90 shadow-2xl backdrop-blur-xl dark:border-white/10 sm:max-h-[calc(100dvh-2rem)] md:max-h-[calc(100dvh-4rem)]"
           role="dialog"
           aria-modal="true"
@@ -164,7 +154,7 @@ const SkillDetailModal = ({
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
     </div>,
@@ -182,37 +172,31 @@ export default function SkillPage() {
       name: "Mobile",
       skills: ["Flutter", "Jetpack Compose", "React Native", "Expo",],
       className: "md:col-span-1 lg:col-span-1",
-      delay: 0.1,
     },
     {
       name: "Frontend",
       skills: ["React", "Next.js", "Angular"],
       className: "md:col-span-1 lg:col-span-1",
-      delay: 0.2,
     },
     {
       name: "Backend",
       skills: ["Spring Boot", "Laravel", "Express.js", "NestJS", "Node JS", "Redis"],
       className: "md:col-span-2 lg:col-span-2",
-      delay: 0.3,
     },
     {
       name: "Database",
       skills: ["MySQL", "MongoDB", "PostgreSQL"],
       className: "md:col-span-1 lg:col-span-1",
-      delay: 0.4,
     },
     {
       name: "Language",
       skills: ["JavaScript", "Java", "Dart", "PHP", "Kotlin", "TypeScript"],
       className: "md:col-span-2 lg:col-span-2",
-      delay: 0.5,
     },
     {
       name: "Other",
       skills: ["Firebase", "Figma"],
       className: "md:col-span-1 lg:col-span-1",
-      delay: 0.6,
     },
   ];
 
@@ -232,7 +216,7 @@ export default function SkillPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 w-full mt-4">
         {categories.map((category) => (
-          <BentoCard key={category.name} className={category.className} delay={category.delay}>
+          <BentoCard key={category.name} className={category.className}>
             <div className="flex items-center gap-3 mb-8">
               <div className="w-1.5 h-6 bg-turquoise rounded-full shadow-[0_0_10px_rgb(var(--accent-color)/0.5)]" />
               <h3 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
@@ -253,8 +237,7 @@ export default function SkillPage() {
                     closeDelay={0}
                     className="bg-background border border-black/10 dark:border-white/10 text-foreground font-bold"
                   >
-                    <motion.div
-                      whileHover={{ y: -5, scale: 1.1 }}
+                    <div
                       role={hasDetail ? "button" : undefined}
                       tabIndex={hasDetail ? 0 : -1}
                       onClick={hasDetail ? () => setSelectedSkill(skill as Skill) : undefined}
@@ -278,7 +261,7 @@ export default function SkillPage() {
                         src={skill.image}
                         className="object-contain w-9 h-9 md:w-10 md:h-10 transition-all duration-500 rounded-none"
                       />
-                    </motion.div>
+                    </div>
                   </Tooltip>
                 );
               })}

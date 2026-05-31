@@ -4,8 +4,7 @@ import { Card, CardBody, CardFooter } from "@heroui/card";
 import { Button } from "@heroui/button";
 import { Tooltip } from "@heroui/tooltip";
 import Image from "next/image";
-import { motion, useMotionValue, useSpring, animate } from "framer-motion";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { siteConfig } from "@/config/site";
 import { 
   GithubIcon, 
@@ -17,50 +16,12 @@ import {
 } from "@/components/icons";
 
 export default function ProjectPage() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 300, damping: 30 });
-  
   const [currentPage, setCurrentPage] = useState(0);
-  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
   const itemsPerPage = 2;
   const totalPages = Math.ceil(siteConfig.project.length / itemsPerPage);
 
-  // Calculate constraints for dragging
-  useEffect(() => {
-    const updateConstraints = () => {
-      if (containerRef.current) {
-        const scrollWidth = containerRef.current.scrollWidth;
-        const offsetWidth = containerRef.current.offsetWidth;
-        setConstraints({ left: Math.min(0, -(scrollWidth - offsetWidth)), right: 0 });
-      }
-    };
-
-    updateConstraints();
-    const timer = setTimeout(updateConstraints, 500);
-    window.addEventListener("resize", updateConstraints);
-    return () => {
-      window.removeEventListener("resize", updateConstraints);
-      clearTimeout(timer);
-    };
-  }, []);
-
   const scrollToPage = (page: number) => {
-    if (containerRef.current) {
-      const containerWidth = containerRef.current.offsetWidth;
-      // Precision offset calculation: (CardWidth * 2) + Gap
-      // Since each card is 50% - 20px and gap is 40px
-      // targetX should be exactly the container width
-      const targetX = -page * containerWidth; 
-      
-      animate(x, targetX, {
-        type: "spring",
-        stiffness: 300,
-        damping: 30,
-        onUpdate: (latest) => x.set(latest)
-      });
-      setCurrentPage(page);
-    }
+    setCurrentPage(Math.max(0, Math.min(totalPages - 1, page)));
   };
 
   const nextSlide = () => {
@@ -77,15 +38,8 @@ export default function ProjectPage() {
 
   const handleWheel = (e: React.WheelEvent) => {
     if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-      const newX = x.get() - e.deltaX;
-      const limitedX = Math.max(constraints.left, Math.min(constraints.right, newX));
-      x.set(limitedX);
-      
-      if (containerRef.current) {
-        const containerWidth = containerRef.current.offsetWidth;
-        const page = Math.round(Math.abs(limitedX) / containerWidth);
-        if (page !== currentPage) setCurrentPage(page);
-      }
+      if (e.deltaX > 0) nextSlide();
+      if (e.deltaX < 0) prevSlide();
     }
   };
 
@@ -131,12 +85,11 @@ export default function ProjectPage() {
           <div className="absolute bottom-4 left-4 flex flex-wrap gap-2 z-10">
             {project.tech.map((tech: any, techIdx: number) => (
               <Tooltip key={techIdx} content={tech.name} closeDelay={0}>
-                <motion.div 
-                  whileHover={{ y: -5, scale: 1.1 }}
-                  className="p-2 rounded-xl bg-black/40 backdrop-blur-md border border-white/10 shadow-xl cursor-help transition-colors hover:border-turquoise/50"
+                <div
+                  className="p-2 rounded-xl bg-black/40 backdrop-blur-md border border-white/10 shadow-xl cursor-help transition-all hover:border-turquoise/50 hover:-translate-y-1 hover:scale-110"
                 >
                   <Image src={tech.image} width={18} height={18} alt={tech.name} className="object-contain pointer-events-none" />
-                </motion.div>
+                </div>
               </Tooltip>
             ))}
           </div>
@@ -252,26 +205,16 @@ export default function ProjectPage() {
       </div>
 
       {/* PROJECT LIST / CAROUSEL */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="w-full"
-      >
+      <div className="w-full">
         {/* MOBILE VIEW */}
         <div className="flex lg:hidden flex-col gap-12 w-full mt-4">
           {siteConfig.project.map((project: any, index) => (
-            <motion.div 
+            <div
               key={index} 
               className="w-full"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
             >
               <ProjectCard project={project} />
-            </motion.div>
+            </div>
           ))}
         </div>
 
@@ -317,31 +260,10 @@ export default function ProjectPage() {
             </>
           )}
 
-          <div 
-            ref={containerRef}
-            className="overflow-hidden cursor-grab active:cursor-grabbing"
-          >
-            <motion.div 
-              drag={totalPages > 1 ? "x" : false}
-              dragConstraints={constraints}
-              style={{ x: springX }}
-              className="flex"
-              onDragEnd={(e, info) => {
-                if (containerRef.current && totalPages > 1) {
-                  const containerWidth = containerRef.current.offsetWidth;
-                  const velocity = info.velocity.x;
-                  const offset = info.offset.x;
-                  
-                  let page = currentPage;
-                  if (offset < -100 || velocity < -500) {
-                    page = Math.min(totalPages - 1, currentPage + 1);
-                  } else if (offset > 100 || velocity > 500) {
-                    page = Math.max(0, currentPage - 1);
-                  }
-                  
-                  scrollToPage(page);
-                }
-              }}
+          <div className="overflow-hidden">
+            <div
+              className="flex transition-transform duration-300 ease-out"
+              style={{ transform: `translateX(-${currentPage * 100}%)` }}
             >
               {siteConfig.project.map((project: any, index) => (
                 <div 
@@ -351,7 +273,7 @@ export default function ProjectPage() {
                   <ProjectCard project={project} />
                 </div>
               ))}
-            </motion.div>
+            </div>
           </div>
 
           {/* Pagination Dots */}
@@ -371,7 +293,7 @@ export default function ProjectPage() {
             </div>
           )}
         </div>
-      </motion.div>
+      </div>
       
       <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
