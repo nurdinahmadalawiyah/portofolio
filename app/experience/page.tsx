@@ -5,6 +5,17 @@ import { siteConfig } from "@/config/site";
 import { Avatar } from "@heroui/avatar";
 import { motion } from "framer-motion";
 
+const entrance = {
+  hidden: { opacity: 0, y: 58, scale: 0.96, filter: "blur(10px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
+
 const experienceStories = [
   {
     title: "First professional chapter",
@@ -55,25 +66,32 @@ export default function ExperiencePage() {
   };
 
   return (
-    <section id="experience" className="relative flex flex-col items-center justify-center gap-8 py-12 md:py-24 w-full max-w-6xl mx-auto px-6 overflow-hidden">
+    <section className="relative flex flex-col items-center justify-center gap-8 py-12 md:py-24 w-full max-w-6xl mx-auto px-6 overflow-hidden">
       {/* Giant Background Text Watermark */}
       <div className="absolute top-10 left-1/2 -translate-x-1/2 pointer-events-none select-none z-0 opacity-[0.04] dark:opacity-[0.08]">
         <h1 className="text-[12rem] md:text-[20rem] font-black tracking-tighter leading-none text-foreground whitespace-nowrap">EXPERIENCE</h1>
       </div>
 
-      <div className="relative z-10 w-full mb-12 flex flex-col items-start">
+      <motion.div
+        id="experience"
+        variants={entrance}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        className="relative z-10 w-full mb-12 flex flex-col items-start"
+      >
         <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">Professional Journey</h2>
         <h3 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
           Work <span className="text-turquoise italic font-serif font-light">Experience.</span>
         </h3>
-      </div>
+      </motion.div>
 
       <motion.div
         className="relative z-10 w-full"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        variants={entrance}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
       >
         <div className="absolute left-5 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-turquoise/40 to-transparent md:left-1/2 md:-translate-x-1/2" />
 
@@ -87,10 +105,10 @@ export default function ExperiencePage() {
               <motion.div
                 key={item.company}
                 className="relative grid w-full grid-cols-[2.5rem_1fr] gap-4 md:grid-cols-[1fr_5rem_1fr] md:gap-8"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 54, scale: 0.96, filter: "blur(8px)" }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
+                transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: index * 0.12 }}
               >
                 <div className="relative z-10 col-start-1 row-start-1 flex justify-center md:col-start-2">
                   <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-turquoise/30 bg-background shadow-[0_0_24px_rgb(var(--accent-color)/0.18)] md:h-16 md:w-16">

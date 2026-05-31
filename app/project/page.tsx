@@ -17,6 +17,17 @@ import {
   ExternalLinkIcon
 } from "@/components/icons";
 
+const entrance = {
+  hidden: { opacity: 0, y: 58, scale: 0.96, filter: "blur(10px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
+
 export default function ProjectPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
@@ -237,25 +248,32 @@ export default function ProjectPage() {
   );
 
   return (
-    <section id="project" className="relative flex flex-col items-center justify-center gap-12 py-16 md:py-24 w-full max-w-6xl mx-auto px-6 overflow-hidden">
+    <section className="relative flex flex-col items-center justify-center gap-12 py-16 md:py-24 w-full max-w-6xl mx-auto px-6 overflow-hidden">
       {/* Giant Background Text Watermark */}
       <div className="absolute top-10 left-1/2 -translate-x-1/2 pointer-events-none select-none z-0 opacity-[0.04] dark:opacity-[0.08]">
         <h1 className="text-[12rem] md:text-[20rem] font-black tracking-tighter leading-none text-foreground whitespace-nowrap">PROJECTS</h1>
       </div>
 
-      <div className="relative z-10 w-full mb-4 flex flex-col items-start">
+      <motion.div
+        id="project"
+        variants={entrance}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        className="relative z-10 w-full mb-4 flex flex-col items-start"
+      >
         <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">Selected Works</h2>
         <h3 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
           Recent <span className="text-turquoise italic font-serif font-light">Projects.</span>
         </h3>
-      </div>
+      </motion.div>
 
       {/* PROJECT LIST / CAROUSEL */}
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        variants={entrance}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
         className="w-full"
       >
         {/* MOBILE VIEW */}
@@ -264,10 +282,10 @@ export default function ProjectPage() {
             <motion.div 
               key={index} 
               className="w-full"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              initial={{ opacity: 0, y: 56, scale: 0.96, filter: "blur(8px)" }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: index * 0.12 }}
             >
               <ProjectCard project={project} />
             </motion.div>

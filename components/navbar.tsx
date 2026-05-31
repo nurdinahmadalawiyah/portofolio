@@ -3,49 +3,157 @@
 import {
   Navbar as NextUINavbar,
   NavbarContent,
-  NavbarMenu,
   NavbarMenuToggle,
   NavbarBrand,
   NavbarItem,
-  NavbarMenuItem,
 } from "@heroui/navbar";
-import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import { siteConfig } from "@/config/site";
 import NextLink from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo } from "@/components/icons";
 import { useLenis } from "lenis/react";
 import { AnimatePresence } from "framer-motion";
+import { useIntroReady } from "@/components/useIntroReady";
+
+const easeOutExpo = [0.16, 1, 0.3, 1] as const;
+const SECTION_TARGET_TOP = 160;
+const SCROLL_SPY_ACTIVATION_TOP = SECTION_TARGET_TOP + 48;
 
 export const Navbar = () => {
   const [activeItem, setActiveItem] = useState("#home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pendingScrollTargetRef = useRef<string | null>(null);
+  const pendingScrollTimerRef = useRef<number | null>(null);
   const lenis = useLenis();
+  const isIntroReady = useIntroReady();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      // Simple Scroll Spy
-      const sections = siteConfig.navItems.map(item => item.href.replace("#", ""));
-      for (const section of sections.reverse()) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
-            setActiveItem(`#${section}`);
-            break;
-          }
-        }
+  const scrollToSection = (href: string) => {
+    pendingScrollTargetRef.current = href;
+    setActiveItem(href);
+
+    if (pendingScrollTimerRef.current) {
+      window.clearTimeout(pendingScrollTimerRef.current);
+    }
+
+    const clearPendingTarget = () => {
+      pendingScrollTargetRef.current = null;
+      if (pendingScrollTimerRef.current) {
+        window.clearTimeout(pendingScrollTimerRef.current);
+        pendingScrollTimerRef.current = null;
       }
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    pendingScrollTimerRef.current = window.setTimeout(clearPendingTarget, 2200);
+
+    const targetElement = document.getElementById(href.replace("#", ""));
+    const targetTop = href === "#home" || !targetElement
+      ? 0
+      : targetElement.getBoundingClientRect().top + window.scrollY - SECTION_TARGET_TOP;
+
+    if (!lenis) {
+      window.scrollTo({ top: targetTop, behavior: "smooth" });
+      return;
+    }
+
+    lenis.scrollTo(targetTop, {
+      duration: 1.5,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      onComplete: () => {
+        setActiveItem(href);
+        clearPendingTarget();
+      },
+    });
+  };
+
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (ticking) return;
+
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        const pendingTarget = pendingScrollTargetRef.current;
+
+        if (pendingTarget) {
+          const pendingElement = document.getElementById(pendingTarget.replace("#", ""));
+          const pendingTop = pendingElement?.getBoundingClientRect().top ?? 0;
+
+          if (Math.abs(pendingTop - SECTION_TARGET_TOP) <= 36) {
+            setActiveItem(pendingTarget);
+            pendingScrollTargetRef.current = null;
+            if (pendingScrollTimerRef.current) {
+              window.clearTimeout(pendingScrollTimerRef.current);
+              pendingScrollTimerRef.current = null;
+            }
+          }
+
+          ticking = false;
+          return;
+        }
+
+        const sections = siteConfig.navItems.map(item => item.href.replace("#", ""));
+        for (const section of sections.reverse()) {
+          const element = document.getElementById(section);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            if (rect.top <= SCROLL_SPY_ACTIVATION_TOP) {
+              setActiveItem(`#${section}`);
+              break;
+            }
+          }
+        }
+
+        ticking = false;
+      });
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (pendingScrollTimerRef.current) {
+        window.clearTimeout(pendingScrollTimerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const pendingTarget = pendingScrollTargetRef.current;
+
+    if (!pendingTarget) return;
+
+    const pendingElement = document.getElementById(pendingTarget.replace("#", ""));
+    const pendingTop = pendingElement?.getBoundingClientRect().top ?? 0;
+
+    if (Math.abs(pendingTop - SECTION_TARGET_TOP) <= 36) {
+      setActiveItem(pendingTarget);
+      pendingScrollTargetRef.current = null;
+      if (pendingScrollTimerRef.current) {
+        window.clearTimeout(pendingScrollTimerRef.current);
+        pendingScrollTimerRef.current = null;
+      }
+    }
+  }, [activeItem]);
+
+  useEffect(() => {
+    return () => {
+      if (pendingScrollTimerRef.current) {
+        window.clearTimeout(pendingScrollTimerRef.current);
+      }
+    };
   }, []);
 
   return (
-    <div className="fixed top-6 left-0 right-0 z-50 mx-auto w-full max-w-6xl px-4 pointer-events-none">
+    <motion.div
+      className="fixed top-6 left-0 right-0 z-50 mx-auto w-full max-w-6xl px-4 pointer-events-none"
+      initial={{ opacity: 0, y: -42, scale: 0.96 }}
+      animate={isIntroReady ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: -42, scale: 0.96 }}
+      transition={{ duration: 0.75, ease: easeOutExpo, delay: 0.08 }}
+    >
       <NextUINavbar 
         maxWidth="full" 
         position="static"
@@ -61,13 +169,8 @@ export const Navbar = () => {
               href="#home"
               onClick={(e) => {
                 e.preventDefault();
-                setActiveItem("#home");
                 setIsMenuOpen(false);
-                lenis?.scrollTo("#home", {
-                  offset: -80,
-                  duration: 1.5,
-                  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                });
+                scrollToSection("#home");
               }}
             >
               <Logo
@@ -91,12 +194,7 @@ export const Navbar = () => {
                     href={item.href}
                     onClick={(e) => {
                       e.preventDefault();
-                      setActiveItem(item.href);
-                      lenis?.scrollTo(item.href, {
-                        offset: -80,
-                        duration: 1.5,
-                        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-                      });
+                      scrollToSection(item.href);
                     }}
                   >
                     {item.label}
@@ -157,12 +255,8 @@ export const Navbar = () => {
                       href={item.href}
                       onClick={(e) => {
                         e.preventDefault();
-                        setActiveItem(item.href);
                         setIsMenuOpen(false);
-                        lenis?.scrollTo(item.href, {
-                          offset: -80,
-                          duration: 1.5
-                        });
+                        scrollToSection(item.href);
                       }}
                     >
                       <span>{item.label}</span>
@@ -179,6 +273,6 @@ export const Navbar = () => {
             </motion.div>
           )}
         </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };

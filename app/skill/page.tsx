@@ -7,13 +7,25 @@ import { motion } from "framer-motion";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
+const entrance = {
+  hidden: { opacity: 0, y: 58, scale: 0.96, filter: "blur(10px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
+
 const BentoCard = ({ children, className, delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      variants={entrance}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay }}
+      transition={{ delay }}
       className={`group relative overflow-hidden rounded-[2.5rem] border border-black/5 dark:border-white/5 bg-white/40 dark:bg-default-100/30 backdrop-blur-xl hover:border-turquoise/30 transition-all duration-500 flex flex-col p-6 md:p-8 ${className}`}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-turquoise/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -217,18 +229,25 @@ export default function SkillPage() {
   ];
 
   return (
-    <section id="skill" className="relative flex flex-col items-center justify-center gap-12 py-16 md:py-24 w-full max-w-6xl mx-auto px-6 overflow-hidden">
+    <section className="relative flex flex-col items-center justify-center gap-12 py-16 md:py-24 w-full max-w-6xl mx-auto px-6 overflow-hidden">
       {/* Giant Background Text Watermark */}
       <div className="absolute top-10 left-1/2 -translate-x-1/2 pointer-events-none select-none z-0 opacity-[0.04] dark:opacity-[0.08]">
         <h1 className="text-[12rem] md:text-[20rem] font-black tracking-tighter leading-none text-foreground whitespace-nowrap">SKILLS</h1>
       </div>
 
-      <div className="relative z-10 w-full mb-4 flex flex-col items-start">
+      <motion.div
+        id="skill"
+        variants={entrance}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        className="relative z-10 w-full mb-4 flex flex-col items-start"
+      >
         <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">Tech Stack</h2>
         <h3 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
           My <span className="text-turquoise italic font-serif font-light">Skills.</span>
         </h3>
-      </div>
+      </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 w-full mt-4">
         {categories.map((category) => (

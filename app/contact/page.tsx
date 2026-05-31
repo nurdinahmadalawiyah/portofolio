@@ -11,6 +11,17 @@ import {
 } from "@/components/icons";
 import { motion, Variants } from "framer-motion";
 
+const entrance = {
+  hidden: { opacity: 0, y: 58, scale: 0.96, filter: "blur(10px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
+
 export default function ContactPage() {
   const defaultSubject = "Hello Nurdin";
   const defaultBody = "Hi Nurdin,%0D%0A%0D%0AI'm reaching out regarding...";
@@ -68,27 +79,36 @@ export default function ContactPage() {
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, x: -20 },
+    hidden: { opacity: 0, x: -46, scale: 0.96, filter: "blur(8px)" },
     visible: { 
       opacity: 1, 
       x: 0,
-      transition: { duration: 0.5, ease: "easeOut" }
+      scale: 1,
+      filter: "blur(0px)",
+      transition: { duration: 0.68, ease: [0.16, 1, 0.3, 1] as const }
     }
   };
 
   return (
-    <section id="contact" className="relative flex flex-col items-center justify-center gap-12 py-16 md:py-24 w-full max-w-6xl mx-auto px-6 overflow-hidden">
+    <section className="relative flex flex-col items-center justify-center gap-12 py-16 md:py-24 w-full max-w-6xl mx-auto px-6 overflow-hidden">
       {/* Giant Background Text Watermark */}
       <div className="absolute top-10 left-1/2 -translate-x-1/2 pointer-events-none select-none z-0 opacity-[0.04] dark:opacity-[0.08]">
         <h1 className="text-[12rem] md:text-[20rem] font-black tracking-tighter leading-none text-foreground whitespace-nowrap">CONTACT</h1>
       </div>
 
-      <div className="relative z-10 w-full mb-4 flex flex-col items-start">
+      <motion.div
+        id="contact"
+        variants={entrance}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        className="relative z-10 w-full mb-4 flex flex-col items-start"
+      >
         <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">Let&apos;s connect</h2>
         <h3 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
           Get In <span className="text-turquoise italic font-serif font-light">Touch.</span>
         </h3>
-      </div>
+      </motion.div>
 
       <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 mt-8">
         {/* Social Cards Grid */}
@@ -97,7 +117,7 @@ export default function ContactPage() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-80px" }}
         >
           {contactItems.map((item, index) => (
             <motion.a
@@ -124,10 +144,10 @@ export default function ContactPage() {
 
         {/* Direct Contact Section */}
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          initial={{ opacity: 0, x: 54, scale: 0.96, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, x: 0, scale: 1, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
           className="w-full"
         >
           <Card className="border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md p-2 shadow-none transition-all duration-300">

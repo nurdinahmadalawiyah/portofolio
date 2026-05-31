@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { siteConfig } from "@/config/site";
+import { markIntroComplete } from "@/components/useIntroReady";
 
 export const SplashScreen = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -16,6 +17,7 @@ export const SplashScreen = () => {
     const timer = setTimeout(() => {
       setIsVisible(false);
       document.body.style.overflow = "";
+      markIntroComplete();
     }, 2000);
 
     return () => {
