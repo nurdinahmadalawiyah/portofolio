@@ -41,6 +41,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className="antialiased selection:bg-turquoise selection:text-black">
       <head />
       <body
+        suppressHydrationWarning
         className={clsx(
           "min-h-screen bg-background font-sans antialiased overflow-x-hidden"
         )}

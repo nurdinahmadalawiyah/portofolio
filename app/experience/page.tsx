@@ -22,6 +22,10 @@ const experienceStories = [
     desc: "My professional journey started here while I was in my final year of college, just before graduation. I began as a Frontend Developer intern, continued with backend on-the-job training, and was later contracted as a Software Developer. This phase shaped me to be adaptive across frontend, backend, and mobile development.",
   },
   {
+    title: "Returning to Jakarta for mobile development",
+    desc: "This is my second onsite assignment in Jakarta, this time as a Mobile Developer at PT. Prudential Life Assurance (Prudential Indonesia) through NTT DATA Indonesia. This chapter allows me to deepen my mobile development experience in a large corporate environment.",
+  },
+  {
     title: "Stepping into corporate work",
     desc: "This was my first outsourced and onsite assignment with a client company. I moved from Bandung to Jakarta, learned to live independently, and experienced working inside a large corporate environment. As a Full Stack Developer, I helped continue Victoria's core system using NestJS and Angular.",
   },
@@ -114,6 +118,7 @@ export default function ExperiencePage() {
                   <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-turquoise/30 bg-background shadow-[0_0_24px_rgb(var(--accent-color)/0.18)] md:h-16 md:w-16">
                     <Avatar
                       src={item.image}
+                      name={item.company}
                       className="h-7 w-7 border border-white/10 md:h-11 md:w-11"
                       radius="md"
                     />
@@ -144,6 +149,11 @@ export default function ExperiencePage() {
                         <p className="mt-2 text-xs font-bold uppercase tracking-[0.18em] text-default-500">
                           {item.alamat}
                         </p>
+                        {item.via && (
+                          <p className="mt-1 text-[11px] font-black uppercase tracking-[0.16em] text-turquoise/80">
+                            via {item.via}
+                          </p>
+                        )}
                       </div>
 
                       <div className="rounded-2xl border border-turquoise/20 bg-turquoise/10 px-4 py-3 text-left md:text-right">

@@ -184,11 +184,11 @@ export default function ProjectPage() {
             {project.jobDesc && (
               <div className="flex flex-col gap-3 p-4 md:p-5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5">
                 <h4 className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-turquoise font-black">Key Responsibilities:</h4>
-                <ul className="flex flex-col gap-2 max-h-32 overflow-y-auto custom-scrollbar">
+                <ul className="flex flex-col gap-2">
                   {project.jobDesc.map((job: string, jobIdx: number) => (
                     <li key={jobIdx} className="flex items-start gap-3 text-[11px] md:text-xs text-foreground/80 font-medium leading-snug">
                       <span className="w-1.5 h-1.5 rounded-full bg-turquoise mt-1.5 flex-shrink-0 shadow-[0_0_5px_rgb(var(--accent-color)/0.5)]" />
-                      {job}
+                      <span className="min-w-0 break-words">{job}</span>
                     </li>
                   ))}
                 </ul>
@@ -199,7 +199,7 @@ export default function ProjectPage() {
       </CardBody>
       
       <CardFooter className="px-6 md:px-8 pb-6 md:pb-8 pt-2 flex flex-wrap gap-3">
-        {!project.isPrivate && (
+        {!project.isPrivate && project.link && (
           <Button
             as="a"
             href={project.link}
@@ -390,21 +390,6 @@ export default function ProjectPage() {
         </div>
       </motion.div>
       
-      <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(var(--accent-color), 0.2);
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: rgba(var(--accent-color), 0.4);
-        }
-      `}</style>
     </section>
   );
 }

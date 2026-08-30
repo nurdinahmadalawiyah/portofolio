@@ -66,6 +66,21 @@ export const siteConfig = {
 				]
 		},
 		{
+			image: "/images/prudential.jpg",
+			company: "PT. Prudential Life Assurance (Prudential Indonesia)",
+			alamat: "South Jakarta, Jakarta, Indonesia",
+			via: "NTT DATA Indonesia",
+			experience:
+				[
+					{
+						position: "Mobile Developer",
+						type: "Onsite",
+						date: "June 2026 - Present",
+						duration: ""
+					}
+				]
+		},
+		{
 			image: "/images/victoria.png",
 			company: "PT. Victoria Investama, Tbk",
 			alamat: "South Jakarta, Jakarta, Indonesia",
@@ -95,6 +110,32 @@ export const siteConfig = {
 		}
 	],
 	project: [
+		{
+			name: "Civiku - Professional CV Builder",
+			desc: "A dynamic online CV generator built with Next.js. Features intuitive resume building using Zustand for efficient state management and a responsive, modern UI powered by Tailwind CSS and shadcn/ui.",
+			image: "/images/project/civiku/SCR-20260830-rxro.png",
+			web: "https://www.civiku.web.id/",
+			isPrivate: true,
+			date: "Jun 2026 - Aug 2026",
+			role: "Fullstack Developer",
+			customer: "Personal Project",
+			jobDesc: [
+				"Developing a dynamic online CV builder with Next.js",
+				"Designing intuitive resume-building flows for structured profile and experience data",
+				"Implementing efficient application state management with Zustand",
+				"Building a responsive and modern user interface with Tailwind CSS and shadcn/ui"
+			],
+			tech: [
+				{
+					name: "Next.js",
+					image: "/icons/next-icon.svg"
+				},
+				{
+					name: "TypeScript",
+					image: "/icons/typescript-icon.svg"
+				}
+			]
+		},
 		{
 			name: "Deep Link Diagnostics Tool",
 			desc: "A modern Next.js SPA that helps mobile developers instantly validate their server-side configurations for iOS Universal Links and Android App Links.",
@@ -162,6 +203,36 @@ export const siteConfig = {
 				{
 					name: "MongoDB",
 					image: "/icons/mongodb-icon.svg"
+				}
+			]
+		},
+		{
+			name: "ITCH MME",
+			desc: "Built a high-throughput data ingestion and transformation pipeline in C++. Managed the consumer process to collect exchange data into MongoDB and developed the parsing logic to extract, process, and load the data into MariaDB for the core ETL pipeline.",
+			image: "/images/project/ksei/Screenshot 2026-08-30 at 20.16.45.png",
+			link: "#",
+			isPrivate: true,
+			date: "Jan 2026 - Apr 2026",
+			customer: "PT. Kustodian Sentral Efek Indonesia",
+			role: "Backend Developer",
+			jobDesc: [
+				"Building a high-throughput data ingestion and transformation pipeline using C++",
+				"Managing the consumer process to collect exchange data and persist it in MongoDB",
+				"Developing parsing logic to extract and process incoming exchange data",
+				"Loading transformed data into MariaDB as part of the core ETL pipeline"
+			],
+			tech: [
+				{
+					name: "C++",
+					image: "/icons/cpp-icon.svg"
+				},
+				{
+					name: "MongoDB",
+					image: "/icons/mongodb-icon.svg"
+				},
+				{
+					name: "MariaDB",
+					image: "/icons/mysql-icon.svg"
 				}
 			]
 		},
