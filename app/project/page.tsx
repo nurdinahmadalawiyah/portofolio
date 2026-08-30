@@ -199,7 +199,7 @@ export default function ProjectPage() {
       </CardBody>
       
       <CardFooter className="px-6 md:px-8 pb-6 md:pb-8 pt-2 flex flex-wrap gap-3">
-        {!project.isPrivate && (
+        {!project.isPrivate && project.link && (
           <Button
             as="a"
             href={project.link}

@@ -96,6 +96,30 @@ export const siteConfig = {
 	],
 	project: [
 		{
+			name: "Civiku - Professional CV Builder",
+			desc: "A dynamic online CV generator built with Next.js. Features intuitive resume building using Zustand for efficient state management and a responsive, modern UI powered by Tailwind CSS and shadcn/ui.",
+			image: "/images/project/civiku/SCR-20260830-rxro.png",
+			date: "Jun 2026 - Aug 2026",
+			role: "Fullstack Developer",
+			customer: "Personal Project",
+			jobDesc: [
+				"Developing a dynamic online CV builder with Next.js",
+				"Designing intuitive resume-building flows for structured profile and experience data",
+				"Implementing efficient application state management with Zustand",
+				"Building a responsive and modern user interface with Tailwind CSS and shadcn/ui"
+			],
+			tech: [
+				{
+					name: "Next.js",
+					image: "/icons/next-icon.svg"
+				},
+				{
+					name: "TypeScript",
+					image: "/icons/typescript-icon.svg"
+				}
+			]
+		},
+		{
 			name: "Deep Link Diagnostics Tool",
 			desc: "A modern Next.js SPA that helps mobile developers instantly validate their server-side configurations for iOS Universal Links and Android App Links.",
 			image: "/images/project/deep_link/Screenshot 2026-05-24 162132.png",
