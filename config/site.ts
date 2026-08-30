@@ -66,6 +66,21 @@ export const siteConfig = {
 				]
 		},
 		{
+			image: "/images/prudential.jpg",
+			company: "PT. Prudential Life Assurance (Prudential Indonesia)",
+			alamat: "South Jakarta, Jakarta, Indonesia",
+			via: "NTT DATA Indonesia",
+			experience:
+				[
+					{
+						position: "Mobile Developer",
+						type: "Onsite",
+						date: "June 2026 - Present",
+						duration: ""
+					}
+				]
+		},
+		{
 			image: "/images/victoria.png",
 			company: "PT. Victoria Investama, Tbk",
 			alamat: "South Jakarta, Jakarta, Indonesia",
