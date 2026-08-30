@@ -166,6 +166,36 @@ export const siteConfig = {
 			]
 		},
 		{
+			name: "ITCH MME",
+			desc: "Built a high-throughput data ingestion and transformation pipeline in C++. Managed the consumer process to collect exchange data into MongoDB and developed the parsing logic to extract, process, and load the data into MariaDB for the core ETL pipeline.",
+			image: "/images/project/ksei/Screenshot 2026-08-30 at 20.16.45.png",
+			link: "#",
+			isPrivate: true,
+			date: "Jan 2026 - Apr 2026",
+			customer: "PT. Kustodian Sentral Efek Indonesia",
+			role: "Backend Developer",
+			jobDesc: [
+				"Building a high-throughput data ingestion and transformation pipeline using C++",
+				"Managing the consumer process to collect exchange data and persist it in MongoDB",
+				"Developing parsing logic to extract and process incoming exchange data",
+				"Loading transformed data into MariaDB as part of the core ETL pipeline"
+			],
+			tech: [
+				{
+					name: "C++",
+					image: "/icons/cpp-icon.svg"
+				},
+				{
+					name: "MongoDB",
+					image: "/icons/mongodb-icon.svg"
+				},
+				{
+					name: "MariaDB",
+					image: "/icons/mysql-icon.svg"
+				}
+			]
+		},
+		{
 			name: "ZenDo",
 			desc: "A modern Android productivity app combining Pomodoro Technique with efficient Task Management. Built using the latest Android standards for a seamless focused experience.",
 			image: "/images/project/zendo/Gemini_Generated_Image_mly7xjmly7xjmly7.png",
