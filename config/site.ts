@@ -1,18 +1,23 @@
-export type SiteConfig = typeof siteConfig;
+const startDate = new Date("2022-07-01"); // Awal magang di Crop Inspirasi Digital
+const today = new Date();
+let yearsOfExperience = today.getFullYear() - startDate.getFullYear();
+if (today.getMonth() < startDate.getMonth() || (today.getMonth() === startDate.getMonth() && today.getDate() < startDate.getDate())) {
+    yearsOfExperience--;
+}
 
 export const siteConfig = {
 	name: "Nurdin A. Alawiyah",
 	home: {
 		greatings: "Hi, I'm Nurdin A. Alawiyah",
 		role: ["I'm a Frontend Developer", "I'm a Mobile Developer", "I'm a Backend Developer", "I'm a Fullstack Developer"],
-		description: "A Fullstack Developer with 4+ years of experience and a strong specialization in mobile application development, driving end-to-end software solutions from enterprise core systems to engaging super apps using modern technologies to build scalable and user-centric applications.",
+		description: `A Fullstack Developer with ${yearsOfExperience}+ years of experience and a strong specialization in mobile application development, driving end-to-end software solutions from enterprise core systems to engaging super apps using modern technologies to build scalable and user-centric applications.`,
 	},
 	about: {
 		desc: "I'm Nurdin A. Alawiyah a fullstack developer who genuinely enjoys building things with code. My strongest area is mobile development, but I'm equally comfortable working across web and backend. I believe the best way to grow is by staying curious, so I'm always picking up new tools and technologies through online courses and side projects outside of work.",
 		highlights: [
 			{
 				label: "Experience",
-				value: "3+ Years",
+				value: `${yearsOfExperience}+ Years`,
 				icon: "Briefcase"
 			},
 			{
@@ -49,19 +54,34 @@ export const siteConfig = {
 						position: "Software Developer",
 						type: "Contract",
 						date: "September 2023 - Present",
-						duration: ""
+						duration: "",
+						jobDesc: [
+							"Worked across frontend web, backend, and mobile development, adapting to different project requirements and technology stacks.",
+							"Contributed to end-to-end software development, from understanding business requirements and implementing features to testing, debugging, and deployment.",
+							"Assigned to various projects and client environments, adapting to different development workflows, technical requirements, and stakeholder expectations.",
+							"Collaborated with cross-functional teams to deliver software solutions based on project and client needs.",
+						]
 					},
 					{
 						position: "Backend Developer",
 						type: "On Job Training",
 						date: "June 2023 - September 2023",
-						duration: "3 Months"
+						duration: "3 Months",
+						jobDesc: [
+							"Developed and maintained RESTful API endpoints to support seamless integration between server and client applications.",
+							"Assisted in managing database systems, utilizing PostgreSQL to ensure reliable data operations.",
+							"Collaborated with senior developers to identify bugs, perform troubleshooting, and optimize overall backend performance.",
+						]
 					},
 					{
 						position: "Frontend Web Developer",
 						type: "Internship",
 						date: "March 2023 - May 2023",
-						duration: "3 Months"
+						duration: "3 Months",
+						jobDesc: [
+							"Translated UI/UX design mockups from Figma into interactive, dynamic, and accessible web page components.",
+							"Integrated frontend interfaces with API services to ensure a smooth and accurate data flow from the server to the end user.",
+						]
 					}
 				]
 		},
@@ -76,7 +96,12 @@ export const siteConfig = {
 						position: "Mobile Developer",
 						type: "Onsite",
 						date: "June 2026 - Present",
-						duration: ""
+						duration: "",
+						jobDesc: [
+							"Developed and maintained cross-platform mobile applications using Flutter and Dart for Prudential Indonesia.",
+							"Implemented new features and enhancements based on business requirements, ensuring a smooth and consistent user experience.",
+							"Integrated RESTful APIs and handled data flow between mobile applications and backend services.",
+						]
 					}
 				]
 		},
@@ -90,7 +115,14 @@ export const siteConfig = {
 						position: "Full Stack Developer",
 						type: "Contract",
 						date: "June 2024 - May 2025",
-						duration: "1 Year"
+						duration: "1 Year",
+						jobDesc: [
+							"Developed and maintained robust end-to-end web applications, utilizing Angular to build responsive user interfaces and NestJS to construct scalable server-side architectures.",
+							"Engineered efficient data pipelines and storage solutions using MongoDB for flexible, document-based data management.",
+							"Optimized application performance by implementing Redis for high-speed caching and session management.",
+							"Designed asynchronous task processing and reliable message queuing systems using BullMQ to handle background jobs without blocking main application workflows.",
+							"Collaborated directly with cross-functional teams in an onsite environment to gather business requirements, perform rapid troubleshooting, and ensure software deliverables met corporate standards.",
+						]
 					}
 				]
 		},
@@ -104,7 +136,13 @@ export const siteConfig = {
 						position: "Mobile Developer",
 						type: "Internship",
 						date: "July 2022 - December 2022",
-						duration: "6 Months"
+						duration: "6 Months",
+						jobDesc: [
+							"Developed mobile applications for Android using the Flutter framework.",
+							"Built responsive and intuitive user interfaces, translating UI/UX design mockups into functional mobile screens using customized Flutter widgets.",
+							"Integrated RESTful APIs to fetch, process, and display dynamic data, ensuring seamless communication between the mobile application and backend services.",
+							"Collaborated with the technical team to troubleshoot issues, debug code, and learn industry-standard mobile development workflows.",
+						]
 					}
 				]
 		}
@@ -615,3 +653,5 @@ export const siteConfig = {
 		cv: "CV - Nurdin A. Alawiyah.pdf"
 	},
 };
+
+export type SiteConfig = typeof siteConfig;

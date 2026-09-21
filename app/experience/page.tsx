@@ -1,6 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { Card, CardBody } from "@heroui/card";
+import { Button } from "@heroui/button";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@heroui/modal";
 import { siteConfig } from "@/config/site";
 import { Avatar } from "@heroui/avatar";
 import { motion } from "framer-motion";
@@ -35,7 +38,15 @@ const experienceStories = [
   },
 ];
 
+type ModalState = {
+  isOpen: boolean;
+  position: string;
+  jobDesc: string[];
+};
+
 export default function ExperiencePage() {
+  const [modal, setModal] = useState<ModalState>({ isOpen: false, position: "", jobDesc: [] });
+
   const calculateDuration = (dateString: string) => {
     try {
       const [start, end] = dateString.split(" - ");
@@ -167,16 +178,23 @@ export default function ExperiencePage() {
                     </div>
 
                     <div className="flex flex-col gap-4">
-                      {item.experience.map((experience, experienceIndex) => (
+                      {item.experience.map((experience: any, experienceIndex: number) => (
                         <div
                           key={`${item.company}-${experienceIndex}`}
-                          className="group/role relative rounded-2xl border border-black/10 bg-background/50 p-4 transition-all duration-300 hover:border-turquoise/30 hover:bg-turquoise/[0.04] dark:border-white/10"
+                          onClick={() => {
+                            if (experience.jobDesc) {
+                              setModal({ isOpen: true, position: experience.position, jobDesc: experience.jobDesc });
+                            }
+                          }}
+                          className={`group/role relative rounded-2xl border border-black/10 bg-background/50 p-4 transition-all duration-300 hover:border-turquoise/30 hover:bg-turquoise/[0.04] dark:border-white/10 ${experience.jobDesc ? "cursor-pointer" : ""}`}
                         >
                           <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                            <div>
-                              <h5 className="text-lg font-black leading-tight text-foreground md:text-xl">
-                                {experience.position}
-                              </h5>
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2">
+                                <h5 className="text-lg font-black leading-tight text-foreground md:text-xl group-hover/role:text-turquoise transition-colors">
+                                  {experience.position}
+                                </h5>
+                              </div>
                               <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-bold text-default-500">
                                 <span>{experience.date}</span>
                                 {(experience.duration || calculateDuration(experience.date)) && (
@@ -204,6 +222,41 @@ export default function ExperiencePage() {
           })}
         </div>
       </motion.div>
+
+      {/* Role Detail Modal */}
+      <Modal
+        isOpen={modal.isOpen}
+        onOpenChange={(open) => setModal((prev) => ({ ...prev, isOpen: open }))}
+        backdrop="blur"
+        classNames={{
+          base: "bg-background/80 backdrop-blur-md border border-white/10 shadow-2xl",
+        }}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1 text-turquoise uppercase tracking-[0.2em] font-black text-sm">
+                {modal.position}
+              </ModalHeader>
+              <ModalBody>
+                <ul className="flex flex-col gap-4 py-2">
+                  {modal.jobDesc.map((job, i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm text-foreground/80 font-medium leading-relaxed">
+                      <span className="w-2 h-2 rounded-full bg-turquoise mt-1.5 flex-shrink-0 shadow-[0_0_5px_rgb(var(--accent-color)/0.5)]" />
+                      <span className="min-w-0 break-words">{job}</span>
+                    </li>
+                  ))}
+                </ul>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="default" variant="light" onPress={onClose} className="font-bold">
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </section>
   );
 }

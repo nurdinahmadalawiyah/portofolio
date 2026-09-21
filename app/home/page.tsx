@@ -83,7 +83,15 @@ export default function HomePage() {
         </motion.div>
 
         <motion.p variants={heroItem} className="mt-6 text-base md:text-xl text-default-500 font-medium leading-[1.6] w-full max-w-2xl mx-auto">
-          A <span className="text-foreground font-bold">Fullstack Developer</span> with <span className="text-turquoise font-bold">4+ years of experience</span> and a strong specialization in <span className="text-turquoise font-bold">mobile application development</span>.
+          A <span className="text-foreground font-bold">Fullstack Developer</span> with <span className="text-turquoise font-bold">
+            {(() => {
+              const start = new Date("2022-07-01");
+              const now = new Date();
+              let y = now.getFullYear() - start.getFullYear();
+              if (now.getMonth() < start.getMonth() || (now.getMonth() === start.getMonth() && now.getDate() < start.getDate())) y--;
+              return y;
+            })()}+ years of experience
+          </span> and a strong specialization in <span className="text-turquoise font-bold">mobile application development</span>.
         </motion.p>
       </motion.div>
 
