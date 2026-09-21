@@ -102,11 +102,8 @@ export default function ProjectPage() {
   };
 
   const ProjectCard = ({ project }: { project: any }) => (
-    <Card 
-      isBlurred
-      className="border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md shadow-none h-full flex flex-col overflow-hidden group/card select-none transition-all duration-300"
-    >
-      <CardBody className="p-0 flex flex-col flex-grow">
+    <div className="rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md hover:border-turquoise/50 transition-all duration-300 shadow-none h-full flex flex-col overflow-clip group/card select-none">
+      <div className="p-0 flex flex-col flex-grow">
         <div className="relative h-36 md:h-44 w-full bg-gradient-to-br from-turquoise/20 to-blue-500/10 overflow-hidden flex-shrink-0">
           <div className="absolute inset-0 bg-black/20 group-hover/card:bg-transparent transition-colors duration-500" />
           
@@ -196,9 +193,9 @@ export default function ProjectPage() {
             )}
           </div>
         </div>
-      </CardBody>
+      </div>
       
-      <CardFooter className="px-6 md:px-8 pb-6 md:pb-8 pt-2 flex flex-wrap gap-3">
+      <div className="px-6 md:px-8 pb-6 md:pb-8 pt-2 flex flex-wrap gap-3">
         {!project.isPrivate && project.link && (
           <Button
             as="a"
@@ -243,8 +240,8 @@ export default function ProjectPage() {
             Play Store
           </Button>
         )}
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   );
 
   return (
@@ -336,7 +333,7 @@ export default function ProjectPage() {
 
           <div 
             ref={containerRef}
-            className="overflow-hidden cursor-grab active:cursor-grabbing"
+            className="overflow-clip cursor-grab active:cursor-grabbing"
           >
             <motion.div 
               drag={totalPages > 1 ? "x" : false}

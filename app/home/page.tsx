@@ -64,85 +64,60 @@ export default function HomePage() {
   };
 
   return (
-    <section className="relative grid grid-cols-1 lg:grid-cols-[50%_50%] gap-12 py-20 min-h-[90vh] items-center w-full max-w-6xl mx-auto">
-      <div className="w-full text-center lg:text-start z-10 overflow-visible">
-        <motion.div
-          variants={heroGroup}
-          initial="hidden"
-          animate={isIntroReady ? "visible" : "hidden"}
-        >
-          <motion.h1 variants={heroItem} className={`${title({ size: "sm" })} leading-[1.2] block`}>
-            Hi, I&apos;m <span className={title({ color: "turqoise", size: "md" })}>Nurdin A. Alawiyah</span>
-          </motion.h1>
+    <section className="relative flex flex-col items-center justify-center text-center py-32 min-h-[90vh] w-full max-w-5xl mx-auto px-4">
+      <motion.div
+        variants={heroGroup}
+        initial="hidden"
+        animate={isIntroReady ? "visible" : "hidden"}
+        className="w-full flex flex-col items-center"
+      >
+        <motion.h1 variants={heroItem} className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-foreground leading-[1.05] block">
+          Hi, I&apos;m<br/>
+          <span className="text-turquoise">Nurdin A. Alawiyah</span>
+        </motion.h1>
 
-          <motion.div variants={heroItem} className="mt-4 md:mt-5 min-h-[32px] md:min-h-[40px] flex items-center justify-center lg:justify-start overflow-visible">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-medium text-foreground/80 tracking-tight">
-              <TypedDescription />
-            </h2>
-          </motion.div>
-
-          <motion.p variants={heroItem} className="mt-4 md:mt-5 text-base md:text-lg text-default-500 leading-[1.8] w-full max-w-lg lg:max-w-none">
-            A{" "}
-            <span className="text-foreground font-semibold">fullstack developer</span>{" "}
-            with a strong passion for{" "}
-            <span className="text-turquoise font-semibold">mobile development</span>.
-            I love turning ideas into real products and I&apos;m always excited to{" "}
-            <span className="text-turquoise font-semibold">learn new technologies</span>{" "}
-            along the way.
-          </motion.p>
+        <motion.div variants={heroItem} className="mt-6 md:mt-8 min-h-[32px] md:min-h-[40px] flex items-center justify-center overflow-visible">
+          <h2 className="text-lg md:text-xl lg:text-2xl font-extrabold text-foreground/80 tracking-tight uppercase">
+            <TypedDescription />
+          </h2>
         </motion.div>
 
-        <motion.div
-          className="mt-10 flex flex-col gap-8 items-center lg:items-start"
-          variants={heroGroup}
-          initial="hidden"
-          animate={isIntroReady ? "visible" : "hidden"}
-        >
-          <div className="flex flex-col sm:flex-row items-center gap-4">
-            <motion.div variants={buttonItem}>
-              <Button
-                variant="solid"
-                size="lg"
-                className="bg-foreground text-background font-medium px-8 h-12 rounded-full hover:scale-105 transition-transform"
-                onClick={scrollToProject}
-              >
-                Explore Project
-              </Button>
-            </motion.div>
+        <motion.p variants={heroItem} className="mt-6 text-base md:text-xl text-default-500 font-medium leading-[1.6] w-full max-w-2xl mx-auto">
+          A <span className="text-foreground font-bold">Fullstack Developer</span> with <span className="text-turquoise font-bold">4+ years of experience</span> and a strong specialization in <span className="text-turquoise font-bold">mobile application development</span>.
+        </motion.p>
+      </motion.div>
 
-            <motion.div variants={buttonItem}>
-              <Button
-                isExternal
-                as={Link}
-                variant="bordered"
-                size="lg"
-                className="bg-transparent border border-foreground/20 text-foreground hover:bg-foreground/5 font-medium px-8 h-12 rounded-full transition-colors"
-                href={siteConfig.links.cv}
-                startContent={<DownloadIcon size={18} />}
-              >
-                Download CV
-              </Button>
-            </motion.div>
-          </div>
+      <motion.div
+        className="mt-10 flex flex-col sm:flex-row items-center gap-4 justify-center w-full"
+        variants={heroGroup}
+        initial="hidden"
+        animate={isIntroReady ? "visible" : "hidden"}
+      >
+        <motion.div variants={buttonItem}>
+          <Button
+            variant="solid"
+            size="lg"
+            className="bg-turquoise text-white dark:text-black font-extrabold px-8 h-12 rounded-full hover:bg-turquoise/80 hover:scale-105 transition-all"
+            onClick={scrollToProject}
+          >
+            Explore Projects
+          </Button>
         </motion.div>
-      </div>
 
-      <div className="flex justify-center lg:justify-end z-10 w-full overflow-visible">
-        <motion.div
-          className="relative lg:block overflow-visible"
-          initial={{ opacity: 0, scale: 0.9, filter: "blur(4px)" }}
-          animate={isIntroReady ? { opacity: 1, scale: 1, filter: "blur(0px)" } : { opacity: 0, scale: 0.9, filter: "blur(4px)" }}
-          transition={{ duration: 0.8, ease: easeOutExpo, delay: 0.2 }}
-        >
-          <div className="relative w-[280px] h-[280px] md:w-[380px] md:h-[380px] z-10 mx-auto">
-            <motion.img
-              alt="Nurdin A. Alawiyah"
-              className="absolute inset-0 object-cover rounded-3xl border border-foreground/10 shadow-sm w-full h-full"
-              src="/images/nurdin1-new.jpeg"
-            />
-          </div>
+        <motion.div variants={buttonItem}>
+          <Button
+            isExternal
+            as={Link}
+            variant="bordered"
+            size="lg"
+            className="bg-transparent border-2 border-foreground/20 text-foreground hover:border-foreground/60 hover:bg-foreground/5 font-bold px-8 h-12 rounded-full transition-all"
+            href={siteConfig.links.cv}
+            startContent={<DownloadIcon size={18} />}
+          >
+            Download CV
+          </Button>
         </motion.div>
-      </div>
+      </motion.div>
 
     </section>
   );

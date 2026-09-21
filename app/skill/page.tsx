@@ -26,9 +26,8 @@ const BentoCard = ({ children, className, delay = 0 }: { children: React.ReactNo
       whileInView="visible"
       viewport={{ once: true }}
       transition={{ delay }}
-      className={`group relative overflow-hidden rounded-[2.5rem] border border-black/5 dark:border-white/5 bg-white/40 dark:bg-default-100/30 backdrop-blur-xl hover:border-turquoise/30 transition-all duration-500 flex flex-col p-6 md:p-8 ${className}`}
+      className={`group relative overflow-clip rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md hover:border-turquoise/50 transition-all duration-300 shadow-none flex flex-col p-6 md:p-8 ${className}`}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-turquoise/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       <div className="relative z-10 h-full flex flex-col">
         {children}
       </div>

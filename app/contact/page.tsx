@@ -127,7 +127,7 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               variants={itemVariants}
               whileHover={{ scale: 1.02, translateY: -5 }}
-              className="flex items-center gap-4 p-5 rounded-2xl border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md hover:border-turquoise/50 transition-all duration-300 group overflow-hidden shadow-none"
+              className="flex items-center gap-4 p-5 rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md hover:border-turquoise/50 transition-all duration-300 group overflow-clip shadow-none"
             >
               <div className={`p-3 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 group-hover:border-turquoise/30 transition-colors flex-shrink-0`}>
                 {item.icon}
@@ -150,8 +150,8 @@ export default function ContactPage() {
           transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
           className="w-full"
         >
-          <Card className="border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md p-2 shadow-none transition-all duration-300">
-            <CardBody className="p-8 flex flex-col gap-6">
+          <div className="rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md shadow-none transition-all duration-300">
+            <div className="p-8 flex flex-col gap-6">
               <div className="flex flex-col gap-2">
                 <span className="text-[10px] uppercase tracking-widest text-turquoise font-black ml-1">Direct message</span>
                 <h4 className="text-2xl md:text-3xl font-black tracking-tight text-foreground">
@@ -203,8 +203,8 @@ export default function ContactPage() {
               >
                 Download CV
               </motion.a>
-            </CardBody>
-          </Card>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

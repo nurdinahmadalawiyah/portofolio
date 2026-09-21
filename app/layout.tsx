@@ -48,7 +48,7 @@ export default function RootLayout({
       <body
         suppressHydrationWarning
         className={clsx(
-          "min-h-screen bg-background font-sans antialiased overflow-x-hidden",
+          "min-h-screen bg-background text-foreground font-sans antialiased overflow-x-hidden",
           plusJakartaSans.variable
         )}
       >
@@ -58,6 +58,7 @@ export default function RootLayout({
           <ScrollToTop />
           <SmoothScroll>
             <div className="relative z-10 flex flex-col min-h-screen bg-transparent">
+              <div className="absolute top-0 left-0 w-full h-[100vh] bg-ld-grid z-[-1] pointer-events-none [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)]" />
               <main className="container mx-auto max-w-6xl pt-16 px-4 flex-grow">
                 {children}
                 <Analytics />
