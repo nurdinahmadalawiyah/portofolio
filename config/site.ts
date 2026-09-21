@@ -1,18 +1,23 @@
-export type SiteConfig = typeof siteConfig;
+const startDate = new Date("2022-07-01"); // Awal magang di Crop Inspirasi Digital
+const today = new Date();
+let yearsOfExperience = today.getFullYear() - startDate.getFullYear();
+if (today.getMonth() < startDate.getMonth() || (today.getMonth() === startDate.getMonth() && today.getDate() < startDate.getDate())) {
+    yearsOfExperience--;
+}
 
 export const siteConfig = {
 	name: "Nurdin A. Alawiyah",
 	home: {
 		greatings: "Hi, I'm Nurdin A. Alawiyah",
 		role: ["I'm a Frontend Developer", "I'm a Mobile Developer", "I'm a Backend Developer", "I'm a Fullstack Developer"],
-		description: "A Fullstack Developer with 4+ years of experience and a strong specialization in mobile application development, driving end-to-end software solutions from enterprise core systems to engaging super apps using modern technologies to build scalable and user-centric applications.",
+		description: `A Fullstack Developer with ${yearsOfExperience}+ years of experience and a strong specialization in mobile application development, driving end-to-end software solutions from enterprise core systems to engaging super apps using modern technologies to build scalable and user-centric applications.`,
 	},
 	about: {
 		desc: "I'm Nurdin A. Alawiyah a fullstack developer who genuinely enjoys building things with code. My strongest area is mobile development, but I'm equally comfortable working across web and backend. I believe the best way to grow is by staying curious, so I'm always picking up new tools and technologies through online courses and side projects outside of work.",
 		highlights: [
 			{
 				label: "Experience",
-				value: "3+ Years",
+				value: `${yearsOfExperience}+ Years`,
 				icon: "Briefcase"
 			},
 			{
@@ -615,3 +620,5 @@ export const siteConfig = {
 		cv: "CV - Nurdin A. Alawiyah.pdf"
 	},
 };
+
+export type SiteConfig = typeof siteConfig;
