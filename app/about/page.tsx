@@ -50,7 +50,6 @@ export default function AboutPage() {
     return parts;
   };
 
-  // Helper component for Bento Cards with hover effect
   const BentoCard = ({ children, className, delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) => (
     <motion.div
       variants={entrance}
@@ -58,10 +57,8 @@ export default function AboutPage() {
       whileInView="visible"
       viewport={{ once: true }}
       transition={{ delay }}
-      className={`relative group rounded-[2.5rem] border border-black/5 dark:border-white/5 bg-white/40 dark:bg-default-100/30 overflow-hidden backdrop-blur-xl hover:border-turquoise/30 transition-all duration-500 ${className}`}
+      className={`relative group rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md hover:border-turquoise/50 transition-all duration-300 overflow-clip shadow-none ${className}`}
     >
-      {/* Subtle hover gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-turquoise/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       <div className="relative z-10 h-full w-full p-8 md:p-10 flex flex-col">
         {children}
       </div>
@@ -97,9 +94,6 @@ export default function AboutPage() {
         <BentoCard className="md:col-span-2 md:row-span-2 flex flex-col justify-between" delay={0.1}>
           <div className="flex justify-between items-start mb-8">
             <div className="w-12 h-1 bg-turquoise rounded-full" />
-            <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-turquoise/30 shadow-[0_0_20px_rgba(44,231,241,0.2)]">
-              <Image src="images/nurdin-circle-new.jpg" alt="Nurdin" className="w-full h-full object-cover" />
-            </div>
           </div>
           <div className="space-y-4">
             <h4 className="text-2xl font-black tracking-tight">Nurdin A. Alawiyah</h4>
@@ -119,25 +113,28 @@ export default function AboutPage() {
           </span>
         </BentoCard>
 
-        {/* Card 3: Highlight 2 (1x1) */}
-        <BentoCard className="md:col-span-1 md:row-span-1 flex flex-col items-center justify-center text-center" delay={0.3}>
-          <span className="text-sm uppercase tracking-[0.2em] text-default-400 font-bold mb-2">
-            {siteConfig.about.highlights?.[1]?.label}
-          </span>
-          <span className="text-2xl md:text-3xl font-black text-foreground tracking-tight">
-            {siteConfig.about.highlights?.[1]?.value}
-          </span>
-        </BentoCard>
+        {/* Card 3: Photo (1x1) */}
+        <motion.div
+          variants={entrance}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="relative group rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md overflow-clip md:col-span-1 md:row-span-1 h-full min-h-[220px]"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-turquoise/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none" />
+          <img src="/images/nurdin1-new.jpeg" alt="Nurdin A. Alawiyah" className="absolute inset-0 w-full h-full object-cover z-0 hover:scale-105 transition-transform duration-700" />
+        </motion.div>
 
-        {/* Card 4: Highlight 3 (Spans 2x1 to fill the gap) */}
+        {/* Card 4: Highlight 3 -> Now Education (Spans 2x1 to fill the gap) */}
         <BentoCard className="md:col-span-2 md:row-span-1 flex flex-col items-start justify-center bg-turquoise/5 border-turquoise/20" delay={0.4}>
           <div className="flex w-full items-center justify-between">
             <div>
               <span className="text-sm uppercase tracking-[0.2em] text-turquoise font-bold mb-2 block">
-                {siteConfig.about.highlights?.[2]?.label}
+                {siteConfig.about.highlights?.[1]?.label}
               </span>
-              <span className="text-3xl md:text-4xl font-black text-foreground">
-                {siteConfig.about.highlights?.[2]?.value}
+              <span className="text-2xl md:text-3xl font-black text-foreground">
+                {siteConfig.about.highlights?.[1]?.value}
               </span>
             </div>
             <div className="text-turquoise opacity-50">

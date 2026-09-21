@@ -16,6 +16,14 @@
   }
 }
 
+@layer utilities {
+  .bg-ld-grid {
+    background-size: 32px 32px;
+    background-image: linear-gradient(to right, rgb(var(--accent-color) / 0.05) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgb(var(--accent-color) / 0.05) 1px, transparent 1px);
+  }
+}
+
 /* Prevent NextUI Navbar from forcing width beyond viewport */
 @layer components {
   [data-slot="base"].navbar {

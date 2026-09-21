@@ -5,7 +5,7 @@ export const siteConfig = {
 	home: {
 		greatings: "Hi, I'm Nurdin A. Alawiyah",
 		role: ["I'm a Frontend Developer", "I'm a Mobile Developer", "I'm a Backend Developer", "I'm a Fullstack Developer"],
-		description: "A fullstack developer with a strong passion for mobile development. I love turning ideas into real products and I'm always excited to learn new technologies along the way.",
+		description: "A Fullstack Developer with 4+ years of experience and a strong specialization in mobile application development, driving end-to-end software solutions from enterprise core systems to engaging super apps using modern technologies to build scalable and user-centric applications.",
 	},
 	about: {
 		desc: "I'm Nurdin A. Alawiyah a fullstack developer who genuinely enjoys building things with code. My strongest area is mobile development, but I'm equally comfortable working across web and backend. I believe the best way to grow is by staying curious, so I'm always picking up new tools and technologies through online courses and side projects outside of work.",

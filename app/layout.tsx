@@ -6,9 +6,14 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scrollToTop";
 import SmoothScroll from "@/components/smoothScroll";
-import { SplashScreen } from "@/components/splash-screen";
 import clsx from "clsx";
 import { Analytics } from "@vercel/analytics/react";
+import { Plus_Jakarta_Sans } from "next/font/google";
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 import { Viewport } from "next";
 
@@ -43,21 +48,17 @@ export default function RootLayout({
       <body
         suppressHydrationWarning
         className={clsx(
-          "min-h-screen bg-background font-sans antialiased overflow-x-hidden"
+          "min-h-screen bg-background text-foreground font-sans antialiased overflow-x-hidden",
+          plusJakartaSans.variable
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "system", enableSystem: true, storageKey: "portofolio-theme" }}>
-          <SplashScreen />
-          {/* Global Ambient Glows */}
-          <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-            <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-turquoise/20 rounded-full blur-[120px] animate-glow-1" />
-            <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-turquoise/10 rounded-full blur-[120px] animate-glow-2" />
-          </div>
           
           <Navbar />
           <ScrollToTop />
           <SmoothScroll>
             <div className="relative z-10 flex flex-col min-h-screen bg-transparent">
+              <div className="absolute top-0 left-0 w-full h-[100vh] bg-ld-grid z-[-1] pointer-events-none [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)]" />
               <main className="container mx-auto max-w-6xl pt-16 px-4 flex-grow">
                 {children}
                 <Analytics />
