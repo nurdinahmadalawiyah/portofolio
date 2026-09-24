@@ -135,6 +135,7 @@ const ProjectCard = ({ project }: { project: any }) => {
                 isOpen={isOpen} 
                 onOpenChange={setIsOpen} 
                 backdrop="blur" 
+                scrollBehavior="inside"
                 classNames={{
                   base: "bg-background/80 backdrop-blur-md border border-white/10 shadow-2xl",
                 }}
@@ -145,7 +146,7 @@ const ProjectCard = ({ project }: { project: any }) => {
                       <ModalHeader className="flex flex-col gap-1 text-turquoise uppercase tracking-[0.2em] font-black text-sm">
                         Responsibilities - {project.name}
                       </ModalHeader>
-                      <ModalBody>
+                      <ModalBody className="min-h-0 overflow-y-auto overscroll-contain" data-lenis-prevent>
                         <ul className="flex flex-col gap-4 py-2">
                           {project.jobDesc.map((job: string, jobIdx: number) => (
                             <li key={jobIdx} className="flex items-start gap-3 text-sm text-foreground/80 font-medium leading-relaxed">

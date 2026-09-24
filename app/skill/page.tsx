@@ -1,11 +1,12 @@
 "use client";
 
 import { siteConfig } from "@/config/site";
+import { Button } from "@heroui/button";
 import { Image } from "@heroui/image";
+import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/modal";
 import { Tooltip } from "@heroui/tooltip";
 import { motion } from "framer-motion";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { createPortal } from "react-dom";
+import React, { useCallback, useMemo, useState } from "react";
 
 const entrance = {
   hidden: { opacity: 0, y: 58, scale: 0.96, filter: "blur(10px)" },
@@ -56,77 +57,50 @@ const SkillDetailModal = ({
   skill: Skill | null;
   onClose: () => void;
 }) => {
-  const [mounted, setMounted] = useState(false);
+  if (!skill) return null;
 
-  useEffect(() => setMounted(true), []);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open, onClose]);
-
-  useEffect(() => {
-    if (!open) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [open]);
-
-  if (!mounted || !open || !skill) return null;
-
-  return createPortal(
-    <div className="fixed inset-0 z-[9999]">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-        onClick={onClose}
-      />
-
-      <div className="absolute inset-0 flex items-start justify-center overflow-hidden p-3 py-6 sm:items-center sm:p-4 md:p-8">
-        <motion.div
-          initial={{ opacity: 0, y: 14, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.2 }}
-          className="relative flex max-h-[calc(100dvh-3rem)] w-full max-w-2xl flex-col overflow-hidden rounded-[2rem] border border-black/10 bg-background/90 shadow-2xl backdrop-blur-xl dark:border-white/10 sm:max-h-[calc(100dvh-2rem)] md:max-h-[calc(100dvh-4rem)]"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${skill.name} details`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-turquoise/10 via-transparent to-transparent pointer-events-none" />
-
-          <div className="relative z-10 flex min-h-0 flex-1 flex-col">
-            <div className="sticky top-0 z-20 shrink-0 border-b border-black/5 bg-background/90 p-5 pb-4 backdrop-blur-xl dark:border-white/5 md:p-8 md:pb-5">
-              <div className="flex items-start justify-between gap-4">
-              <div className="flex items-center gap-4 min-w-0">
-                <div className="w-16 h-16 md:w-[72px] md:h-[72px] rounded-2xl border border-black/10 dark:border-white/10 bg-white/50 dark:bg-white/5 flex items-center justify-center flex-shrink-0">
+  return (
+    <Modal
+      isOpen={open}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) onClose();
+      }}
+      backdrop="blur"
+      scrollBehavior="inside"
+      classNames={{
+        base: "bg-background/80 backdrop-blur-md border border-white/10 shadow-2xl",
+      }}
+    >
+      <ModalContent>
+        {(onModalClose) => (
+          <>
+            <ModalHeader className="flex flex-col gap-1 text-turquoise uppercase tracking-[0.2em] font-black text-sm">
+              Skill Details - {skill.name}
+            </ModalHeader>
+            <ModalBody className="min-h-0 overflow-y-auto overscroll-contain" data-lenis-prevent>
+              <div className="flex items-center gap-4 pb-2">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-black/10 bg-white/50 dark:border-white/10 dark:bg-white/5">
                   <Image
-                    width={64}
-                    height={64}
+                    removeWrapper
+                    width={42}
+                    height={42}
                     alt={skill.name}
                     src={skill.image}
-                    className="object-contain w-14 h-14 md:w-16 md:h-16 rounded-none"
+                    className="h-10 w-10 rounded-none object-contain"
                   />
                 </div>
                 <div className="min-w-0">
-                  <h4 className="text-2xl md:text-3xl font-black tracking-tight text-foreground truncate">
+                  <h4 className="text-xl font-black tracking-tight text-foreground">
                     {skill.name}
                   </h4>
                   {skill.highlights?.length ? (
                     <div className="mt-2 flex flex-wrap gap-2">
-                      {skill.highlights.slice(0, 6).map((h) => (
+                      {skill.highlights.slice(0, 6).map((highlight) => (
                         <span
-                          key={h}
-                          className="px-3 py-1 rounded-full bg-turquoise/10 text-turquoise text-xs font-black uppercase tracking-widest border border-turquoise/20"
+                          key={highlight}
+                          className="rounded-full border border-turquoise/20 bg-turquoise/10 px-3 py-1 text-xs font-black uppercase tracking-widest text-turquoise"
                         >
-                          {h}
+                          {highlight}
                         </span>
                       ))}
                     </div>
@@ -134,52 +108,47 @@ const SkillDetailModal = ({
                 </div>
               </div>
 
-              <button
-                type="button"
-                onClick={onClose}
-                className="size-11 shrink-0 aspect-square rounded-2xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 transition-all flex items-center justify-center text-foreground shadow-[0_10px_30px_rgba(0,0,0,0.25)] hover:shadow-[0_14px_40px_rgba(0,0,0,0.35)] active:scale-95"
-                aria-label="Close"
-              >
-                <span className="text-2xl leading-[1] -translate-y-[1px]">&times;</span>
-              </button>
-              </div>
-            </div>
-
-            <div className="skill-detail-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain p-5 pt-4 [scrollbar-gutter:stable] md:p-8 md:pt-5">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {skill.details?.length ? (
-                skill.details.map((group) => (
-                  <div
-                    key={group.title}
-                    className="rounded-2xl border border-black/5 dark:border-white/5 bg-white/40 dark:bg-default-100/30 p-4"
-                  >
-                    <div className="text-[11px] font-black uppercase tracking-[0.18em] text-turquoise mb-2">
-                      {group.title}
+              <div className="grid grid-cols-1 gap-4 py-2 md:grid-cols-2">
+                {skill.details?.length ? (
+                  skill.details.map((group) => (
+                    <div
+                      key={group.title}
+                      className="rounded-2xl border border-black/5 bg-white/40 p-4 dark:border-white/5 dark:bg-default-100/30"
+                    >
+                      <div className="mb-2 text-[11px] font-black uppercase tracking-[0.18em] text-turquoise">
+                        {group.title}
+                      </div>
+                      <ul className="flex flex-col gap-2">
+                        {group.items.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-3 text-sm font-medium leading-relaxed text-foreground/80"
+                          >
+                            <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-turquoise shadow-[0_0_5px_rgb(var(--accent-color)/0.5)]" />
+                            <span className="min-w-0 break-words">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <ul className="space-y-2">
-                      {group.items.map((item) => (
-                        <li key={item} className="text-sm font-semibold text-foreground/90">
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
+                  ))
+                ) : (
+                  <div className="rounded-2xl border border-black/5 bg-white/40 p-4 dark:border-white/5 dark:bg-default-100/30 md:col-span-2">
+                    <div className="text-sm font-semibold text-foreground/80">
+                      I'm still updating the details of this skill.
+                    </div>
                   </div>
-                ))
-              ) : (
-                <div className="md:col-span-2 rounded-2xl border border-black/5 dark:border-white/5 bg-white/40 dark:bg-default-100/30 p-4">
-                  <div className="text-sm font-semibold text-foreground/80">
-                    I'm still updating the details of this skill.
-                  </div>
-                </div>
-              )}
+                )}
               </div>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-
-    </div>,
-    document.body
+            </ModalBody>
+            <ModalFooter>
+              <Button color="default" variant="light" onPress={onModalClose} className="font-bold">
+                Close
+              </Button>
+            </ModalFooter>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
   );
 };
 

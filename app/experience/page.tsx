@@ -38,14 +38,109 @@ const experienceStories = [
   },
 ];
 
+type GalleryItem = {
+  label: string;
+  caption: string;
+  gradient: string;
+};
+
+const experienceGallery: GalleryItem[][] = [
+  [
+    {
+      label: "Team moment",
+      caption: "Placeholder for a team collaboration photo.",
+      gradient: "linear-gradient(135deg, #082f49 0%, #0e7490 48%, #67e8f9 100%)",
+    },
+    {
+      label: "Project day",
+      caption: "Placeholder for a photo from a project or client assignment.",
+      gradient: "linear-gradient(135deg, #164e63 0%, #155e75 45%, #a5f3fc 100%)",
+    },
+    {
+      label: "Work setup",
+      caption: "Placeholder for a desk setup or behind-the-scenes photo.",
+      gradient: "linear-gradient(135deg, #1e293b 0%, #334155 50%, #22d3ee 100%)",
+    },
+    {
+      label: "Milestone",
+      caption: "Placeholder for a memorable professional milestone.",
+      gradient: "linear-gradient(135deg, #134e4a 0%, #0f766e 48%, #5eead4 100%)",
+    },
+  ],
+  [
+    {
+      label: "Onsite chapter",
+      caption: "Placeholder for an onsite assignment photo.",
+      gradient: "linear-gradient(135deg, #172554 0%, #1d4ed8 48%, #93c5fd 100%)",
+    },
+    {
+      label: "Mobile team",
+      caption: "Placeholder for a mobile development team photo.",
+      gradient: "linear-gradient(135deg, #312e81 0%, #4f46e5 48%, #c4b5fd 100%)",
+    },
+    {
+      label: "Office day",
+      caption: "Placeholder for a day at the client office.",
+      gradient: "linear-gradient(135deg, #1e1b4b 0%, #3730a3 48%, #818cf8 100%)",
+    },
+  ],
+  [
+    {
+      label: "First onsite",
+      caption: "Placeholder for a first onsite assignment photo.",
+      gradient: "linear-gradient(135deg, #3f1d0b 0%, #c2410c 48%, #fdba74 100%)",
+    },
+    {
+      label: "Team collaboration",
+      caption: "Placeholder for a cross-functional collaboration photo.",
+      gradient: "linear-gradient(135deg, #431407 0%, #ea580c 48%, #fed7aa 100%)",
+    },
+    {
+      label: "Project milestone",
+      caption: "Placeholder for a project milestone photo.",
+      gradient: "linear-gradient(135deg, #422006 0%, #d97706 48%, #fde68a 100%)",
+    },
+  ],
+  [
+    {
+      label: "First internship",
+      caption: "Placeholder for the beginning of the mobile development journey.",
+      gradient: "linear-gradient(135deg, #172554 0%, #0369a1 48%, #7dd3fc 100%)",
+    },
+    {
+      label: "Learning phase",
+      caption: "Placeholder for a learning or mentoring moment.",
+      gradient: "linear-gradient(135deg, #082f49 0%, #0284c7 48%, #bae6fd 100%)",
+    },
+    {
+      label: "First product",
+      caption: "Placeholder for a photo related to the first mobile product.",
+      gradient: "linear-gradient(135deg, #0c4a6e 0%, #0891b2 48%, #a5f3fc 100%)",
+    },
+  ],
+];
+
 type ModalState = {
   isOpen: boolean;
   position: string;
   jobDesc: string[];
 };
 
+type GalleryModalState = {
+  isOpen: boolean;
+  company: string;
+  gallery: GalleryItem[];
+  index: number;
+};
+
 export default function ExperiencePage() {
   const [modal, setModal] = useState<ModalState>({ isOpen: false, position: "", jobDesc: [] });
+  const [galleryModal, setGalleryModal] = useState<GalleryModalState>({
+    isOpen: false,
+    company: "",
+    gallery: [],
+    index: 0,
+  });
 
   const calculateDuration = (dateString: string) => {
     try {
@@ -78,6 +173,17 @@ export default function ExperiencePage() {
     } catch (e) {
       return null;
     }
+  };
+
+  const activeGalleryItem = galleryModal.gallery[galleryModal.index];
+
+  const changeGalleryPhoto = (direction: number) => {
+    setGalleryModal((previous) => {
+      const nextIndex = previous.index + direction;
+      if (nextIndex < 0 || nextIndex >= previous.gallery.length) return previous;
+
+      return { ...previous, index: nextIndex };
+    });
   };
 
   return (
@@ -115,11 +221,14 @@ export default function ExperiencePage() {
             const isRight = index % 2 !== 0;
             const firstExperience = item.experience[0];
             const story = experienceStories[index];
+            const gallery = experienceGallery[index] ?? [];
+            const galleryPreview = gallery.length > 3 ? gallery.slice(0, 2) : gallery;
+            const remainingGallery = gallery.length > 3 ? gallery.slice(2) : [];
 
             return (
               <motion.div
                 key={item.company}
-                className="relative grid w-full grid-cols-[2.5rem_1fr] gap-4 md:grid-cols-[1fr_5rem_1fr] md:gap-8"
+                className="relative grid w-full items-start grid-cols-[2.5rem_1fr] gap-4 md:grid-cols-[1fr_5rem_1fr] md:gap-8"
                 initial={{ opacity: 0, y: 54, scale: 0.96, filter: "blur(8px)" }}
                 whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                 viewport={{ once: true, margin: "-80px" }}
@@ -136,7 +245,7 @@ export default function ExperiencePage() {
                   </div>
                 </div>
 
-                <div className={`col-start-2 row-start-1 self-center pb-4 md:pb-0 ${isRight ? "md:col-start-1 md:text-right" : "md:col-start-3 md:text-left"}`}>
+                <div className={`col-start-2 row-start-1 self-start pb-4 md:pb-0 ${isRight ? "md:col-start-1 md:text-right" : "md:col-start-3 md:text-left"}`}>
                   <div className={`flex flex-col gap-3 ${isRight ? "md:items-end" : "md:items-start"}`}>
                     <span className="w-fit rounded-full border border-turquoise/20 bg-turquoise/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.22em] text-turquoise">
                       Storyline
@@ -147,6 +256,92 @@ export default function ExperiencePage() {
                     <p className="max-w-md text-sm font-medium leading-7 text-default-500">
                       {story.desc}
                     </p>
+
+                    <div className="mt-6 w-full max-w-sm">
+                      <div className="mb-4 flex items-end justify-between gap-4">
+                        <div>
+                          <p className="text-[10px] font-black uppercase tracking-[0.24em] text-turquoise/80">
+                            Moments from this chapter
+                          </p>
+                          <p className="mt-1 text-xs font-medium text-default-500">
+                            A visual record of the journey
+                          </p>
+                        </div>
+                        <span className="shrink-0 text-[10px] font-black uppercase tracking-[0.16em] text-default-400">
+                          {gallery.length} {gallery.length === 1 ? "photo" : "photos"}
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-3 gap-2">
+                        {galleryPreview.map((photo, photoIndex) => (
+                          <button
+                            key={`${item.company}-gallery-${photoIndex}`}
+                            type="button"
+                            aria-label={`Open ${photo.label} placeholder from ${item.company}`}
+                            onClick={() =>
+                              setGalleryModal({
+                                isOpen: true,
+                                company: item.company,
+                                gallery,
+                                index: photoIndex,
+                              })
+                            }
+                            className="group/gallery min-w-0 overflow-hidden rounded-xl border border-black/10 bg-background/50 text-left transition-all duration-300 hover:-translate-y-1 hover:border-turquoise/50 hover:shadow-[0_12px_30px_rgb(var(--accent-color)/0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/70 dark:border-white/10"
+                          >
+                            <div
+                              className="relative aspect-[4/3] overflow-hidden"
+                              style={{ backgroundImage: photo.gradient }}
+                            >
+                              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,255,255,0.28),transparent_32%),linear-gradient(135deg,transparent_35%,rgba(0,0,0,0.18))]" />
+                              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-white/90">
+                                <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 opacity-80" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                  <rect x="3" y="4" width="18" height="16" rx="2" />
+                                  <circle cx="8.5" cy="9" r="1.5" />
+                                  <path d="m3 16 4.5-4.5 3.5 3.5 2.5-2.5L21 19" />
+                                </svg>
+                                <span className="text-[8px] font-black uppercase tracking-[0.12em]">{String(photoIndex + 1).padStart(2, "0")}</span>
+                              </div>
+                              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/35 to-transparent opacity-70" />
+                            </div>
+                            <div className="p-2">
+                              <p className="truncate text-[10px] font-black text-foreground transition-colors group-hover/gallery:text-turquoise">
+                                {photo.label}
+                              </p>
+                            </div>
+                          </button>
+                        ))}
+                        {remainingGallery.length > 0 && (
+                          <button
+                            type="button"
+                            aria-label={`Open ${remainingGallery.length} more gallery photos from ${item.company}`}
+                            onClick={() =>
+                              setGalleryModal({
+                                isOpen: true,
+                                company: item.company,
+                                gallery,
+                                index: gallery.indexOf(remainingGallery[0]),
+                              })
+                            }
+                            className="group/gallery relative min-w-0 overflow-hidden rounded-xl border border-black/10 bg-background/50 text-left transition-all duration-300 hover:-translate-y-1 hover:border-turquoise/50 hover:shadow-[0_12px_30px_rgb(var(--accent-color)/0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/70 dark:border-white/10"
+                          >
+                            <div
+                              className="relative aspect-[4/3] overflow-hidden"
+                              style={{ backgroundImage: remainingGallery[0].gradient }}
+                            >
+                              <div className="absolute inset-0 bg-black/45 transition-colors group-hover/gallery:bg-black/35" />
+                              <div className="absolute inset-0 flex items-center justify-center text-white">
+                                <span className="text-xl font-black tracking-tight">+{remainingGallery.length}</span>
+                              </div>
+                            </div>
+                            <div className="p-2">
+                              <p className="truncate text-[10px] font-black text-foreground transition-colors group-hover/gallery:text-turquoise">
+                                More moments
+                              </p>
+                            </div>
+                          </button>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -249,6 +444,81 @@ export default function ExperiencePage() {
                 </ul>
               </ModalBody>
               <ModalFooter>
+                <Button color="default" variant="light" onPress={onClose} className="font-bold">
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+
+      {/* Experience Gallery Lightbox */}
+      <Modal
+        isOpen={galleryModal.isOpen}
+        onOpenChange={(open) => setGalleryModal((prev) => ({ ...prev, isOpen: open }))}
+        size="3xl"
+        backdrop="blur"
+        classNames={{
+          base: "bg-background/90 backdrop-blur-md border border-white/10 shadow-2xl",
+        }}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                <span className="text-xs font-black uppercase tracking-[0.2em] text-turquoise">{activeGalleryItem?.label}</span>
+                <span className="text-xl font-black tracking-tight text-foreground">{galleryModal.company}</span>
+              </ModalHeader>
+              <ModalBody>
+                {activeGalleryItem && (
+                  <div className="overflow-hidden rounded-2xl border border-white/10">
+                    <div
+                      className="relative aspect-[4/3] min-h-64 w-full"
+                      style={{ backgroundImage: activeGalleryItem.gradient }}
+                    >
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,255,255,0.3),transparent_32%),linear-gradient(135deg,transparent_35%,rgba(0,0,0,0.2))]" />
+                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-white/90">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" className="h-12 w-12 opacity-80" fill="none" stroke="currentColor" strokeWidth="1.25">
+                          <rect x="3" y="4" width="18" height="16" rx="2" />
+                          <circle cx="8.5" cy="9" r="1.5" />
+                          <path d="m3 16 4.5-4.5 3.5 3.5 2.5-2.5L21 19" />
+                        </svg>
+                        <span className="text-xs font-black uppercase tracking-[0.24em]">Photo placeholder</span>
+                      </div>
+                      <button
+                        type="button"
+                        aria-label="Previous gallery photo"
+                        disabled={galleryModal.index === 0}
+                        onClick={() => changeGalleryPhoto(-1)}
+                        className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/30 text-white backdrop-blur-sm transition hover:bg-black/55 disabled:pointer-events-none disabled:opacity-25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                      >
+                        <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
+                          <path d="m15 18-6-6 6-6" />
+                        </svg>
+                      </button>
+                      <button
+                        type="button"
+                        aria-label="Next gallery photo"
+                        disabled={galleryModal.index === galleryModal.gallery.length - 1}
+                        onClick={() => changeGalleryPhoto(1)}
+                        className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/30 text-white backdrop-blur-sm transition hover:bg-black/55 disabled:pointer-events-none disabled:opacity-25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                      >
+                        <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
+                          <path d="m9 18 6-6-6-6" />
+                        </svg>
+                      </button>
+                    </div>
+                    <p className="border-t border-white/10 bg-black/10 px-5 py-4 text-sm font-medium leading-6 text-default-500">
+                      {activeGalleryItem.caption}
+                    </p>
+                  </div>
+                )}
+              </ModalBody>
+              <ModalFooter>
+                <span className="mr-auto self-center text-xs font-black uppercase tracking-[0.18em] text-default-500">
+                  {galleryModal.gallery.length > 0 ? `${galleryModal.index + 1} / ${galleryModal.gallery.length}` : ""}
+                </span>
                 <Button color="default" variant="light" onPress={onClose} className="font-bold">
                   Close
                 </Button>
