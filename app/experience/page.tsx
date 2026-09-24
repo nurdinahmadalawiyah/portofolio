@@ -42,80 +42,75 @@ type GalleryItem = {
   label: string;
   caption: string;
   gradient: string;
+  image?: string;
 };
 
 const experienceGallery: GalleryItem[][] = [
   [
     {
       label: "Team moment",
-      caption: "Placeholder for a team collaboration photo.",
+      caption: "A team collaboration moment from this chapter.",
       gradient: "linear-gradient(135deg, #082f49 0%, #0e7490 48%, #67e8f9 100%)",
     },
     {
       label: "Project day",
-      caption: "Placeholder for a photo from a project or client assignment.",
+      caption: "A moment from a project or client assignment.",
       gradient: "linear-gradient(135deg, #164e63 0%, #155e75 45%, #a5f3fc 100%)",
     },
     {
       label: "Work setup",
-      caption: "Placeholder for a desk setup or behind-the-scenes photo.",
+      caption: "A behind-the-scenes moment from the work setup.",
       gradient: "linear-gradient(135deg, #1e293b 0%, #334155 50%, #22d3ee 100%)",
     },
     {
       label: "Milestone",
-      caption: "Placeholder for a memorable professional milestone.",
+      caption: "A memorable professional milestone from this chapter.",
       gradient: "linear-gradient(135deg, #134e4a 0%, #0f766e 48%, #5eead4 100%)",
     },
   ],
   [
     {
       label: "Onsite chapter",
-      caption: "Placeholder for an onsite assignment photo.",
+      caption: "A moment from the onsite assignment.",
       gradient: "linear-gradient(135deg, #172554 0%, #1d4ed8 48%, #93c5fd 100%)",
     },
     {
       label: "Mobile team",
-      caption: "Placeholder for a mobile development team photo.",
+      caption: "A mobile development team moment.",
       gradient: "linear-gradient(135deg, #312e81 0%, #4f46e5 48%, #c4b5fd 100%)",
     },
     {
       label: "Office day",
-      caption: "Placeholder for a day at the client office.",
+      caption: "A day at the client office.",
       gradient: "linear-gradient(135deg, #1e1b4b 0%, #3730a3 48%, #818cf8 100%)",
     },
   ],
   [
     {
-      label: "First onsite",
-      caption: "Placeholder for a first onsite assignment photo.",
+      label: "Padepokan visit",
+      caption: "The Padepokan Tujuh Sembilan team visiting during the onsite assignment.",
       gradient: "linear-gradient(135deg, #3f1d0b 0%, #c2410c 48%, #fdba74 100%)",
+      image: "/images/experience/victoria-onsite-visit.jpg",
     },
     {
-      label: "Team collaboration",
-      caption: "Placeholder for a cross-functional collaboration photo.",
+      label: "National Batik Day",
+      caption: "A team photo celebrating National Batik Day at Victoria Investama.",
       gradient: "linear-gradient(135deg, #431407 0%, #ea580c 48%, #fed7aa 100%)",
+      image: "/images/experience/victoria-batik-day.jpg",
     },
     {
-      label: "Project milestone",
-      caption: "Placeholder for a project milestone photo.",
+      label: "Last day at Victoria",
+      caption: "A team photo from the final day of the assignment at Victoria Investama.",
       gradient: "linear-gradient(135deg, #422006 0%, #d97706 48%, #fde68a 100%)",
+      image: "/images/experience/victoria-last-day.jpg",
     },
   ],
   [
     {
-      label: "First internship",
-      caption: "Placeholder for the beginning of the mobile development journey.",
-      gradient: "linear-gradient(135deg, #172554 0%, #0369a1 48%, #7dd3fc 100%)",
-    },
-    {
-      label: "Learning phase",
-      caption: "Placeholder for a learning or mentoring moment.",
-      gradient: "linear-gradient(135deg, #082f49 0%, #0284c7 48%, #bae6fd 100%)",
-    },
-    {
-      label: "First product",
-      caption: "Placeholder for a photo related to the first mobile product.",
+      label: "Full team",
+      caption: "Full team moment during the Crop Inspirasi Digital chapter.",
       gradient: "linear-gradient(135deg, #0c4a6e 0%, #0891b2 48%, #a5f3fc 100%)",
+      image: "/images/experience/crop-full-team.jpg",
     },
   ],
 ];
@@ -277,7 +272,7 @@ export default function ExperiencePage() {
                           <button
                             key={`${item.company}-gallery-${photoIndex}`}
                             type="button"
-                            aria-label={`Open ${photo.label} placeholder from ${item.company}`}
+                            aria-label={`Open ${photo.label} from ${item.company}`}
                             onClick={() =>
                               setGalleryModal({
                                 isOpen: true,
@@ -289,16 +284,11 @@ export default function ExperiencePage() {
                             className="group/gallery min-w-0 overflow-hidden rounded-xl border border-black/10 bg-background/50 text-left transition-all duration-300 hover:-translate-y-1 hover:border-turquoise/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/70 dark:border-white/10"
                           >
                             <div
-                              className="relative aspect-[4/3] overflow-hidden"
-                              style={{ backgroundImage: photo.gradient }}
+                              className="relative aspect-[4/3] overflow-hidden bg-cover bg-center"
+                              style={{ backgroundImage: photo.image ? `url("${photo.image}")` : photo.gradient }}
                             >
                               <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,255,255,0.28),transparent_32%),linear-gradient(135deg,transparent_35%,rgba(0,0,0,0.18))]" />
                               <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-white/90">
-                                <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 opacity-80" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                  <rect x="3" y="4" width="18" height="16" rx="2" />
-                                  <circle cx="8.5" cy="9" r="1.5" />
-                                  <path d="m3 16 4.5-4.5 3.5 3.5 2.5-2.5L21 19" />
-                                </svg>
                                 <span className="text-[8px] font-black uppercase tracking-[0.12em]">{String(photoIndex + 1).padStart(2, "0")}</span>
                               </div>
                               <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/35 to-transparent opacity-70" />
@@ -325,8 +315,8 @@ export default function ExperiencePage() {
                             className="group/gallery relative min-w-0 overflow-hidden rounded-xl border border-black/10 bg-background/50 text-left transition-all duration-300 hover:-translate-y-1 hover:border-turquoise/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/70 dark:border-white/10"
                           >
                             <div
-                              className="relative aspect-[4/3] overflow-hidden"
-                              style={{ backgroundImage: remainingGallery[0].gradient }}
+                              className="relative aspect-[4/3] overflow-hidden bg-cover bg-center"
+                              style={{ backgroundImage: remainingGallery[0].image ? `url("${remainingGallery[0].image}")` : remainingGallery[0].gradient }}
                             >
                               <div className="absolute inset-0 bg-black/45 transition-colors group-hover/gallery:bg-black/35" />
                               <div className="absolute inset-0 flex items-center justify-center text-white">
@@ -474,18 +464,10 @@ export default function ExperiencePage() {
                 {activeGalleryItem && (
                   <div className="overflow-hidden rounded-2xl border border-white/10">
                     <div
-                      className="relative aspect-[4/3] min-h-64 w-full"
-                      style={{ backgroundImage: activeGalleryItem.gradient }}
+                      className="relative aspect-[4/3] min-h-64 w-full bg-cover bg-center"
+                      style={{ backgroundImage: activeGalleryItem.image ? `url("${activeGalleryItem.image}")` : activeGalleryItem.gradient }}
                     >
                       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,255,255,0.3),transparent_32%),linear-gradient(135deg,transparent_35%,rgba(0,0,0,0.2))]" />
-                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-white/90">
-                        <svg aria-hidden="true" viewBox="0 0 24 24" className="h-12 w-12 opacity-80" fill="none" stroke="currentColor" strokeWidth="1.25">
-                          <rect x="3" y="4" width="18" height="16" rx="2" />
-                          <circle cx="8.5" cy="9" r="1.5" />
-                          <path d="m3 16 4.5-4.5 3.5 3.5 2.5-2.5L21 19" />
-                        </svg>
-                        <span className="text-xs font-black uppercase tracking-[0.24em]">Photo placeholder</span>
-                      </div>
                       <button
                         type="button"
                         aria-label="Previous gallery photo"
