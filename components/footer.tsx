@@ -56,8 +56,6 @@ export const Footer = () => {
         </div>
       </div>
       
-      {/* Subtle Glow */}
-      <div className="absolute -bottom-24 right-0 w-64 h-64 bg-turquoise/5 rounded-full blur-[100px] pointer-events-none" />
     </footer>
   );
 };

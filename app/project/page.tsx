@@ -51,8 +51,8 @@ const ProjectCard = ({ project }: { project: any }) => {
               </div>
             )}
             {project.isOngoing && (
-              <div className="px-3 py-1 rounded-full bg-turquoise/20 backdrop-blur-md border border-turquoise/30 flex items-center gap-2 shadow-[0_0_15px_rgb(var(--accent-color)/0.2)]">
-                <div className="w-1.5 h-1.5 rounded-full bg-turquoise animate-pulse shadow-[0_0_8px_rgb(var(--accent-color)/1)]" />
+              <div className="px-3 py-1 rounded-full bg-turquoise/20 backdrop-blur-md border border-turquoise/30 flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-turquoise animate-pulse" />
                 <span className="text-[10px] font-black text-turquoise uppercase tracking-widest">In Development</span>
               </div>
             )}
@@ -82,7 +82,6 @@ const ProjectCard = ({ project }: { project: any }) => {
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <div className="w-24 h-24 rounded-full bg-turquoise/10 blur-2xl animate-pulse" />
               <span className="text-turquoise/40 font-black text-4xl italic tracking-tighter opacity-20 text-center px-4">NO PREVIEW</span>
             </div>
           )}
@@ -103,7 +102,7 @@ const ProjectCard = ({ project }: { project: any }) => {
 
         <div className="p-6 md:p-8 flex flex-col flex-grow">
           <div className="flex items-start gap-4 mb-4">
-            <div className="w-1.5 h-10 bg-turquoise rounded-full shadow-[0_0_10px_rgb(var(--accent-color)/0.5)] flex-shrink-0 mt-1" />
+            <div className="w-1.5 h-10 bg-turquoise rounded-full flex-shrink-0 mt-1" />
             <div className="flex flex-col gap-1.5">
               <h3 className="text-xl md:text-2xl font-black text-foreground tracking-tight group-hover/card:text-turquoise transition-colors leading-tight">
                 {project.name}
@@ -150,7 +149,7 @@ const ProjectCard = ({ project }: { project: any }) => {
                         <ul className="flex flex-col gap-4 py-2">
                           {project.jobDesc.map((job: string, jobIdx: number) => (
                             <li key={jobIdx} className="flex items-start gap-3 text-sm text-foreground/80 font-medium leading-relaxed">
-                              <span className="w-2 h-2 rounded-full bg-turquoise mt-1.5 flex-shrink-0 shadow-[0_0_5px_rgb(var(--accent-color)/0.5)]" />
+                              <span className="w-2 h-2 rounded-full bg-turquoise mt-1.5 flex-shrink-0" />
                               <span className="min-w-0 break-words">{job}</span>
                             </li>
                           ))}
@@ -176,7 +175,7 @@ const ProjectCard = ({ project }: { project: any }) => {
             as="a"
             href={project.link}
             target="_blank"
-            className="flex-1 min-w-[120px] bg-turquoise text-white dark:text-black font-black shadow-[0_0_20px_rgb(var(--accent-color)/0.2)] hover:shadow-[0_0_30px_rgb(var(--accent-color)/0.4)] transition-all duration-300 h-12 rounded-xl"
+            className="flex-1 min-w-[120px] bg-turquoise text-white dark:text-black font-black transition-all duration-300 h-12 rounded-xl"
             startContent={<GithubIcon size={20} />}
           >
             Source Code
@@ -307,7 +306,7 @@ export default function ProjectPage() {
             fullWidth
             classNames={{
               tabList: "gap-2 w-[600px] p-1 border border-default-200/50 bg-background/50 backdrop-blur-md",
-              cursor: "w-full bg-turquoise/10 shadow-[0_0_15px_rgb(var(--accent-color)/0.15)] border border-turquoise/20",
+              cursor: "w-full bg-turquoise/10 border border-turquoise/20",
               tab: "h-10",
               tabContent: "group-data-[selected=true]:text-turquoise font-bold text-xs uppercase tracking-widest transition-colors w-full text-center"
             }}
@@ -442,7 +441,7 @@ export default function ProjectPage() {
                     onClick={() => scrollTo(i)}
                     className={`h-2.5 rounded-full transition-all duration-500 ${
                       selectedIndex === i 
-                        ? "w-10 bg-turquoise shadow-[0_0_15px_rgb(var(--accent-color)/0.8)]" 
+                        ? "w-10 bg-turquoise"
                         : "w-2.5 bg-default-300 hover:bg-default-400"
                     }`}
                   />

@@ -235,7 +235,7 @@ export default function ExperiencePage() {
                 transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: index * 0.12 }}
               >
                 <div className="relative z-10 col-start-1 row-start-1 flex justify-center md:col-start-2">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-turquoise/30 bg-background shadow-[0_0_24px_rgb(var(--accent-color)/0.18)] md:h-16 md:w-16">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-turquoise/30 bg-background md:h-16 md:w-16">
                     <Avatar
                       src={item.image}
                       name={item.company}
@@ -286,7 +286,7 @@ export default function ExperiencePage() {
                                 index: photoIndex,
                               })
                             }
-                            className="group/gallery min-w-0 overflow-hidden rounded-xl border border-black/10 bg-background/50 text-left transition-all duration-300 hover:-translate-y-1 hover:border-turquoise/50 hover:shadow-[0_12px_30px_rgb(var(--accent-color)/0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/70 dark:border-white/10"
+                            className="group/gallery min-w-0 overflow-hidden rounded-xl border border-black/10 bg-background/50 text-left transition-all duration-300 hover:-translate-y-1 hover:border-turquoise/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/70 dark:border-white/10"
                           >
                             <div
                               className="relative aspect-[4/3] overflow-hidden"
@@ -322,7 +322,7 @@ export default function ExperiencePage() {
                                 index: gallery.indexOf(remainingGallery[0]),
                               })
                             }
-                            className="group/gallery relative min-w-0 overflow-hidden rounded-xl border border-black/10 bg-background/50 text-left transition-all duration-300 hover:-translate-y-1 hover:border-turquoise/50 hover:shadow-[0_12px_30px_rgb(var(--accent-color)/0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/70 dark:border-white/10"
+                            className="group/gallery relative min-w-0 overflow-hidden rounded-xl border border-black/10 bg-background/50 text-left transition-all duration-300 hover:-translate-y-1 hover:border-turquoise/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/70 dark:border-white/10"
                           >
                             <div
                               className="relative aspect-[4/3] overflow-hidden"
@@ -437,7 +437,7 @@ export default function ExperiencePage() {
                 <ul className="flex flex-col gap-4 py-2">
                   {modal.jobDesc.map((job, i) => (
                     <li key={i} className="flex items-start gap-3 text-sm text-foreground/80 font-medium leading-relaxed">
-                      <span className="w-2 h-2 rounded-full bg-turquoise mt-1.5 flex-shrink-0 shadow-[0_0_5px_rgb(var(--accent-color)/0.5)]" />
+                      <span className="w-2 h-2 rounded-full bg-turquoise mt-1.5 flex-shrink-0" />
                       <span className="min-w-0 break-words">{job}</span>
                     </li>
                   ))}

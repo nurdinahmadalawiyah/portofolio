@@ -124,7 +124,7 @@ const SkillDetailModal = ({
                             key={item}
                             className="flex items-start gap-3 text-sm font-medium leading-relaxed text-foreground/80"
                           >
-                            <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-turquoise shadow-[0_0_5px_rgb(var(--accent-color)/0.5)]" />
+                            <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-turquoise" />
                             <span className="min-w-0 break-words">{item}</span>
                           </li>
                         ))}
@@ -221,7 +221,7 @@ export default function SkillPage() {
         {categories.map((category) => (
           <BentoCard key={category.name} className={category.className} delay={category.delay}>
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-1.5 h-6 bg-turquoise rounded-full shadow-[0_0_10px_rgb(var(--accent-color)/0.5)]" />
+              <div className="w-1.5 h-6 bg-turquoise rounded-full" />
               <h3 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
                 {category.name}
               </h3>

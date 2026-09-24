@@ -176,7 +176,7 @@ export default function ContactPage() {
                   href={emailHref}
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full bg-turquoise text-white dark:text-black font-black uppercase tracking-widest py-4 rounded-xl shadow-[0_0_20px_rgba(44,231,241,0.3)] hover:shadow-[0_0_30px_rgba(44,231,241,0.5)] transition-all duration-300 flex items-center justify-center gap-2 text-xs"
+                  className="w-full bg-turquoise text-white dark:text-black font-black uppercase tracking-widest py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-xs"
                 >
                   <MailIcon size={18} />
                   Email Me
