@@ -6,7 +6,7 @@ import { Button } from "@heroui/button";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@heroui/modal";
 import { siteConfig } from "@/config/site";
 import { Avatar } from "@heroui/avatar";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 const entrance = {
   hidden: { opacity: 0, y: 58, scale: 0.96, filter: "blur(10px)" },
@@ -130,6 +130,7 @@ type GalleryModalState = {
 
 export default function ExperiencePage() {
   const [modal, setModal] = useState<ModalState>({ isOpen: false, position: "", jobDesc: [] });
+  const [openGalleries, setOpenGalleries] = useState<Record<string, boolean>>({});
   const [galleryModal, setGalleryModal] = useState<GalleryModalState>({
     isOpen: false,
     company: "",
@@ -219,6 +220,7 @@ export default function ExperiencePage() {
             const gallery = experienceGallery[index] ?? [];
             const galleryPreview = gallery.length > 3 ? gallery.slice(0, 2) : gallery;
             const remainingGallery = gallery.length > 3 ? gallery.slice(2) : [];
+            const isGalleryOpen = Boolean(openGalleries[item.company]);
 
             return (
               <motion.div
@@ -253,7 +255,18 @@ export default function ExperiencePage() {
                     </p>
 
                     <div className="mt-6 w-full max-w-sm">
-                      <div className="mb-4 flex items-end justify-between gap-4">
+                      <button
+                        type="button"
+                        aria-expanded={isGalleryOpen}
+                        aria-controls={`gallery-${index}`}
+                        onClick={() =>
+                          setOpenGalleries((previous) => ({
+                            ...previous,
+                            [item.company]: !previous[item.company],
+                          }))
+                        }
+                        className="group/gallery-toggle flex w-full items-center justify-between gap-4 rounded-xl border border-transparent px-4 py-3 text-left transition-colors hover:border-turquoise/20 hover:bg-turquoise/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/70 md:px-5"
+                      >
                         <div>
                           <p className="text-[10px] font-black uppercase tracking-[0.24em] text-turquoise/80">
                             Moments from this chapter
@@ -262,12 +275,42 @@ export default function ExperiencePage() {
                             A visual record of the journey
                           </p>
                         </div>
-                        <span className="shrink-0 text-[10px] font-black uppercase tracking-[0.16em] text-default-400">
-                          {gallery.length} {gallery.length === 1 ? "photo" : "photos"}
-                        </span>
-                      </div>
+                        <div className="flex shrink-0 items-center gap-2">
+                          <span className="text-[10px] font-black uppercase tracking-[0.16em] text-default-400">
+                            {gallery.length} {gallery.length === 1 ? "photo" : "photos"}
+                          </span>
+                          <svg
+                            aria-hidden="true"
+                            viewBox="0 0 24 24"
+                            className={`h-4 w-4 text-turquoise transition-transform duration-300 ${isGalleryOpen ? "rotate-180" : ""}`}
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <path d="m6 9 6 6 6-6" />
+                          </svg>
+                        </div>
+                      </button>
 
-                      <div className="grid grid-cols-3 gap-2">
+                      <AnimatePresence initial={false}>
+                        {isGalleryOpen && (
+                          <motion.div
+                            key={`gallery-${index}`}
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{
+                              height: { duration: 0.34, ease: [0.16, 1, 0.3, 1] },
+                              opacity: { duration: 0.2 },
+                            }}
+                            className="overflow-hidden"
+                          >
+                            <div
+                              id={`gallery-${index}`}
+                              role="region"
+                              aria-label={`${item.company} gallery`}
+                              className="mt-3 grid grid-cols-3 gap-2"
+                            >
                         {galleryPreview.map((photo, photoIndex) => (
                           <button
                             key={`${item.company}-gallery-${photoIndex}`}
@@ -330,7 +373,10 @@ export default function ExperiencePage() {
                             </div>
                           </button>
                         )}
-                      </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
                   </div>
                 </div>
