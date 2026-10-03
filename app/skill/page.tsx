@@ -4,7 +4,6 @@ import { siteConfig } from "@/config/site";
 import { Button } from "@heroui/button";
 import { Image } from "@heroui/image";
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/modal";
-import { Tooltip } from "@heroui/tooltip";
 import { motion } from "framer-motion";
 import React, { useCallback, useMemo, useState } from "react";
 
@@ -19,22 +18,7 @@ const entrance = {
   },
 };
 
-const BentoCard = ({ children, className, delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) => {
-  return (
-    <motion.div
-      variants={entrance}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      transition={{ delay }}
-      className={`group relative overflow-clip rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md hover:border-turquoise/50 transition-all duration-300 shadow-none flex flex-col p-6 md:p-8 ${className}`}
-    >
-      <div className="relative z-10 h-full flex flex-col">
-        {children}
-      </div>
-    </motion.div>
-  );
-};
+
 
 type SkillDetailGroup = {
   title: string;
@@ -172,15 +156,21 @@ export default function SkillPage() {
     },
     {
       name: "Backend",
-      skills: ["Spring Boot", "Laravel", "Express.js", "NestJS", "Node JS", "Redis"],
+      skills: ["Spring Boot", "Laravel", "Express.js", "NestJS", "Node JS"],
       className: "md:col-span-2 lg:col-span-2",
       delay: 0.3,
     },
     {
-      name: "Database",
-      skills: ["MySQL", "MongoDB", "PostgreSQL"],
+      name: "Database & Caching",
+      skills: ["MySQL", "MongoDB", "PostgreSQL", "Redis"],
       className: "md:col-span-1 lg:col-span-1",
       delay: 0.4,
+    },
+    {
+      name: "CI/CD & Distribution",
+      skills: ["App Store Connect", "Google Play Console", "Codemagic"],
+      className: "md:col-span-1 lg:col-span-1",
+      delay: 0.45,
     },
     {
       name: "Language",
@@ -189,8 +179,8 @@ export default function SkillPage() {
       delay: 0.5,
     },
     {
-      name: "Other",
-      skills: ["Firebase", "Figma"],
+      name: "Tools & Services",
+      skills: ["Firebase", "Crashlytics", "Remote Config", "Cloud Messaging", "Figma", "Git"],
       className: "md:col-span-1 lg:col-span-1",
       delay: 0.6,
     },
@@ -217,60 +207,64 @@ export default function SkillPage() {
         </h3>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 w-full mt-4">
+      <div className="flex flex-col gap-12 md:gap-16 w-full mt-12 z-10">
         {categories.map((category) => (
-          <BentoCard key={category.name} className={category.className} delay={category.delay}>
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-1.5 h-6 bg-turquoise rounded-full" />
-              <h3 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
+          <motion.div
+            key={category.name}
+            variants={entrance}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ delay: category.delay }}
+            className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 items-start border-t border-black/10 dark:border-white/10 pt-8 md:pt-12"
+          >
+            <div className="md:col-span-1">
+              <h3 className="text-2xl md:text-3xl font-black text-foreground uppercase tracking-tight">
                 {category.name}
               </h3>
             </div>
             
-            <div className="flex flex-wrap gap-4">
+            <div className="md:col-span-3 flex flex-wrap gap-x-8 gap-y-6">
               {category.skills.map((skillName) => {
                 const skill = allSkills.find((s) => s.name === skillName);
                 if (!skill) return null;
                 const hasDetail = Boolean(skill.details?.length);
                 return (
-                  <Tooltip 
-                    key={skill.name} 
-                    content={skill.name} 
-                    placement="top"
-                    closeDelay={0}
-                    className="bg-background border border-black/10 dark:border-white/10 text-foreground font-bold"
+                  <div
+                    key={skill.name}
+                    role={hasDetail ? "button" : undefined}
+                    tabIndex={hasDetail ? 0 : -1}
+                    onClick={hasDetail ? () => setSelectedSkill(skill as Skill) : undefined}
+                    onKeyDown={
+                      hasDetail
+                        ? (e) => {
+                            if (e.key === "Enter" || e.key === " ") setSelectedSkill(skill as Skill);
+                          }
+                        : undefined
+                    }
+                    className={`flex flex-col items-center justify-start gap-3 w-20 md:w-24 group/skill outline-none ${
+                      hasDetail
+                        ? "cursor-pointer focus-visible:ring-2 focus-visible:ring-turquoise/60 focus-visible:ring-offset-4 focus-visible:ring-offset-background rounded-2xl"
+                        : "cursor-default"
+                    }`}
                   >
-                    <motion.div
-                      whileHover={{ y: -5, scale: 1.1 }}
-                      role={hasDetail ? "button" : undefined}
-                      tabIndex={hasDetail ? 0 : -1}
-                      onClick={hasDetail ? () => setSelectedSkill(skill as Skill) : undefined}
-                      onKeyDown={
-                        hasDetail
-                          ? (e) => {
-                              if (e.key === "Enter" || e.key === " ") setSelectedSkill(skill as Skill);
-                            }
-                          : undefined
-                      }
-                      className={`flex flex-col items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-lg bg-white dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-turquoise/40 hover:bg-turquoise/5 transition-all duration-300 group/skill shadow-sm flex-shrink-0 outline-none ${
-                        hasDetail
-                          ? "cursor-pointer focus-visible:ring-2 focus-visible:ring-turquoise/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                          : "cursor-default"
-                      }`}
-                    >
+                    <div className="flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-white/50 dark:bg-white/5 border border-black/5 dark:border-white/5 group-hover/skill:border-turquoise/40 group-hover/skill:bg-turquoise/5 transition-all duration-300 flex-shrink-0 shadow-sm">
                       <Image
-                        width={38}
-                        height={38}
+                        width={48}
+                        height={48}
                         alt={skill.name}
                         src={skill.image}
-                        className="object-contain w-9 h-9 md:w-10 md:h-10 transition-all duration-500 rounded-none"
+                        className="object-contain w-9 h-9 md:w-11 md:h-11 group-hover/skill:scale-110 transition-transform duration-500 rounded-none"
                       />
-                    </motion.div>
-                  </Tooltip>
+                    </div>
+                    <span className="text-xs md:text-sm text-center font-bold text-foreground/80 group-hover/skill:text-foreground transition-colors duration-300 leading-tight">
+                      {skill.name}
+                    </span>
+                  </div>
                 );
               })}
             </div>
-          </BentoCard>
+          </motion.div>
         ))}
       </div>
 

@@ -603,6 +603,34 @@ export const siteConfig = {
 		{
 			name: "Figma",
 			image: "/icons/figma-icon.svg",
+		},
+		{
+			name: "Crashlytics",
+			image: "/icons/crashlytics-icon.svg",
+		},
+		{
+			name: "Remote Config",
+			image: "/icons/remoteconfig-icon.svg",
+		},
+		{
+			name: "Cloud Messaging",
+			image: "/icons/cloudmessaging-icon.svg",
+		},
+		{
+			name: "App Store Connect",
+			image: "/icons/appstore-icon.svg",
+		},
+		{
+			name: "Google Play Console",
+			image: "/icons/playconsole-icon.svg",
+		},
+		{
+			name: "Codemagic",
+			image: "/icons/codemagic-icon.svg",
+		},
+		{
+			name: "Git",
+			image: "/icons/git-icon.svg",
 		}
 	],
 	contact: {
