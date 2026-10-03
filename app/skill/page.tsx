@@ -156,15 +156,21 @@ export default function SkillPage() {
     },
     {
       name: "Backend",
-      skills: ["Spring Boot", "Laravel", "Express.js", "NestJS", "Node JS", "Redis"],
+      skills: ["Spring Boot", "Laravel", "Express.js", "NestJS", "Node JS"],
       className: "md:col-span-2 lg:col-span-2",
       delay: 0.3,
     },
     {
-      name: "Database",
-      skills: ["MySQL", "MongoDB", "PostgreSQL"],
+      name: "Database & Caching",
+      skills: ["MySQL", "MongoDB", "PostgreSQL", "Redis"],
       className: "md:col-span-1 lg:col-span-1",
       delay: 0.4,
+    },
+    {
+      name: "CI/CD & Distribution",
+      skills: ["App Store Connect", "Google Play Console", "Codemagic"],
+      className: "md:col-span-1 lg:col-span-1",
+      delay: 0.45,
     },
     {
       name: "Language",
@@ -173,8 +179,8 @@ export default function SkillPage() {
       delay: 0.5,
     },
     {
-      name: "Other",
-      skills: ["Firebase", "Figma"],
+      name: "Tools & Services",
+      skills: ["Firebase", "Crashlytics", "Remote Config", "Cloud Messaging", "Figma", "Git"],
       className: "md:col-span-1 lg:col-span-1",
       delay: 0.6,
     },
