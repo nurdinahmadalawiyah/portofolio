@@ -9,6 +9,7 @@ import SmoothScroll from "@/components/smoothScroll";
 import clsx from "clsx";
 import { Analytics } from "@vercel/analytics/react";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import ChatWidget from "@/components/ChatWidget";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -66,6 +67,7 @@ export default function RootLayout({
               <Footer />
             </div>
           </SmoothScroll>
+          <ChatWidget />
         </Providers>
       </body>
     </html>
