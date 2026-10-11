@@ -4,6 +4,8 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import clsx from 'clsx';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ScrollToTop } from './scrollToTop';
 
 type Message = {
   role: 'user' | 'bot';
@@ -41,6 +43,7 @@ const TypewriterMarkdown = ({ content, onUpdate }: { content: string, onUpdate?:
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'bot',
@@ -62,6 +65,16 @@ export default function ChatWidget() {
   const toggleChat = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -226,21 +239,66 @@ export default function ChatWidget() {
         </div>
       </div>
 
-      {/* Floating Button */}
+      {/* Floating Action Buttons: Scroll to top on the left, AI on the right */}
       <div
         className={clsx(
-          "fixed bottom-6 right-6 z-40 transition-all duration-300",
+          "fixed bottom-6 right-6 z-40 flex items-center gap-3 transition-all duration-300",
           isOpen ? "translate-x-32 opacity-0 pointer-events-none" : "translate-x-0 opacity-100"
         )}
       >
-        <button
+        <ScrollToTop />
+
+        <motion.button
+          layout
           onClick={toggleChat}
-          className="flex items-center justify-center gap-2 px-5 h-14 bg-turquoise text-white dark:text-black rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-200 font-semibold"
-          aria-label="Open chat"
+          className={clsx(
+            "flex items-center justify-center h-14 bg-turquoise text-white dark:text-black rounded-2xl shadow-lg hover:shadow-xl font-semibold overflow-hidden shrink-0",
+            isScrolled ? "w-14 px-0" : "px-5"
+          )}
+          whileHover={{ y: -4 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{
+            layout: { type: "spring", stiffness: 380, damping: 28 },
+          }}
+          title="Ask Nurdin AI"
+          aria-label="Ask Nurdin AI"
         >
-          <Sparkles size={20} className="text-white fill-white dark:text-black dark:fill-black" />
-          <span>Ask Nurdin AI</span>
-        </button>
+          <motion.div layout="position" className="flex items-center justify-center shrink-0">
+            <Sparkles size={20} className="text-white dark:text-black" />
+          </motion.div>
+          <AnimatePresence initial={false}>
+            {!isScrolled && (
+              <motion.span
+                key="label"
+                layout="position"
+                initial={{ opacity: 0, width: 0, marginLeft: 0 }}
+                animate={{
+                  opacity: 1,
+                  width: "auto",
+                  marginLeft: 8,
+                  transition: {
+                    width: { type: "spring", stiffness: 380, damping: 28 },
+                    opacity: { duration: 0.2, delay: 0.08 },
+                    marginLeft: { duration: 0.2 },
+                  },
+                }}
+                exit={{
+                  opacity: 0,
+                  width: 0,
+                  marginLeft: 0,
+                  transition: {
+                    opacity: { duration: 0.15 },
+                    width: { type: "spring", stiffness: 380, damping: 28 },
+                    marginLeft: { duration: 0.2 },
+                  },
+                }}
+                className="whitespace-nowrap overflow-hidden select-none"
+              >
+                Ask Nurdin AI
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </motion.button>
       </div>
     </>
   );
