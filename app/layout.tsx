@@ -4,7 +4,6 @@ import { siteConfig } from "@/config/site";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { ScrollToTop } from "@/components/scrollToTop";
 import SmoothScroll from "@/components/smoothScroll";
 import clsx from "clsx";
 import { Analytics } from "@vercel/analytics/react";
@@ -56,7 +55,6 @@ export default function RootLayout({
         <Providers themeProps={{ attribute: "class", defaultTheme: "system", enableSystem: true, storageKey: "portofolio-theme" }}>
           
           <Navbar />
-          <ScrollToTop />
           <SmoothScroll>
             <div className="relative z-10 flex flex-col min-h-screen bg-transparent">
               <div className="absolute top-0 left-0 w-full h-[100vh] bg-ld-grid z-[-1] pointer-events-none [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)]" />
