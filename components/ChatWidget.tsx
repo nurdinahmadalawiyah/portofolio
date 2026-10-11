@@ -79,10 +79,25 @@ export default function ChatWidget() {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const isAtBottomRef = useRef(true);
 
-  const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  // Check if user is near the bottom (threshold 60px)
+  const handleScroll = useCallback(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    const distanceToBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    isAtBottomRef.current = distanceToBottom < 60;
+  }, []);
+
+  const scrollToBottom = useCallback((force = false) => {
+    if (force || isAtBottomRef.current) {
+      const el = scrollContainerRef.current;
+      if (el) {
+        el.scrollTop = el.scrollHeight;
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -122,8 +137,10 @@ export default function ChatWidget() {
     if (!messageText) {
       setInputValue('');
     }
+    isAtBottomRef.current = true;
     setMessages((prev) => [...prev, { role: 'user', content: textToSend }]);
     setIsLoading(true);
+    setTimeout(() => scrollToBottom(true), 10);
 
     try {
       const res = await fetch('/api/chatbot', {
@@ -219,6 +236,8 @@ export default function ChatWidget() {
 
             {/* Messages Area */}
             <div 
+              ref={scrollContainerRef}
+              onScroll={handleScroll}
               className="flex-1 overflow-y-auto px-4 pt-16 pb-20 sm:pb-16 space-y-3.5 overscroll-contain text-sm"
               data-lenis-prevent="true"
             >
