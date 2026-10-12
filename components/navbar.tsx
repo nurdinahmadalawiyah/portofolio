@@ -14,6 +14,7 @@ import NextLink from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ThemeSwitch } from "@/components/theme-switch";
+import { LanguageSwitch } from "@/components/language-switch";
 import { Logo } from "@/components/icons";
 import { useLenis } from "lenis/react";
 import { AnimatePresence } from "framer-motion";
@@ -220,11 +221,13 @@ export const Navbar = () => {
 
         <NavbarContent className="basis-1/5 sm:basis-full" justify="end">
           <NavbarItem className="hidden lg:flex gap-4 items-center">
+            <LanguageSwitch />
             <ThemeSwitch />
           </NavbarItem>
         </NavbarContent>
 
         <NavbarContent className="lg:hidden basis-1" justify="end">
+          <LanguageSwitch />
           <ThemeSwitch />
           <NavbarMenuToggle 
             className="text-default-500 w-10 h-10" 

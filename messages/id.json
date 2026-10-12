@@ -1,0 +1,490 @@
+{
+	"meta": {
+		"description": "Seorang Fullstack Developer dengan pengalaman {years}+ tahun dan spesialisasi kuat pada pengembangan aplikasi mobile, mendorong solusi perangkat lunak end-to-end dari sistem inti enterprise hingga super app yang seru dengan teknologi modern untuk membangun aplikasi yang skalabel dan berpusat pada pengguna."
+	},
+	"common": {
+		"close": "Tutup",
+		"downloadCv": "Unduh CV",
+		"scrollToTop": "Kembali ke atas",
+		"language": "Bahasa",
+		"countIs": "Jumlah {count}",
+		"yearsValue": "{years}+ Tahun",
+		"yearsShort": "{years, plural, one {# Tahun} other {# Tahun}}",
+		"monthsShort": "{months, plural, one {# Bulan} other {# Bulan}}",
+		"photoCount": "{count, plural, one {# foto} other {# foto}}",
+		"openPhoto": "Buka {label} dari {company}",
+		"openMorePhotos": "Buka {count} foto galeri lainnya dari {company}",
+		"galleryRegion": "Galeri {company}"
+	},
+	"nav": {
+		"home": "Beranda",
+		"project": "Proyek",
+		"skill": "Keahlian",
+		"experience": "Pengalaman",
+		"about": "Tentang",
+		"contact": "Kontak"
+	},
+	"home": {
+		"greeting": "Halo, saya",
+		"roles": [
+			"Saya seorang Frontend Developer",
+			"Saya seorang Mobile Developer",
+			"Saya seorang Backend Developer",
+			"Saya seorang Fullstack Developer"
+		],
+		"intro": {
+			"lead": "Seorang ",
+			"role": "Fullstack Developer",
+			"middle": " dengan ",
+			"years": "pengalaman {years}+ tahun",
+			"tail": " dan spesialisasi kuat pada ",
+			"focus": "pengembangan aplikasi mobile",
+			"end": "."
+		},
+		"exploreProjects": "Lihat Proyek",
+		"downloadCv": "Unduh CV"
+	},
+	"about": {
+		"watermark": "TENTANG",
+		"eyebrow": "Kenali saya lebih dekat",
+		"titleLead": "Bukan sekadar ",
+		"titleAccent": "menulis kode.",
+		"bio": "Saya Nurdin A. Alawiyah, pengembang fullstack yang benar-benar menikmati membuat sesuatu lewat kode. Bidang terkuat saya adalah pengembangan mobile, namun saya juga nyaman bekerja di web dan backend. Saya percaya cara terbaik untuk berkembang adalah tetap penasaran, sehingga saya selalu mempelajari alat dan teknologi baru melalui kursus online serta proyek sampingan di luar pekerjaan.",
+		"highlightKeywords": [
+			"Nurdin A. Alawiyah",
+			"pengembang fullstack",
+			"pengembangan mobile",
+			"web dan backend",
+			"tetap penasaran",
+			"kursus online",
+			"proyek sampingan"
+		],
+		"highlights": {
+			"experience": {
+				"label": "Pengalaman",
+				"value": "{years}+ Tahun"
+			},
+			"education": {
+				"label": "Pendidikan",
+				"value": "S.Tr.T Informatika"
+			}
+		},
+		"academicBackground": "Latar Pendidikan",
+		"gradeLabel": "Nilai (IPK)",
+		"education": {
+			"tedc": {
+				"degree": "Sarjana Terapan Teknologi (S.Tr.T) Teknik Informatika",
+				"duration": "Sep 2019 - Agu 2023",
+				"status": "Lulus dengan Pujian Cum Laude",
+				"desc": "Fokus pada Rekayasa Perangkat Lunak, Pengembangan Web, dan sistem Aplikasi Mobile."
+			}
+		}
+	},
+	"experience": {
+		"watermark": "PENGALAMAN",
+		"eyebrow": "Perjalanan Karier",
+		"titleLead": "Pengalaman ",
+		"titleAccent": "Bekerja.",
+		"storyline": "Garis Cerita",
+		"mainRole": "Peran Utama",
+		"via": "via {company}",
+		"momentsTitle": "Momen dari bab ini",
+		"momentsSubtitle": "Rekaman visual perjalanan",
+		"moreMoments": "Momen lainnya",
+		"previousPhoto": "Foto galeri sebelumnya",
+		"nextPhoto": "Foto galeri berikutnya",
+		"work": {
+			"padepokan": {
+				"location": "Bandung, Jawa Barat, Indonesia",
+				"story": {
+					"title": "Bab profesional pertama",
+					"desc": "Perjalanan karier saya dimulai di sini saat semester akhir kuliah, tidak lama sebelum lulus. Saya memulai sebagai magang Frontend Developer, lanjut ke pelatihan kerja backend, dan akhirnya dipekerjakan sebagai Software Developer. Fase ini membentuk saya agar mudah beradaptasi di frontend, backend, dan pengembangan mobile."
+				},
+				"roles": {
+					"software-developer": {
+						"position": "Software Developer",
+						"type": "Kontrak",
+						"date": "September 2023 - Sekarang",
+						"duration": "",
+						"jobDesc": [
+							"Bekerja di pengembangan web frontend, backend, dan mobile, menyesuaikan diri dengan kebutuhan proyek dan stack teknologi yang berbeda.",
+							"Berkontribusi pada pengembangan perangkat lunak end-to-end, mulai dari memahami kebutuhan bisnis dan mengimplementasikan fitur hingga pengujian, debugging, dan deployment.",
+							"Ditugaskan ke berbagai proyek dan lingkungan klien, menyesuaikan diri dengan alur kerja, kebutuhan teknis, dan ekspektasi stakeholder yang berbeda.",
+							"Berkolaborasi dengan lintas tim untuk menghadirkan solusi perangkat lunak sesuai kebutuhan proyek dan klien."
+						]
+					},
+					"backend-ojt": {
+						"position": "Backend Developer",
+						"type": "Pelatihan Kerja",
+						"date": "Juni 2023 - September 2023",
+						"duration": "3 Bulan",
+						"jobDesc": [
+							"Mengembangkan dan memelihara endpoint RESTful API untuk mendukung integrasi yang mulus antara aplikasi server dan klien.",
+							"Membantu mengelola sistem basis data dengan PostgreSQL untuk memastikan operasi data yang andal.",
+							"Berkolaborasi dengan developer senior untuk menemukan bug, melakukan troubleshooting, dan mengoptimalkan kinerja backend."
+						]
+					},
+					"frontend-intern": {
+						"position": "Frontend Web Developer",
+						"type": "Magang",
+						"date": "Maret 2023 - Mei 2023",
+						"duration": "3 Bulan",
+						"jobDesc": [
+							"Menerjemahkan mockup desain UI/UX dari Figma menjadi komponen halaman web yang interaktif, dinamis, dan aksesibel.",
+							"Mengintegrasikan antarmuka frontend dengan layanan API agar aliran data dari server ke pengguna berjalan lancar dan akurat."
+						]
+					}
+				},
+				"gallery": {
+					"team-moment": {
+						"label": "Momen tim",
+						"caption": "Momen kolaborasi tim dari bab ini."
+					},
+					"project-day": {
+						"label": "Hari proyek",
+						"caption": "Momen dari proyek atau penugasan klien."
+					},
+					"work-setup": {
+						"label": "Suasana kerja",
+						"caption": "Momen di balik layar dari suasana kerja."
+					},
+					"milestone": {
+						"label": "Tonggak",
+						"caption": "Tonggak profesional yang berkesan dari bab ini."
+					}
+				}
+			},
+			"prudential": {
+				"location": "Jakarta Selatan, Jakarta, Indonesia",
+				"story": {
+					"title": "Kembali ke Jakarta untuk pengembangan mobile",
+					"desc": "Ini adalah penugasan onsite kedua saya di Jakarta, kali ini sebagai Mobile Developer di PT. Prudential Life Assurance (Prudential Indonesia) melalui NTT DATA Indonesia. Bab ini memungkinkan saya mendalami pengalaman pengembangan mobile di lingkungan korporasi besar."
+				},
+				"roles": {
+					"mobile-developer": {
+						"position": "Mobile Developer",
+						"type": "Onsite",
+						"date": "Juni 2026 - Sekarang",
+						"duration": "",
+						"jobDesc": [
+							"Mengembangkan dan memelihara aplikasi mobile cross-platform menggunakan Flutter dan Dart untuk Prudential Indonesia.",
+							"Menerapkan fitur dan peningkatan baru berdasarkan kebutuhan bisnis, memastikan pengalaman pengguna yang mulus dan konsisten.",
+							"Mengintegrasikan RESTful API dan menangani aliran data antara aplikasi mobile dan layanan backend."
+						]
+					}
+				},
+				"gallery": {
+					"onsite-chapter": {
+						"label": "Bab onsite",
+						"caption": "Momen dari penugasan onsite."
+					},
+					"mobile-team": {
+						"label": "Tim mobile",
+						"caption": "Momen tim pengembangan mobile."
+					},
+					"office-day": {
+						"label": "Hari di kantor",
+						"caption": "Sehari di kantor klien."
+					}
+				}
+			},
+			"victoria": {
+				"location": "Jakarta Selatan, Jakarta, Indonesia",
+				"story": {
+					"title": "Masuk ke lingkungan kerja korporat",
+					"desc": "Ini adalah penugasan outsourcing dan onsite pertama saya di perusahaan klien. Saya pindah dari Bandung ke Jakarta, belajar hidup mandiri, dan merasakan bekerja di lingkungan korporasi besar. Sebagai Full Stack Developer, saya membantu melanjutkan core system Victoria menggunakan NestJS dan Angular."
+				},
+				"roles": {
+					"fullstack-developer": {
+						"position": "Full Stack Developer",
+						"type": "Kontrak",
+						"date": "Juni 2024 - Mei 2025",
+						"duration": "1 Tahun",
+						"jobDesc": [
+							"Mengembangkan dan memelihara aplikasi web end-to-end yang andal, memakai Angular untuk antarmuka yang responsif dan NestJS untuk arsitektur sisi server yang skalabel.",
+							"Merancang pipeline data dan solusi penyimpanan yang efisien dengan MongoDB untuk pengelolaan data berbasis dokumen yang fleksibel.",
+							"Mengoptimalkan kinerja aplikasi dengan Redis untuk caching dan manajemen sesi berkecepatan tinggi.",
+							"Merancang sistem pemrosesan asinkron dan message queue yang andal dengan BullMQ untuk job latar belakang tanpa menghambat alur aplikasi utama.",
+							"Berkolaborasi langsung dengan lintas tim dalam lingkungan onsite untuk mengumpulkan kebutuhan bisnis, melakukan troubleshooting cepat, dan memastikan deliverable memenuhi standar perusahaan."
+						]
+					}
+				},
+				"gallery": {
+					"padepokan-visit": {
+						"label": "Kunjungan Padepokan",
+						"caption": "Tim Padepokan Tujuh Sembilan berkunjung saat penugasan onsite."
+					},
+					"national-batik-day": {
+						"label": "Hari Batik Nasional",
+						"caption": "Foto tim merayakan Hari Batik Nasional di Victoria Investama."
+					},
+					"last-day": {
+						"label": "Hari terakhir di Victoria",
+						"caption": "Foto tim dari hari terakhir penugasan di Victoria Investama."
+					}
+				}
+			},
+			"crop": {
+				"location": "Bandung, Jawa Barat, Indonesia",
+				"story": {
+					"title": "Awal mula pengembangan mobile",
+					"desc": "Inilah pertama kali saya menulis kode untuk perusahaan sungguhan saat masih berstatus mahasiswa. Saya bergabung sebagai magang di perusahaan dosen, menemukan pemrograman mobile, dan membangun sistem mobile untuk bisnis tersebut menggunakan Flutter. Dari sinilah minat saya pada pengembangan mobile bermula."
+				},
+				"roles": {
+					"mobile-intern": {
+						"position": "Mobile Developer",
+						"type": "Magang",
+						"date": "Juli 2022 - Desember 2022",
+						"duration": "6 Bulan",
+						"jobDesc": [
+							"Mengembangkan aplikasi mobile untuk Android menggunakan framework Flutter.",
+							"Membangun antarmuka yang responsif dan intuitif, menerjemahkan mockup desain UI/UX menjadi layar aplikasi fungsional dengan widget Flutter kustom.",
+							"Mengintegrasikan RESTful API untuk mengambil, memproses, dan menampilkan data dinamis agar komunikasi antara aplikasi mobile dan layanan backend berjalan mulus.",
+							"Berkolaborasi dengan tim teknis untuk menangani masalah, melakukan debug, dan mempelajari alur kerja pengembangan standar industri."
+						]
+					}
+				},
+				"gallery": {
+					"full-team": {
+						"label": "Seluruh tim",
+						"caption": "Momen seluruh tim selama bab Crop Inspirasi Digital."
+					}
+				}
+			}
+		}
+	},
+	"projects": {
+		"watermark": "PROYEK",
+		"eyebrow": "Karya Terpilih",
+		"titleLead": "Proyek ",
+		"titleAccent": "Terkini.",
+		"filtersLabel": "Filter Proyek",
+		"filters": {
+			"all": "Semua",
+			"mobile": "Mobile",
+			"fullstack": "Fullstack",
+			"frontend": "Frontend",
+			"backend": "Backend"
+		},
+		"emptyState": "Tidak ada proyek untuk filter {filter}.",
+		"privateRepo": "Repo Privat",
+		"inDevelopment": "Dalam Pengembangan",
+		"keyResponsibilities": "Tanggung Jawab Utama",
+		"noPreview": "TANPA PRATINJAU",
+		"responsibilitiesTitle": "Tanggung Jawab - {name}",
+		"sourceCode": "Kode Sumber",
+		"openWeb": "Buka Web",
+		"appStore": "App Store",
+		"playStore": "Play Store",
+		"items": {
+			"civiku": {
+				"name": "Civiku - Professional CV Builder",
+				"desc": "Generator CV online yang dinamis, dibangun dengan Next.js. Menyediakan pembuatan resume yang intuitif berkat Zustand untuk manajemen state yang efisien serta UI modern dan responsif dengan Tailwind CSS dan shadcn/ui.",
+				"date": "Jun 2026 - Agu 2026",
+				"role": "Pengembang Fullstack",
+				"customer": "Proyek Pribadi",
+				"jobDesc": [
+					"Mengembangkan pembuat CV online yang dinamis dengan Next.js",
+					"Merancang alur pembuatan resume yang intuitif untuk data profil dan pengalaman yang terstruktur",
+					"Menerapkan manajemen state aplikasi yang efisien dengan Zustand",
+					"Membangun antarmuka pengguna yang modern dan responsif dengan Tailwind CSS dan shadcn/ui"
+				]
+			},
+			"deep-link": {
+				"name": "Deep Link Diagnostics Tool",
+				"desc": "SPA Next.js modern yang membantu developer mobile langsung memvalidasi konfigurasi server untuk Universal Links iOS dan Android App Links.",
+				"date": "Mei 2026",
+				"role": "Pengembang Fullstack",
+				"customer": "Proyek Pribadi",
+				"jobDesc": [
+					"Membangun Single Page Application (SPA) Next.js dengan desain yang menawan",
+					"Memvalidasi berkas konfigurasi .well-known dengan JSON Schema",
+					"Mengintegrasikan pemeriksaan Apple CDN dan API Google Digital Asset Links",
+					"Memgenerasi perintah CLI (xcrun, adb) untuk pengujian path lokal"
+				]
+			},
+			"ardan": {
+				"name": "Ardan Digital Platform",
+				"desc": "Proyek transformasi digital menyeluruh untuk Ardan Radio, mencakup aplikasi mobile cross-platform dan integrasi web untuk memperkuat keterlibatan komunitas pendengar.",
+				"date": "Mei 2025 - April 2026",
+				"customer": "PT. Radio Ardan Swaratama",
+				"role": "Pengembang Mobile",
+				"jobDesc": [
+					"Merancang dan mengimplementasikan UI responsif dengan Flutter & Bloc",
+					"Mengintegrasikan RESTful API yang kompleks dengan manajemen state yang efisien",
+					"Mengoptimalkan kinerja cross-platform untuk iOS dan Android",
+					"Mengimplementasikan fitur real-time dan modul berbasis komunitas"
+				]
+			},
+			"itch-mme": {
+				"name": "ITCH MME",
+				"desc": "Membangun pipeline ingest dan transformasi data throughput tinggi dengan C++. Mengelola proses pengumpulan data bursa ke MongoDB serta mengembangkan logika parsing untuk mengekstrak, memproses, dan memuat data ke MariaDB pada pipeline ETL inti.",
+				"date": "Jan 2026 - Apr 2026",
+				"customer": "PT. Kustodian Sentral Efek Indonesia",
+				"role": "Pengembang Backend",
+				"jobDesc": [
+					"Membangun pipeline ingest dan transformasi data throughput tinggi dengan C++",
+					"Mengelola proses pengumpulan data bursa dan menyimpannya di MongoDB",
+					"Mengembangkan logika parsing untuk mengekstrak dan memproses data bursa yang masuk",
+					"Memuat data hasil transformasi ke MariaDB sebagai bagian dari pipeline ETL inti"
+				]
+			},
+			"zendo": {
+				"name": "ZenDo",
+				"desc": "Aplikasi produktivitas Android modern yang memadukan Teknik Pomodoro dengan pengelolaan tugas yang efisien. Dibangun dengan standar Android terkini untuk pengalaman fokus yang mulus.",
+				"date": "Sekarang",
+				"role": "Pengembang Android",
+				"customer": "Proyek Pribadi",
+				"jobDesc": [
+					"Menerapkan Clean Architecture & MVVM agar kode skalabel",
+					"Membangun UI modern dengan 100% Jetpack Compose (Material 3)",
+					"Mengintegrasikan Firebase Firestore untuk sinkronisasi data cloud real-time",
+					"Menerapkan suara ambient dengan Media3 ExoPlayer untuk menjaga fokus"
+				]
+			},
+			"victoria-core": {
+				"name": "Victoria Life Insurance Core System",
+				"desc": "Core system berperforma tinggi untuk operasi asuransi kritis seperti penerbitan polis dan klaim. Dirancang menangani volume transaksi hingga 8.000 sertifikat per hari.",
+				"date": "Juni 2024 - Mei 2025",
+				"customer": "PT Victoria Alife Indonesia",
+				"role": "Pengembang Fullstack",
+				"jobDesc": [
+					"Mengembangkan modul inti: Product Setup, Policy, Billing, dan Claims",
+					"Menerapkan BullMQ untuk pemrosesan data Excel berkecepatan tinggi ke MongoDB",
+					"Mengoptimalkan kinerja sistem dengan mekanisme caching Redis",
+					"Membangun Backend yang kokoh dengan NestJS 10 dan Frontend dengan AngularJS 16"
+				]
+			},
+			"wms": {
+				"name": "Workshop Management System",
+				"desc": "WMS adalah produk berbasis microservice untuk bengkel kendaraan, mencakup manajemen body repair dan service. Dibangun dengan Spring Boot dan Next.js berperforma tinggi.",
+				"date": "Juni 2023 - Maret 2024",
+				"customer": "PT. Layanan Prima Setia Jaya",
+				"role": "Pengembang Fullstack",
+				"jobDesc": [
+					"Menerapkan MINIO untuk penyimpanan cloud gambar dan video (Backend)",
+					"Merancang dan membuat REST API microservice (Backend)",
+					"Menerapkan desain Figma ke aplikasi web Next.js 13 (Frontend)",
+					"Mengintegrasikan REST API yang kompleks agar fungsionalitas berjalan mulus (Frontend)"
+				]
+			},
+			"pkl": {
+				"name": "Aplikasi Praktik Kerja Lapangan Berbasis Mobile",
+				"desc": "Aplikasi mobile yang dikembangkan sebagai tugas akhir selama kuliah. Aplikasi ini dibuat untuk memudahkan mahasiswa melaporkan kegiatan magang dan memantau progresnya.",
+				"date": "Maret 2023 - Agustus 2023",
+				"customer": "Politeknik TEDC Bandung",
+				"role": "Pengembang Fullstack",
+				"jobDesc": [
+					"Merencanakan dan merancang antarmuka frontend dengan Next.js",
+					"Menerapkan sistem autentikasi aman berbasis JWT",
+					"Mengintegrasikan notifikasi real-time melalui API OneSignal",
+					"Merancang dan mengembangkan RESTful API backend dengan Laravel"
+				]
+			},
+			"e-recruitment": {
+				"name": "E-Recruitment",
+				"desc": "Aplikasi web untuk rekrutmen talenta yang dapat digunakan oleh pelamar kerja maupun tim HRD untuk memilih calon karyawan.",
+				"date": "Maret 2023 - Juni 2023",
+				"customer": "PT. Padepokan Tujuh Sembilan",
+				"role": "Pengembang Frontend",
+				"jobDesc": [
+					"Merancang antarmuka pengguna mengikuti desain yang sudah ada",
+					"Membuat layar Daftar Candidate & Detail Candidate",
+					"Membuat layar Dashboard - List Contract Candidate",
+					"Mengintegrasikan REST API yang disediakan backend"
+				]
+			},
+			"internal-management": {
+				"name": "Internal Management Web Application Office",
+				"desc": "Aplikasi mobile untuk mengelola berbagai situs web milik kantor. Aplikasi ini mengelola aktivitas login setiap web aplikasi.",
+				"date": "Juli 2022 - Desember 2022",
+				"customer": "PT. Crop Inspirasi Digital",
+				"role": "Pengembang Mobile",
+				"jobDesc": [
+					"Mengimplementasikan fitur login",
+					"Mengimplementasikan layar pengelolaan web internal kantor"
+				]
+			}
+		}
+	},
+	"skills": {
+		"watermark": "KEAHLIAN",
+		"eyebrow": "Rangkaian Teknologi",
+		"titleLead": "Keahlian ",
+		"titleAccent": "Saya.",
+		"categories": {
+			"mobile": "Mobile",
+			"frontend": "Frontend",
+			"backend": "Backend",
+			"database": "Database & Caching",
+			"cicd": "CI/CD & Distribusi",
+			"language": "Bahasa Pemrograman",
+			"tools": "Alat & Layanan"
+		},
+		"modalTitle": "Detail Keahlian - {name}",
+		"modalEmpty": "Saya masih memperbarui detail keahlian ini."
+	},
+	"contact": {
+		"watermark": "KONTAK",
+		"eyebrow": "Mari terhubung",
+		"titleLead": "Mari ",
+		"titleAccent": "Terhubung.",
+		"emailSubject": "Halo Nurdin",
+		"emailBody": "Halo Nurdin,%0D%0A%0D%0ASaya ingin menghubungi soal...",
+		"whatsappText": "Halo Nurdin, saya ingin terhubung denganmu.",
+		"labels": {
+			"whatsapp": "WhatsApp",
+			"linkedin": "LinkedIn",
+			"instagram": "Instagram",
+			"github": "GitHub",
+			"location": "Lokasi",
+			"email": "Email Cepat"
+		},
+		"directMessage": "Pesan langsung",
+		"reachOut": "Hubungi saya kapan saja.",
+		"reachOutDesc": "Pilih kanal yang kamu inginkan dan saya akan segera membalas.",
+		"fastReply": "Balasan cepat",
+		"openToCollaboration": "Terbuka untuk kolaborasi",
+		"emailMe": "Kirim Email",
+		"whatsappCta": "WhatsApp",
+		"downloadCv": "Unduh CV"
+	},
+	"footer": {
+		"tagline": "Fullstack Developer yang berdomisili di {location}.",
+		"connect": "Terhubung",
+		"rights": "© {year} HAK CIPTA DILINDUNGI",
+		"designedBy": "DIDESAIN OLEH {name}"
+	},
+	"theme": {
+		"light": "Terang",
+		"system": "Sistem",
+		"dark": "Gelap",
+		"toggle": "Ganti tema",
+		"options": "Opsi tema"
+	},
+	"chat": {
+		"title": "Asisten Portofolio",
+		"subtitle": "Tanyakan tentang karya Nurdin",
+		"greeting": "Halo! Silakan tanyakan apa saja tentang keahlian, pengalaman, atau proyek Nurdin.",
+		"suggestionsLabel": "Topik yang disarankan:",
+		"suggestions": [
+			"Teknologi utama",
+			"Pengalaman kerja",
+			"Proyek unggulan",
+			"Kontak & media sosial"
+		],
+		"thinking": "Sedang berpikir...",
+		"inputPlaceholder": "Ajukan pertanyaan...",
+		"reset": "Ulangi percakapan",
+		"close": "Tutup obrolan",
+		"open": "Tanyakan ke Asisten AI",
+		"send": "Kirim pesan",
+		"generating": "Sedang menyiapkan jawaban...",
+		"errorUnexpected": "Format respons dari server tidak terduga.",
+		"errorOffline": "Tidak dapat terhubung ke server. Silakan coba lagi."
+	},
+	"error": {
+		"title": "Terjadi kesalahan!",
+		"retry": "Coba lagi"
+	}
+}

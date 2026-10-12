@@ -6,6 +6,7 @@
 		"close": "Close",
 		"downloadCv": "Download CV",
 		"scrollToTop": "Scroll to top",
+		"language": "Language",
 		"countIs": "Count is {count}",
 		"yearsValue": "{years}+ Years",
 		"yearsShort": "{years, plural, one {# Year} other {# Years}}",

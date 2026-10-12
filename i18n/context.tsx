@@ -25,7 +25,13 @@ export function LocaleProvider({
 	// Applied after hydration so SSR markup and the first client render stay identical.
 	useEffect(() => {
 		const stored = window.localStorage.getItem(LOCALE_STORAGE_KEY);
-		if (isLocale(stored) && stored !== locale) setLocaleState(stored);
+		if (isLocale(stored)) {
+			if (stored !== locale) setLocaleState(stored);
+			return;
+		}
+
+		const preferred = window.navigator.languages.find(isLocale);
+		if (preferred && preferred !== locale) setLocaleState(preferred);
 	}, [locale]);
 
 	useEffect(() => {
