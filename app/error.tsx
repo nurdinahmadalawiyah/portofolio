@@ -1,7 +1,8 @@
-'use client' 
- 
+'use client'
+
 import { useEffect } from 'react'
- 
+import { useT } from '@/i18n/context'
+
 export default function Error({
   error,
   reset,
@@ -9,21 +10,23 @@ export default function Error({
   error: Error
   reset: () => void
 }) {
+  const t = useT()
+
   useEffect(() => {
     // Log the error to an error reporting service
     console.error(error)
   }, [error])
- 
+
   return (
     <div>
-      <h2>Something went wrong!</h2>
+      <h2>{t.error.title}</h2>
       <button
         onClick={
           // Attempt to recover by trying to re-render the segment
           () => reset()
         }
       >
-        Try again
+        {t.error.retry}
       </button>
     </div>
   )

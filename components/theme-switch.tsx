@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { useIsSSR } from "@react-aria/ssr";
 import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
+import { useT } from "@/i18n/context";
 
 const SunIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -48,10 +49,10 @@ const CheckIcon = () => (
 
 type ThemeOption = "light" | "system" | "dark";
 
-const THEMES: { value: ThemeOption; icon: React.ReactNode; label: string }[] = [
-  { value: "light", icon: <SunIcon />, label: "Light" },
-  { value: "system", icon: <SystemIcon />, label: "System" },
-  { value: "dark", icon: <MoonIcon />, label: "Dark" },
+const THEMES: { value: ThemeOption; icon: React.ReactNode }[] = [
+  { value: "light", icon: <SunIcon /> },
+  { value: "system", icon: <SystemIcon /> },
+  { value: "dark", icon: <MoonIcon /> },
 ];
 
 export interface ThemeSwitchProps {
@@ -60,6 +61,7 @@ export interface ThemeSwitchProps {
 
 export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className }) => {
   const { theme, resolvedTheme, setTheme } = useTheme();
+  const t = useT();
   const isSSR = useIsSSR();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const menuAnchorRef = useRef<HTMLButtonElement | null>(null);
@@ -123,7 +125,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className }) => {
       <div className="flex items-center rounded-xl bg-default-100 border border-black/10 dark:border-white/10 p-1">
         <button
           type="button"
-          aria-label="Toggle theme"
+          aria-label={t.theme.toggle}
           onClick={() => setTheme(effectiveTheme === "dark" ? "light" : "dark")}
           className="flex items-center justify-center w-9 h-8 rounded-lg text-default-600 hover:text-foreground transition-colors"
         >
@@ -134,7 +136,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className }) => {
 
         <button
           type="button"
-          aria-label="Theme options"
+          aria-label={t.theme.options}
           aria-haspopup="menu"
           aria-expanded={isOpen}
           onClick={() => setIsOpen((v) => !v)}
@@ -153,7 +155,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className }) => {
             {isOpen && menuPos && (
               <motion.div
                 role="menu"
-                aria-label="Theme options"
+                aria-label={t.theme.options}
                 initial={{ opacity: 0, y: 6, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 6, scale: 0.98 }}
@@ -162,22 +164,22 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className }) => {
                 style={{ top: menuPos.top, right: menuPos.right }}
               >
                 <div className="p-1">
-                  {THEMES.map((t) => {
-                    const isActive = currentTheme === t.value;
+                  {THEMES.map((option) => {
+                    const isActive = currentTheme === option.value;
                     return (
                       <button
-                        key={t.value}
+                        key={option.value}
                         type="button"
                         role="menuitem"
                         onClick={() => {
-                          setTheme(t.value);
+                          setTheme(option.value);
                           setIsOpen(false);
                         }}
                         className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-semibold transition-colors
                           ${isActive ? "bg-black/5 dark:bg-white/5 text-foreground" : "text-default-600 hover:bg-black/5 dark:hover:bg-white/5 hover:text-foreground"}`}
                       >
-                        <span className="text-default-500">{t.icon}</span>
-                        <span className="flex-1 text-left">{t.label}</span>
+                        <span className="text-default-500">{option.icon}</span>
+                        <span className="flex-1 text-left">{t.theme[option.value]}</span>
                         {isActive && (
                           <span className="text-turquoise">
                             <CheckIcon />

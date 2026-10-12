@@ -1,6 +1,7 @@
 "use client";
 
-import { siteConfig } from "@/config/site";
+import { siteConfig, type SkillCategoryKey } from "@/config/site";
+import { useFormat, useT } from "@/i18n/context";
 import { Button } from "@heroui/button";
 import { Image } from "@heroui/image";
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/modal";
@@ -41,6 +42,9 @@ const SkillDetailModal = ({
   skill: Skill | null;
   onClose: () => void;
 }) => {
+  const t = useT();
+  const format = useFormat();
+
   if (!skill) return null;
 
   return (
@@ -59,7 +63,7 @@ const SkillDetailModal = ({
         {(onModalClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1 text-turquoise uppercase tracking-[0.2em] font-black text-sm">
-              Skill Details - {skill.name}
+              {format(t.skills.modalTitle, { name: skill.name })}
             </ModalHeader>
             <ModalBody className="min-h-0 overflow-y-auto overscroll-contain" data-lenis-prevent>
               <div className="flex items-center gap-4 pb-2">
@@ -118,7 +122,7 @@ const SkillDetailModal = ({
                 ) : (
                   <div className="rounded-2xl border border-black/5 bg-white/40 p-4 dark:border-white/5 dark:bg-default-100/30 md:col-span-2">
                     <div className="text-sm font-semibold text-foreground/80">
-                      I'm still updating the details of this skill.
+                      {t.skills.modalEmpty}
                     </div>
                   </div>
                 )}
@@ -126,7 +130,7 @@ const SkillDetailModal = ({
             </ModalBody>
             <ModalFooter>
               <Button color="default" variant="light" onPress={onModalClose} className="font-bold">
-                Close
+                {t.common.close}
               </Button>
             </ModalFooter>
           </>
@@ -137,49 +141,50 @@ const SkillDetailModal = ({
 };
 
 export default function SkillPage() {
+  const t = useT();
   const allSkills = useMemo(() => siteConfig.skill as Skill[], []);
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
   const closeModal = useCallback(() => setSelectedSkill(null), []);
 
-  const categories = [
+  const categories: { key: SkillCategoryKey; skills: string[]; className: string; delay: number }[] = [
     {
-      name: "Mobile",
+      key: "mobile",
       skills: ["Flutter", "Jetpack Compose", "React Native", "Expo",],
       className: "md:col-span-1 lg:col-span-1",
       delay: 0.1,
     },
     {
-      name: "Frontend",
+      key: "frontend",
       skills: ["React", "Next.js", "Angular"],
       className: "md:col-span-1 lg:col-span-1",
       delay: 0.2,
     },
     {
-      name: "Backend",
+      key: "backend",
       skills: ["Spring Boot", "Laravel", "Express.js", "NestJS", "Node JS"],
       className: "md:col-span-2 lg:col-span-2",
       delay: 0.3,
     },
     {
-      name: "Database & Caching",
+      key: "database",
       skills: ["MySQL", "MongoDB", "PostgreSQL", "Redis"],
       className: "md:col-span-1 lg:col-span-1",
       delay: 0.4,
     },
     {
-      name: "CI/CD & Distribution",
+      key: "cicd",
       skills: ["App Store Connect", "Google Play Console", "Codemagic"],
       className: "md:col-span-1 lg:col-span-1",
       delay: 0.45,
     },
     {
-      name: "Language",
+      key: "language",
       skills: ["JavaScript", "Java", "Dart", "PHP", "Kotlin", "TypeScript"],
       className: "md:col-span-2 lg:col-span-2",
       delay: 0.5,
     },
     {
-      name: "Tools & Services",
+      key: "tools",
       skills: ["Firebase", "Crashlytics", "Remote Config", "Cloud Messaging", "Figma", "Git"],
       className: "md:col-span-1 lg:col-span-1",
       delay: 0.6,
@@ -190,7 +195,7 @@ export default function SkillPage() {
     <section className="relative flex flex-col items-center justify-center gap-12 py-16 md:py-24 w-full max-w-6xl mx-auto px-6 overflow-hidden">
       {/* Giant Background Text Watermark */}
       <div className="absolute top-10 left-1/2 -translate-x-1/2 pointer-events-none select-none z-0 opacity-[0.04] dark:opacity-[0.08]">
-        <h1 className="text-[12rem] md:text-[20rem] font-black tracking-tighter leading-none text-foreground whitespace-nowrap">SKILLS</h1>
+        <h1 className="text-[12rem] md:text-[20rem] font-black tracking-tighter leading-none text-foreground whitespace-nowrap">{t.skills.watermark}</h1>
       </div>
 
       <motion.div
@@ -201,16 +206,16 @@ export default function SkillPage() {
         viewport={{ once: true, margin: "-80px" }}
         className="relative z-10 w-full mb-4 flex flex-col items-start"
       >
-        <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">Tech Stack</h2>
+        <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">{t.skills.eyebrow}</h2>
         <h3 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
-          My <span className="text-turquoise italic font-serif font-light">Skills.</span>
+          {t.skills.titleLead}<span className="text-turquoise italic font-serif font-light">{t.skills.titleAccent}</span>
         </h3>
       </motion.div>
 
       <div className="flex flex-col gap-12 md:gap-16 w-full mt-12 z-10">
         {categories.map((category) => (
           <motion.div
-            key={category.name}
+            key={category.key}
             variants={entrance}
             initial="hidden"
             whileInView="visible"
@@ -220,7 +225,7 @@ export default function SkillPage() {
           >
             <div className="md:col-span-1">
               <h3 className="text-2xl md:text-3xl font-black text-foreground uppercase tracking-tight">
-                {category.name}
+                {t.skills.categories[category.key]}
               </h3>
             </div>
             

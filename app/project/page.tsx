@@ -8,7 +8,8 @@ import { Tooltip } from "@heroui/tooltip";
 import { motion } from "framer-motion";
 import { useState, useCallback, useEffect, useMemo } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import { siteConfig } from "@/config/site";
+import { siteConfig, type ProjectRoleKey, type SiteConfig } from "@/config/site";
+import { useFormat, useT } from "@/i18n/context";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@heroui/modal";
 import { Tabs, Tab } from "@heroui/tabs";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/dropdown";
@@ -34,7 +35,10 @@ const entrance = {
   },
 };
 
-const ProjectCard = ({ project }: { project: any }) => {
+const ProjectCard = ({ project }: { project: SiteConfig["project"][number] }) => {
+  const t = useT();
+  const format = useFormat();
+  const copy = t.projects.items[project.id];
   const [isOpen, setIsOpen] = useState(false);
   
   return (
@@ -47,20 +51,20 @@ const ProjectCard = ({ project }: { project: any }) => {
             {project.isPrivate && (
               <div className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-                <span className="text-[10px] font-black text-white uppercase tracking-widest">Private Repo</span>
+                <span className="text-[10px] font-black text-white uppercase tracking-widest">{t.projects.privateRepo}</span>
               </div>
             )}
             {project.isOngoing && (
               <div className="px-3 py-1 rounded-full bg-turquoise/20 backdrop-blur-md border border-turquoise/30 flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-turquoise animate-pulse" />
-                <span className="text-[10px] font-black text-turquoise uppercase tracking-widest">In Development</span>
+                <span className="text-[10px] font-black text-turquoise uppercase tracking-widest">{t.projects.inDevelopment}</span>
               </div>
             )}
           </div>
 
-          {project.jobDesc && (
+          {copy.jobDesc && (
             <div className="absolute inset-0 z-30 flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 pointer-events-none">
-              <Tooltip content="Key Responsibilities" closeDelay={0} placement="top">
+              <Tooltip content={t.projects.keyResponsibilities} closeDelay={0} placement="top">
                 <Button
                   isIconOnly
                   radius="full"
@@ -77,12 +81,12 @@ const ProjectCard = ({ project }: { project: any }) => {
             <Image
               removeWrapper
               src={project.image}
-              alt={project.name}
+              alt={copy.name}
               className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700 pointer-events-none"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <span className="text-turquoise/40 font-black text-4xl italic tracking-tighter opacity-20 text-center px-4">NO PREVIEW</span>
+              <span className="text-turquoise/40 font-black text-4xl italic tracking-tighter opacity-20 text-center px-4">{t.projects.noPreview}</span>
             </div>
           )}
           
@@ -105,18 +109,18 @@ const ProjectCard = ({ project }: { project: any }) => {
             <div className="w-1.5 h-10 bg-turquoise rounded-full flex-shrink-0 mt-1" />
             <div className="flex flex-col gap-1.5">
               <h3 className="text-xl md:text-2xl font-black text-foreground tracking-tight group-hover/card:text-turquoise transition-colors leading-tight">
-                {project.name}
+                {copy.name}
               </h3>
               <div className="flex flex-col gap-1 text-default-500 font-bold uppercase tracking-widest">
-                {project.customer && (
-                  <span className="text-[10px] md:text-xs leading-relaxed">{project.customer}</span>
+                {copy.customer && (
+                  <span className="text-[10px] md:text-xs leading-relaxed">{copy.customer}</span>
                 )}
                 <div className="flex items-center gap-2 text-[9px] md:text-[10px]">
-                  <span className="text-turquoise">{project.role}</span>
-                  {project.date && (
+                  <span className="text-turquoise">{copy.role}</span>
+                  {copy.date && (
                     <>
                       <span className="w-1 h-1 rounded-full bg-default-300" />
-                      <span className="text-default-400">{project.date}</span>
+                      <span className="text-default-400">{copy.date}</span>
                     </>
                   )}
                 </div>
@@ -125,11 +129,11 @@ const ProjectCard = ({ project }: { project: any }) => {
           </div>
 
           <p className="text-default-500 dark:text-default-400 text-sm leading-relaxed">
-            {project.desc}
+            {copy.desc}
           </p>
 
           <div>
-            {project.jobDesc && (
+            {copy.jobDesc && (
               <Modal 
                 isOpen={isOpen} 
                 onOpenChange={setIsOpen} 
@@ -143,11 +147,11 @@ const ProjectCard = ({ project }: { project: any }) => {
                   {(onClose) => (
                     <>
                       <ModalHeader className="flex flex-col gap-1 text-turquoise uppercase tracking-[0.2em] font-black text-sm">
-                        Responsibilities - {project.name}
+                        {format(t.projects.responsibilitiesTitle, { name: copy.name })}
                       </ModalHeader>
                       <ModalBody className="min-h-0 overflow-y-auto overscroll-contain" data-lenis-prevent>
                         <ul className="flex flex-col gap-4 py-2">
-                          {project.jobDesc.map((job: string, jobIdx: number) => (
+                          {copy.jobDesc.map((job: string, jobIdx: number) => (
                             <li key={jobIdx} className="flex items-start gap-3 text-sm text-foreground/80 font-medium leading-relaxed">
                               <span className="w-2 h-2 rounded-full bg-turquoise mt-1.5 flex-shrink-0" />
                               <span className="min-w-0 break-words">{job}</span>
@@ -157,7 +161,7 @@ const ProjectCard = ({ project }: { project: any }) => {
                       </ModalBody>
                       <ModalFooter>
                         <Button color="default" variant="light" onPress={onClose} className="font-bold">
-                          Close
+                          {t.common.close}
                         </Button>
                       </ModalFooter>
                     </>
@@ -178,7 +182,7 @@ const ProjectCard = ({ project }: { project: any }) => {
             className="flex-1 min-w-[120px] bg-turquoise text-white dark:text-black font-black transition-all duration-300 h-12 rounded-xl"
             startContent={<GithubIcon size={20} />}
           >
-            Source Code
+            {t.projects.sourceCode}
           </Button>
         )}
         {project.web && (
@@ -189,7 +193,7 @@ const ProjectCard = ({ project }: { project: any }) => {
             className="flex-1 min-w-[120px] bg-black text-white border border-white/20 hover:border-white/50 font-bold transition-all duration-300 h-12 rounded-xl"
             startContent={<ExternalLinkIcon size={20} />}
           >
-            Open Web
+            {t.projects.openWeb}
           </Button>
         )}
         {project.appStore && (
@@ -200,7 +204,7 @@ const ProjectCard = ({ project }: { project: any }) => {
             className="flex-1 min-w-[120px] bg-black text-white border border-white/20 hover:border-white/50 font-bold transition-all duration-300 h-12 rounded-xl"
             startContent={<AppleIcon size={20} />}
           >
-            App Store
+            {t.projects.appStore}
           </Button>
         )}
         {project.playStore && (
@@ -211,7 +215,7 @@ const ProjectCard = ({ project }: { project: any }) => {
             className="flex-1 min-w-[120px] bg-black text-white border border-white/20 hover:border-white/50 font-bold transition-all duration-300 h-12 rounded-xl"
             startContent={<PlayStoreIcon size={20} />}
           >
-            Play Store
+            {t.projects.playStore}
           </Button>
         )}
       </div>
@@ -220,18 +224,13 @@ const ProjectCard = ({ project }: { project: any }) => {
 };
 
 export default function ProjectPage() {
-  const [filter, setFilter] = useState("All");
+  const t = useT();
+  const format = useFormat();
+  const [filter, setFilter] = useState<ProjectRoleKey | "all">("all");
 
   const filteredProjects = useMemo(() => {
-    return siteConfig.project.filter((project) => {
-      if (filter === "All") return true;
-      const role = project.role.toLowerCase();
-      if (filter === "Mobile") return role.includes("mobile") || role.includes("android") || role.includes("ios");
-      if (filter === "Frontend") return role.includes("frontend");
-      if (filter === "Backend") return role.includes("backend");
-      if (filter === "Fullstack") return role.includes("fullstack") || role.includes("full stack");
-      return role.includes(filter.toLowerCase());
-    });
+    if (filter === "all") return siteConfig.project;
+    return siteConfig.project.filter((project) => project.roleKey === filter);
   }, [filter]);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
@@ -277,7 +276,7 @@ export default function ProjectPage() {
     <section className="relative flex flex-col items-center justify-center gap-12 py-16 md:py-24 w-full max-w-6xl mx-auto px-6 overflow-hidden min-h-screen">
       {/* Giant Background Text Watermark */}
       <div className="absolute top-10 left-1/2 -translate-x-1/2 pointer-events-none select-none z-0 opacity-[0.04] dark:opacity-[0.08]">
-        <h1 className="text-[12rem] md:text-[20rem] font-black tracking-tighter leading-none text-foreground whitespace-nowrap">PROJECTS</h1>
+        <h1 className="text-[12rem] md:text-[20rem] font-black tracking-tighter leading-none text-foreground whitespace-nowrap">{t.projects.watermark}</h1>
       </div>
 
       <motion.div
@@ -289,18 +288,18 @@ export default function ProjectPage() {
         className="relative z-10 w-full mb-8 flex flex-row items-end justify-between gap-4"
       >
         <div className="flex flex-col items-start">
-          <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">Selected Works</h2>
+          <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">{t.projects.eyebrow}</h2>
           <h3 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
-            Recent <span className="text-turquoise italic font-serif font-light">Projects.</span>
+            {t.projects.titleLead}<span className="text-turquoise italic font-serif font-light">{t.projects.titleAccent}</span>
           </h3>
         </div>
 
         {/* Desktop Filter */}
         <div className="hidden lg:block">
           <Tabs 
-            aria-label="Project Filters" 
+            aria-label={t.projects.filtersLabel} 
             selectedKey={filter} 
-            onSelectionChange={(key) => setFilter(key as string)}
+            onSelectionChange={(key) => setFilter(key as ProjectRoleKey | "all")}
             variant="light"
             radius="full"
             fullWidth
@@ -311,11 +310,11 @@ export default function ProjectPage() {
               tabContent: "group-data-[selected=true]:text-turquoise font-bold text-xs uppercase tracking-widest transition-colors w-full text-center"
             }}
           >
-            <Tab key="All" title="All" />
-            <Tab key="Mobile" title="Mobile" />
-            <Tab key="Fullstack" title="Fullstack" />
-            <Tab key="Frontend" title="Frontend" />
-            <Tab key="Backend" title="Backend" />
+            <Tab key="all" title={t.projects.filters.all} />
+            <Tab key="mobile" title={t.projects.filters.mobile} />
+            <Tab key="fullstack" title={t.projects.filters.fullstack} />
+            <Tab key="frontend" title={t.projects.filters.frontend} />
+            <Tab key="backend" title={t.projects.filters.backend} />
           </Tabs>
         </div>
 
@@ -333,13 +332,13 @@ export default function ProjectPage() {
               </Button>
             </DropdownTrigger>
             <DropdownMenu 
-              aria-label="Project Filters"
+              aria-label={t.projects.filtersLabel}
               selectionMode="single"
               selectedKeys={new Set([filter])}
               onSelectionChange={(keys) => {
                 if (keys !== "all") {
                   const selected = Array.from(keys)[0];
-                  if (selected) setFilter(selected as string);
+                  if (selected) setFilter(selected as ProjectRoleKey | "all");
                 }
               }}
               className="w-48"
@@ -348,11 +347,11 @@ export default function ProjectPage() {
                 title: "font-bold text-sm uppercase tracking-widest"
               }}
             >
-              <DropdownItem key="All">All</DropdownItem>
-              <DropdownItem key="Mobile">Mobile</DropdownItem>
-              <DropdownItem key="Fullstack">Fullstack</DropdownItem>
-              <DropdownItem key="Frontend">Frontend</DropdownItem>
-              <DropdownItem key="Backend">Backend</DropdownItem>
+              <DropdownItem key="all">{t.projects.filters.all}</DropdownItem>
+              <DropdownItem key="mobile">{t.projects.filters.mobile}</DropdownItem>
+              <DropdownItem key="fullstack">{t.projects.filters.fullstack}</DropdownItem>
+              <DropdownItem key="frontend">{t.projects.filters.frontend}</DropdownItem>
+              <DropdownItem key="backend">{t.projects.filters.backend}</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </div>
@@ -370,7 +369,7 @@ export default function ProjectPage() {
         <div className="flex lg:hidden flex-col gap-12 w-full mt-4">
           {filteredProjects.map((project: any, index) => (
             <motion.div 
-              key={project.name} 
+              key={project.id} 
               className="w-full"
               initial={{ opacity: 0, y: 56, scale: 0.96, filter: "blur(8px)" }}
               whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
@@ -381,7 +380,7 @@ export default function ProjectPage() {
             </motion.div>
           ))}
           {filteredProjects.length === 0 && (
-            <div className="w-full py-12 text-center text-default-500 font-medium">No projects found for {filter}.</div>
+            <div className="w-full py-12 text-center text-default-500 font-medium">{format(t.projects.emptyState, { filter: t.projects.filters[filter] })}</div>
           )}
         </div>
 
@@ -390,11 +389,11 @@ export default function ProjectPage() {
           <div className="overflow-hidden w-full" ref={emblaRef}>
             <div className="flex touch-pan-y">
               {filteredProjects.length === 0 ? (
-                <div className="w-full py-20 text-center text-default-500 font-medium flex-[0_0_100%]">No projects found for {filter}.</div>
+                <div className="w-full py-20 text-center text-default-500 font-medium flex-[0_0_100%]">{format(t.projects.emptyState, { filter: t.projects.filters[filter] })}</div>
               ) : (
                 filteredProjects.map((project: any, index) => (
                   <div 
-                    key={project.name} 
+                    key={project.id} 
                     className={`min-w-0 px-5 flex ${filteredProjects.length === 1 ? 'flex-[0_0_100%] max-w-2xl mx-auto' : 'flex-[0_0_50%]'}`}
                   >
                     <div className="w-full h-full">

@@ -1,6 +1,10 @@
 import "@/styles/globals.css";
 import { Metadata } from "next";
-import { siteConfig } from "@/config/site";
+import { getYearsOfExperience, siteConfig } from "@/config/site";
+import { defaultLocale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { formatMessage } from "@/i18n/format";
+import { LocaleProvider } from "@/i18n/context";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
@@ -24,12 +28,16 @@ export const viewport: Viewport = {
   ],
 };
 
+const dictionary = getDictionary(defaultLocale);
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
     template: `%s - ${siteConfig.name}`,
   },
-  description: siteConfig.home.description,
+  description: formatMessage(defaultLocale, dictionary.meta.description, {
+    years: getYearsOfExperience(),
+  }),
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",
@@ -43,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className="antialiased selection:bg-turquoise selection:text-black">
+    <html lang={defaultLocale} suppressHydrationWarning className="antialiased selection:bg-turquoise selection:text-black">
       <head />
       <body
         suppressHydrationWarning
@@ -53,19 +61,20 @@ export default function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "system", enableSystem: true, storageKey: "portofolio-theme" }}>
-          
-          <Navbar />
-          <SmoothScroll>
-            <div className="relative z-10 flex flex-col min-h-screen bg-transparent">
-              <div className="absolute top-0 left-0 w-full h-[100vh] bg-ld-grid z-[-1] pointer-events-none [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)]" />
-              <main className="container mx-auto max-w-6xl pt-16 px-4 flex-grow">
-                {children}
-                <Analytics />
-              </main>
-              <Footer />
-            </div>
-          </SmoothScroll>
-          <ChatWidget />
+          <LocaleProvider>
+            <Navbar />
+            <SmoothScroll>
+              <div className="relative z-10 flex flex-col min-h-screen bg-transparent">
+                <div className="absolute top-0 left-0 w-full h-[100vh] bg-ld-grid z-[-1] pointer-events-none [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)]" />
+                <main className="container mx-auto max-w-6xl pt-16 px-4 flex-grow">
+                  {children}
+                  <Analytics />
+                </main>
+                <Footer />
+              </div>
+            </SmoothScroll>
+            <ChatWidget />
+          </LocaleProvider>
         </Providers>
       </body>
     </html>

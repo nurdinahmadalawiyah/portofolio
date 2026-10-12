@@ -9,10 +9,12 @@ import {
 } from "@heroui/navbar";
 import { Link } from "@heroui/link";
 import { siteConfig } from "@/config/site";
+import { useT } from "@/i18n/context";
 import NextLink from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ThemeSwitch } from "@/components/theme-switch";
+import { LanguageSwitch } from "@/components/language-switch";
 import { Logo } from "@/components/icons";
 import { useLenis } from "lenis/react";
 import { AnimatePresence } from "framer-motion";
@@ -23,6 +25,7 @@ const SECTION_TARGET_TOP = 160;
 const SCROLL_SPY_ACTIVATION_TOP = SECTION_TARGET_TOP + 48;
 
 export const Navbar = () => {
+  const t = useT();
   const [activeItem, setActiveItem] = useState("#home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pendingScrollTargetRef = useRef<string | null>(null);
@@ -197,7 +200,7 @@ export const Navbar = () => {
                       scrollToSection(item.href);
                     }}
                   >
-                    {item.label}
+                    {t.nav[item.key]}
                     {isActive && (
                       <motion.div
                         layoutId="nav-underline"
@@ -218,11 +221,13 @@ export const Navbar = () => {
 
         <NavbarContent className="basis-1/5 sm:basis-full" justify="end">
           <NavbarItem className="hidden lg:flex gap-4 items-center">
+            <LanguageSwitch />
             <ThemeSwitch />
           </NavbarItem>
         </NavbarContent>
 
         <NavbarContent className="lg:hidden basis-1" justify="end">
+          <LanguageSwitch />
           <ThemeSwitch />
           <NavbarMenuToggle 
             className="text-default-500 w-10 h-10" 
@@ -259,7 +264,7 @@ export const Navbar = () => {
                         scrollToSection(item.href);
                       }}
                     >
-                      <span>{item.label}</span>
+                      <span>{t.nav[item.key]}</span>
                       {activeItem === item.href && (
                         <motion.div 
                           layoutId="active-dot"

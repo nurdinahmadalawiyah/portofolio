@@ -5,9 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@heroui/button";
 import { ChevronUpIcon } from "./icons";
 import { useLenis } from "lenis/react";
+import { useT } from "@/i18n/context";
 import clsx from "clsx";
 
 export const ScrollToTop = ({ className }: { className?: string } = {}) => {
+  const t = useT();
   const [isVisible, setIsVisible] = useState(false);
   const lenis = useLenis();
 
@@ -51,7 +53,7 @@ export const ScrollToTop = ({ className }: { className?: string } = {}) => {
             isIconOnly
             onClick={scrollToTop}
             className="bg-turquoise/20 hover:bg-turquoise/30 backdrop-blur-md border border-turquoise/30 text-turquoise h-14 w-14 rounded-2xl group transition-all duration-300 shadow-lg"
-            aria-label="Scroll to top"
+            aria-label={t.common.scrollToTop}
           >
             <ChevronUpIcon className="w-6 h-6 transition-transform duration-300 group-hover:-translate-y-1" />
           </Button>

@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import clsx from 'clsx';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollToTop } from './scrollToTop';
+import { useT } from '@/i18n/context';
 
 type Message = {
   role: 'user' | 'bot';
@@ -13,17 +14,10 @@ type Message = {
   isTyped?: boolean;
 };
 
-const SUGGESTIONS = [
-  "Core tech stack",
-  "Work experience",
-  "Featured projects",
-  "Contact & socials",
-];
-
-const INITIAL_MESSAGES: Message[] = [
+const createInitialMessages = (greeting: string): Message[] => [
   {
     role: 'bot',
-    content: "Hi there! Feel free to ask anything about Nurdin's skills, experience, or projects.",
+    content: greeting,
     isTyped: true,
   }
 ];
@@ -74,15 +68,31 @@ const TypewriterMarkdown = ({
 };
 
 export default function ChatWidget() {
+  const t = useT();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
+  const [messages, setMessages] = useState<Message[]>(() => createInitialMessages(t.chat.greeting));
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const isAtBottomRef = useRef(true);
 
-  const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  // Check if user is near the bottom (threshold 60px)
+  const handleScroll = useCallback(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    const distanceToBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    isAtBottomRef.current = distanceToBottom < 60;
+  }, []);
+
+  const scrollToBottom = useCallback((force = false) => {
+    if (force || isAtBottomRef.current) {
+      const el = scrollContainerRef.current;
+      if (el) {
+        el.scrollTop = el.scrollHeight;
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -94,9 +104,14 @@ export default function ChatWidget() {
   };
 
   const handleResetChat = () => {
-    setMessages(INITIAL_MESSAGES);
+    setMessages(createInitialMessages(t.chat.greeting));
     setInputValue('');
   };
+
+  // A locale switch starts a fresh conversation so replies match the new language.
+  useEffect(() => {
+    setMessages(createInitialMessages(t.chat.greeting));
+  }, [t.chat.greeting]);
 
   useEffect(() => {
     if (isOpen) {
@@ -122,8 +137,10 @@ export default function ChatWidget() {
     if (!messageText) {
       setInputValue('');
     }
+    isAtBottomRef.current = true;
     setMessages((prev) => [...prev, { role: 'user', content: textToSend }]);
     setIsLoading(true);
+    setTimeout(() => scrollToBottom(true), 10);
 
     try {
       const res = await fetch('/api/chatbot', {
@@ -148,7 +165,7 @@ export default function ChatWidget() {
       } else {
         setMessages((prev) => [
           ...prev,
-          { role: 'bot', content: 'Unexpected response format from server.', isTyped: false },
+          { role: 'bot', content: t.chat.errorUnexpected, isTyped: false },
         ]);
       }
 
@@ -156,7 +173,7 @@ export default function ChatWidget() {
       console.error('Chat API Error:', error);
       setMessages((prev) => [
         ...prev,
-        { role: 'bot', content: 'Unable to connect to the server. Please try again.', isTyped: false },
+        { role: 'bot', content: t.chat.errorOffline, isTyped: false },
       ]);
     } finally {
       setIsLoading(false);
@@ -192,23 +209,23 @@ export default function ChatWidget() {
                     <Sparkles size={16} />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-sm leading-none">Portfolio Assistant</h3>
-                    <span className="text-[11px] text-default-400">Ask about Nurdin's work</span>
+                    <h3 className="font-semibold text-sm leading-none">{t.chat.title}</h3>
+                    <span className="text-[11px] text-default-400">{t.chat.subtitle}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
                   <button
                     onClick={handleResetChat}
-                    title="Reset conversation"
+                    title={t.chat.reset}
                     className="p-1.5 rounded-lg text-default-400 hover:text-foreground hover:bg-default-100 dark:hover:bg-zinc-800 transition-colors"
-                    aria-label="Reset conversation"
+                    aria-label={t.chat.reset}
                   >
                     <RotateCcw size={15} />
                   </button>
                   <button
                     onClick={toggleChat}
                     className="p-1.5 rounded-lg text-default-400 hover:text-foreground hover:bg-default-100 dark:hover:bg-zinc-800 transition-colors"
-                    aria-label="Close chat"
+                    aria-label={t.chat.close}
                   >
                     <X size={17} />
                   </button>
@@ -219,6 +236,8 @@ export default function ChatWidget() {
 
             {/* Messages Area */}
             <div 
+              ref={scrollContainerRef}
+              onScroll={handleScroll}
               className="flex-1 overflow-y-auto px-4 pt-16 pb-20 sm:pb-16 space-y-3.5 overscroll-contain text-sm"
               data-lenis-prevent="true"
             >
@@ -261,9 +280,9 @@ export default function ChatWidget() {
               {/* Suggestions: only on initial state */}
               {messages.length === 1 && !isLoading && (
                 <div className="pt-2 space-y-1.5">
-                  <p className="text-[11px] text-default-400">Suggested topics:</p>
+                  <p className="text-[11px] text-default-400">{t.chat.suggestionsLabel}</p>
                   <div className="flex flex-wrap gap-1.5">
-                    {SUGGESTIONS.map((suggestion, i) => (
+                    {t.chat.suggestions.map((suggestion, i) => (
                       <button
                         key={i}
                         onClick={() => sendMessage(suggestion)}
@@ -280,7 +299,7 @@ export default function ChatWidget() {
                 <div className="flex justify-start">
                   <div className="px-3 py-1.5 rounded-xl bg-default-100 dark:bg-zinc-800 border border-black/5 dark:border-white/5 text-xs text-default-500 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-turquoise animate-pulse" />
-                    <span>Thinking...</span>
+                    <span>{t.chat.thinking}</span>
                   </div>
                 </div>
               )}
@@ -305,7 +324,7 @@ export default function ChatWidget() {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Ask a question..."
+                    placeholder={t.chat.inputPlaceholder}
                     disabled={isLoading}
                     className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-default-400 outline-none min-w-0"
                   />
@@ -330,8 +349,8 @@ export default function ChatWidget() {
                         "h-11 rounded-xl bg-turquoise text-white dark:text-black flex items-center justify-center shrink-0 overflow-hidden shadow-sm transition-all",
                         isLoading ? "opacity-80 cursor-not-allowed" : "hover:opacity-90 active:scale-95 cursor-pointer"
                       )}
-                      aria-label={isLoading ? "Generating response..." : "Send message"}
-                      title={isLoading ? "Generating response..." : "Send message"}
+                      aria-label={isLoading ? t.chat.generating : t.chat.send}
+                      title={isLoading ? t.chat.generating : t.chat.send}
                     >
                       <div className="w-11 h-11 flex items-center justify-center shrink-0">
                         {isLoading ? (
@@ -356,8 +375,8 @@ export default function ChatWidget() {
         <button
           onClick={toggleChat}
           className="bg-turquoise/20 hover:bg-turquoise/30 backdrop-blur-md border border-turquoise/30 text-turquoise h-14 w-14 rounded-2xl flex items-center justify-center transition-all duration-300 shadow-lg hover:-translate-y-1 active:scale-95 shrink-0"
-          title={isOpen ? "Close chat" : "Ask AI Assistant"}
-          aria-label={isOpen ? "Close chat" : "Ask AI Assistant"}
+          title={isOpen ? t.chat.close : t.chat.open}
+          aria-label={isOpen ? t.chat.close : t.chat.open}
         >
           <AnimatePresence mode="wait" initial={false}>
             {isOpen ? (

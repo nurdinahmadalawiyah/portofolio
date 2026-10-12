@@ -2,10 +2,13 @@
 
 import { Link } from "@heroui/link";
 import { siteConfig } from "@/config/site";
+import { useFormat, useT } from "@/i18n/context";
 import { GithubIcon, LinkedInIcon, WhatsAppIcon, MailIcon, InstagramIcon } from "@/components/icons";
 import { Divider } from "@heroui/divider";
 
 export const Footer = () => {
+  const t = useT();
+  const format = useFormat();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -21,13 +24,13 @@ export const Footer = () => {
               {siteConfig.name}
             </h3>
             <p className="text-default-500 text-sm text-center md:text-left leading-relaxed">
-              Fullstack Developer based in {siteConfig.contact.location}, Indonesia.
+              {format(t.footer.tagline, { location: siteConfig.contact.location })}
             </p>
           </div>
 
           {/* Social Connect */}
           <div className="flex flex-col items-center md:items-end gap-5">
-            <h4 className="text-sm font-semibold uppercase tracking-widest text-default-400">Connect</h4>
+            <h4 className="text-sm font-semibold uppercase tracking-widest text-default-400">{t.footer.connect}</h4>
             <div className="flex items-center gap-6">
               <Link isExternal href={siteConfig.contact.github} className="text-default-400 hover:text-turquoise transition-all hover:-translate-y-1">
                 <GithubIcon size={24} />
@@ -51,8 +54,8 @@ export const Footer = () => {
         <Divider className="opacity-5" />
 
         <div className="mt-10 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] uppercase tracking-[0.2em] text-default-400 font-medium">
-          <p>© {currentYear} ALL RIGHTS RESERVED</p>
-          <p>DESIGNED BY {siteConfig.name}</p>
+          <p>{format(t.footer.rights, { year: currentYear })}</p>
+          <p>{format(t.footer.designedBy, { name: siteConfig.name })}</p>
         </div>
       </div>
       

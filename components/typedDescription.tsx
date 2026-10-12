@@ -1,15 +1,16 @@
 "use client";
 
-import { siteConfig } from '@/config/site';
+import { useT } from '@/i18n/context';
 import React, { useEffect, useRef } from 'react';
 import Typed from 'typed.js';
 
 const TypedDescription = () => {
   const typedTextRef = useRef(null);
+  const roles = useT().home.roles;
 
   useEffect(() => {
     const options = {
-      strings: siteConfig.home.role,
+      strings: roles,
       typeSpeed: 100,
       backSpeed: 50,
       showCursor: true,
@@ -22,7 +23,7 @@ const TypedDescription = () => {
     return () => {
       typed.destroy();
     };
-  }, []);
+  }, [roles]);
 
   return <span ref={typedTextRef}></span>;
 };

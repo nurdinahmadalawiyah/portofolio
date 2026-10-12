@@ -35,6 +35,10 @@ npm install
 npm run dev
 ```
 
+## Localization
+
+All user-facing strings live in `messages/<locale>.json` (`en`, `id`) with a language toggle in the navbar; see [docs/i18n.md](docs/i18n.md) for the layout and for how to add a locale.
+
 ## License
 
 Licensed under the [MIT license](https://github.com/nextui-org/next-app-template/blob/main/LICENSE).

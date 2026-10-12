@@ -1,6 +1,7 @@
 "use client";
 
-import { siteConfig } from "@/config/site";
+import { getYearsOfExperience, siteConfig } from "@/config/site";
+import { useFormat, useT } from "@/i18n/context";
 import { Image } from "@heroui/image";
 import { motion } from "framer-motion";
 
@@ -16,16 +17,12 @@ const entrance = {
 };
 
 export default function AboutPage() {
+  const t = useT();
+  const format = useFormat();
+  const yearsOfExperience = getYearsOfExperience();
+
   const highlightKeywords = (text: string) => {
-    const keywords = [
-      "Nurdin A. Alawiyah",
-      "fullstack developer",
-      "mobile development", 
-      "web and backend",
-      "staying curious",
-      "online courses",
-      "side projects"
-    ];
+    const keywords = t.about.highlightKeywords;
     
     let parts = [text];
     keywords.forEach(keyword => {
@@ -70,7 +67,7 @@ export default function AboutPage() {
       
       {/* Giant Background Text Watermark */}
       <div className="absolute top-10 left-1/2 -translate-x-1/2 pointer-events-none select-none z-0 opacity-[0.04] dark:opacity-[0.08]">
-        <h1 className="text-[15rem] md:text-[20rem] font-black tracking-tighter leading-none text-foreground">ABOUT</h1>
+        <h1 className="text-[15rem] md:text-[20rem] font-black tracking-tighter leading-none text-foreground">{t.about.watermark}</h1>
       </div>
 
       <motion.div
@@ -81,9 +78,9 @@ export default function AboutPage() {
         viewport={{ once: true, margin: "-80px" }}
         className="relative z-10 w-full mb-12 flex flex-col items-start"
       >
-        <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">Get to know me</h2>
+        <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">{t.about.eyebrow}</h2>
         <h3 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
-          Not just <span className="text-turquoise italic font-serif font-light">writing code.</span>
+          {t.about.titleLead}<span className="text-turquoise italic font-serif font-light">{t.about.titleAccent}</span>
         </h3>
       </motion.div>
 
@@ -96,9 +93,9 @@ export default function AboutPage() {
             <div className="w-12 h-1 bg-turquoise rounded-full" />
           </div>
           <div className="space-y-4">
-            <h4 className="text-2xl font-black tracking-tight">Nurdin A. Alawiyah</h4>
+            <h4 className="text-2xl font-black tracking-tight">{siteConfig.name}</h4>
             <p className="text-default-500 leading-relaxed font-medium text-lg">
-              {highlightKeywords(siteConfig.about.desc)}
+              {highlightKeywords(t.about.bio)}
             </p>
           </div>
         </BentoCard>
@@ -106,10 +103,10 @@ export default function AboutPage() {
         {/* Card 2: Highlight 1 (1x1) */}
         <BentoCard className="md:col-span-1 md:row-span-1 flex flex-col items-center justify-center text-center" delay={0.2}>
           <span className="text-sm uppercase tracking-[0.2em] text-default-400 font-bold mb-2">
-            {siteConfig.about.highlights?.[0]?.label}
+            {t.about.highlights.experience.label}
           </span>
           <span className="text-4xl md:text-5xl font-black text-foreground">
-            {siteConfig.about.highlights?.[0]?.value}
+            {format(t.about.highlights.experience.value, { years: yearsOfExperience })}
           </span>
         </BentoCard>
 
@@ -123,7 +120,7 @@ export default function AboutPage() {
           className="relative group rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md overflow-clip md:col-span-1 md:row-span-1 h-full min-h-[220px]"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-turquoise/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none" />
-          <img src="/images/nurdin1-new.jpeg" alt="Nurdin A. Alawiyah" className="absolute inset-0 w-full h-full object-cover z-0 hover:scale-105 transition-transform duration-700" />
+          <img src="/images/nurdin1-new.jpeg" alt={siteConfig.name} className="absolute inset-0 w-full h-full object-cover z-0 hover:scale-105 transition-transform duration-700" />
         </motion.div>
 
         {/* Card 4: Highlight 3 -> Now Education (Spans 2x1 to fill the gap) */}
@@ -131,10 +128,10 @@ export default function AboutPage() {
           <div className="flex w-full items-center justify-between">
             <div>
               <span className="text-sm uppercase tracking-[0.2em] text-turquoise font-bold mb-2 block">
-                {siteConfig.about.highlights?.[1]?.label}
+                {t.about.highlights.education.label}
               </span>
               <span className="text-2xl md:text-3xl font-black text-foreground">
-                {siteConfig.about.highlights?.[1]?.value}
+                {t.about.highlights.education.value}
               </span>
             </div>
             <div className="text-turquoise opacity-50">
@@ -147,16 +144,16 @@ export default function AboutPage() {
         <BentoCard className="md:col-span-4" delay={0.5}>
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8 mb-8 text-center md:text-left">
             <div className="flex items-center gap-4">
-              <span className="text-sm uppercase tracking-[0.3em] text-turquoise font-black">Academic Background</span>
+              <span className="text-sm uppercase tracking-[0.3em] text-turquoise font-black">{t.about.academicBackground}</span>
             </div>
             {siteConfig.about.education?.[0] && (
               <div className="px-5 py-2 rounded-full bg-turquoise/10 text-turquoise text-[10px] font-black uppercase tracking-[0.2em] border border-turquoise/20 text-center">
-                {siteConfig.about.education[0].status}
+                {t.about.education[siteConfig.about.education[0].id].status}
               </div>
             )}
           </div>
 
-          {siteConfig.about.education?.map((edu: any, idx: number) => (
+          {siteConfig.about.education?.map((edu, idx) => (
             <div key={idx} className="flex flex-col lg:flex-row gap-8 items-center lg:items-center w-full">
               <div className="w-24 h-24 rounded-[1.5rem] bg-white dark:bg-white/5 flex items-center justify-center flex-shrink-0 p-4 border border-black/5 dark:border-white/10 group-hover:scale-105 transition-transform duration-500">
                 {edu.logo ? (
@@ -172,19 +169,19 @@ export default function AboutPage() {
                 </h4>
                 <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
                   <span className="px-3 py-1 rounded-lg bg-turquoise/10 text-turquoise text-xs font-black uppercase tracking-widest text-center">
-                    {edu.degree}
+                    {t.about.education[edu.id].degree}
                   </span>
                   <span className="text-default-500 font-bold tracking-wider text-sm">
-                    {edu.duration}
+                    {t.about.education[edu.id].duration}
                   </span>
                 </div>
                 <p className="text-default-500 text-sm md:text-base leading-relaxed max-w-3xl mt-2 text-center lg:text-left">
-                  {edu.desc}
+                  {t.about.education[edu.id].desc}
                 </p>
               </div>
 
               <div className="flex flex-col items-center lg:items-end p-6 w-full lg:w-auto mt-4 lg:mt-0 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10">
-                <span className="text-[10px] uppercase tracking-[0.3em] text-default-400 font-black mb-1 text-center lg:text-right">Grade (GPA)</span>
+                <span className="text-[10px] uppercase tracking-[0.3em] text-default-400 font-black mb-1 text-center lg:text-right">{t.about.gradeLabel}</span>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-black text-turquoise">{edu.gpa.split('/')[0]}</span>
                   <span className="text-default-400 font-bold text-sm">/ {edu.gpa.split('/')[1]}</span>
