@@ -2,7 +2,8 @@
 
 import { Link } from "@heroui/link";
 import { Button } from "@heroui/button";
-import { siteConfig } from "@/config/site";
+import { getYearsOfExperience, siteConfig } from "@/config/site";
+import { useFormat, useT } from "@/i18n/context";
 import { title } from "@/components/primitives";
 import { motion, Variants } from "framer-motion";
 import TypedDescription from "@/components/typedDescription";
@@ -45,6 +46,9 @@ const buttonItem: Variants = {
 export default function HomePage() {
   const lenis = useLenis();
   const isIntroReady = useIntroReady();
+  const t = useT();
+  const format = useFormat();
+  const yearsOfExperience = getYearsOfExperience();
 
   const scrollToProject = () => {
     const projectHeading = document.getElementById("project");
@@ -72,8 +76,8 @@ export default function HomePage() {
         className="w-full flex flex-col items-center"
       >
         <motion.h1 variants={heroItem} className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-foreground leading-[1.05] block">
-          Hi, I&apos;m<br/>
-          <span className="text-turquoise">Nurdin A. Alawiyah</span>
+          {t.home.greeting}<br/>
+          <span className="text-turquoise">{siteConfig.name}</span>
         </motion.h1>
 
         <motion.div variants={heroItem} className="mt-6 md:mt-8 min-h-[32px] md:min-h-[40px] flex items-center justify-center overflow-visible">
@@ -83,15 +87,9 @@ export default function HomePage() {
         </motion.div>
 
         <motion.p variants={heroItem} className="mt-6 text-base md:text-xl text-default-500 font-medium leading-[1.6] w-full max-w-2xl mx-auto">
-          A <span className="text-foreground font-bold">Fullstack Developer</span> with <span className="text-turquoise font-bold">
-            {(() => {
-              const start = new Date("2022-07-01");
-              const now = new Date();
-              let y = now.getFullYear() - start.getFullYear();
-              if (now.getMonth() < start.getMonth() || (now.getMonth() === start.getMonth() && now.getDate() < start.getDate())) y--;
-              return y;
-            })()}+ years of experience
-          </span> and a strong specialization in <span className="text-turquoise font-bold">mobile application development</span>.
+          {t.home.intro.lead}<span className="text-foreground font-bold">{t.home.intro.role}</span>{t.home.intro.middle}<span className="text-turquoise font-bold">
+            {format(t.home.intro.years, { years: yearsOfExperience })}
+          </span>{t.home.intro.tail}<span className="text-turquoise font-bold">{t.home.intro.focus}</span>{t.home.intro.end}
         </motion.p>
       </motion.div>
 
@@ -108,7 +106,7 @@ export default function HomePage() {
             className="bg-turquoise text-white dark:text-black font-extrabold px-8 h-12 rounded-full hover:bg-turquoise/80 hover:scale-105 transition-all"
             onClick={scrollToProject}
           >
-            Explore Projects
+            {t.home.exploreProjects}
           </Button>
         </motion.div>
 
@@ -122,7 +120,7 @@ export default function HomePage() {
             href={siteConfig.links.cv}
             startContent={<DownloadIcon size={18} />}
           >
-            Download CV
+            {t.home.downloadCv}
           </Button>
         </motion.div>
       </motion.div>

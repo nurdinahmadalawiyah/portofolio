@@ -9,6 +9,7 @@ import {
 } from "@heroui/navbar";
 import { Link } from "@heroui/link";
 import { siteConfig } from "@/config/site";
+import { useT } from "@/i18n/context";
 import NextLink from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
@@ -23,6 +24,7 @@ const SECTION_TARGET_TOP = 160;
 const SCROLL_SPY_ACTIVATION_TOP = SECTION_TARGET_TOP + 48;
 
 export const Navbar = () => {
+  const t = useT();
   const [activeItem, setActiveItem] = useState("#home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pendingScrollTargetRef = useRef<string | null>(null);
@@ -197,7 +199,7 @@ export const Navbar = () => {
                       scrollToSection(item.href);
                     }}
                   >
-                    {item.label}
+                    {t.nav[item.key]}
                     {isActive && (
                       <motion.div
                         layoutId="nav-underline"
@@ -259,7 +261,7 @@ export const Navbar = () => {
                         scrollToSection(item.href);
                       }}
                     >
-                      <span>{item.label}</span>
+                      <span>{t.nav[item.key]}</span>
                       {activeItem === item.href && (
                         <motion.div 
                           layoutId="active-dot"

@@ -1,526 +1,278 @@
+import type { Dictionary } from "@/i18n/dictionaries";
+
 const startDate = new Date("2022-07-01"); // Awal magang di Crop Inspirasi Digital
-const today = new Date();
-let yearsOfExperience = today.getFullYear() - startDate.getFullYear();
-if (today.getMonth() < startDate.getMonth() || (today.getMonth() === startDate.getMonth() && today.getDate() < startDate.getDate())) {
-    yearsOfExperience--;
+
+export function getYearsOfExperience(today = new Date()): number {
+	let years = today.getFullYear() - startDate.getFullYear();
+	const notYetAnniversary =
+		today.getMonth() < startDate.getMonth() ||
+		(today.getMonth() === startDate.getMonth() && today.getDate() < startDate.getDate());
+	return notYetAnniversary ? years - 1 : years;
 }
+
+export type NavItemKey = keyof Dictionary["nav"];
+export type SkillCategoryKey = keyof Dictionary["skills"]["categories"];
+export type ProjectRoleKey = "mobile" | "frontend" | "backend" | "fullstack";
+
+// The id fields are keyed by the English dictionary, so a typo or a missing
+// translation entry fails the build instead of rendering "undefined" on the page.
+type ExperienceCopy = Dictionary["experience"]["work"];
+type ProjectCopy = Dictionary["projects"]["items"];
+type EducationCopy = Dictionary["about"]["education"];
+
+type WorkEntry<K extends keyof ExperienceCopy> = {
+	id: K;
+	company: string;
+	image: string;
+	via?: string;
+	roles: { id: keyof ExperienceCopy[K]["roles"]; start: string; end: string | null }[];
+	gallery: { id: keyof ExperienceCopy[K]["gallery"]; gradient: string; image?: string }[];
+};
+
+type ProjectEntry<K extends keyof ProjectCopy> = {
+	id: K;
+	image: string;
+	link?: string;
+	web?: string;
+	appStore?: string;
+	playStore?: string;
+	isPrivate?: boolean;
+	isOngoing?: boolean;
+	roleKey: ProjectRoleKey;
+	tech: { name: string; image: string }[];
+};
+
+type EducationEntry<K extends keyof EducationCopy> = {
+	id: K;
+	school: string;
+	logo: string;
+	gpa: string;
+};
+
+const defineWork = <K extends keyof ExperienceCopy>(entry: WorkEntry<K>): WorkEntry<K> => entry;
+const defineProject = <K extends keyof ProjectCopy>(entry: ProjectEntry<K>): ProjectEntry<K> => entry;
+const defineEducation = <K extends keyof EducationCopy>(entry: EducationEntry<K>): EducationEntry<K> => entry;
 
 export const siteConfig = {
 	name: "Nurdin A. Alawiyah",
-	home: {
-		greatings: "Hi, I'm Nurdin A. Alawiyah",
-		role: ["I'm a Frontend Developer", "I'm a Mobile Developer", "I'm a Backend Developer", "I'm a Fullstack Developer"],
-		description: `A Fullstack Developer with ${yearsOfExperience}+ years of experience and a strong specialization in mobile application development, driving end-to-end software solutions from enterprise core systems to engaging super apps using modern technologies to build scalable and user-centric applications.`,
-	},
 	about: {
-		desc: "I'm Nurdin A. Alawiyah a fullstack developer who genuinely enjoys building things with code. My strongest area is mobile development, but I'm equally comfortable working across web and backend. I believe the best way to grow is by staying curious, so I'm always picking up new tools and technologies through online courses and side projects outside of work.",
-		highlights: [
-			{
-				label: "Experience",
-				value: `${yearsOfExperience}+ Years`,
-				icon: "Briefcase"
-			},
-			{
-				label: "Education",
-				value: "S.Tr.T Informatics",
-				icon: "GraduationCap"
-			},
-			{
-				label: "Focus",
-				value: "Web & Mobile",
-				icon: "Code2"
-			}
-		],
 		education: [
-			{
+			defineEducation({
+				id: "tedc",
 				school: "Politeknik TEDC Bandung",
 				logo: "/images/tedc.png",
-				degree: "Bachelor of Applied Technology (S.Tr.T) in Informatics Engineering",
-				duration: "Sep 2019 - Aug 2023",
 				gpa: "3.87 / 4.00",
-				status: "Graduated with Cum Laude Honors",
-				desc: "Focused on Software Engineering, Web Development, and Mobile Application systems."
-			}
-		]
+			}),
+		],
 	},
 	work: [
-		{
-			image: "/images/padepokan.png",
+		defineWork({
+			id: "padepokan",
 			company: "Padepokan Tujuh Sembilan",
-			alamat: "Bandung, West Java, Indonesia",
-			experience:
-				[
-					{
-						position: "Software Developer",
-						type: "Contract",
-						date: "September 2023 - Present",
-						duration: "",
-						jobDesc: [
-							"Worked across frontend web, backend, and mobile development, adapting to different project requirements and technology stacks.",
-							"Contributed to end-to-end software development, from understanding business requirements and implementing features to testing, debugging, and deployment.",
-							"Assigned to various projects and client environments, adapting to different development workflows, technical requirements, and stakeholder expectations.",
-							"Collaborated with cross-functional teams to deliver software solutions based on project and client needs.",
-						]
-					},
-					{
-						position: "Backend Developer",
-						type: "On Job Training",
-						date: "June 2023 - September 2023",
-						duration: "3 Months",
-						jobDesc: [
-							"Developed and maintained RESTful API endpoints to support seamless integration between server and client applications.",
-							"Assisted in managing database systems, utilizing PostgreSQL to ensure reliable data operations.",
-							"Collaborated with senior developers to identify bugs, perform troubleshooting, and optimize overall backend performance.",
-						]
-					},
-					{
-						position: "Frontend Web Developer",
-						type: "Internship",
-						date: "March 2023 - May 2023",
-						duration: "3 Months",
-						jobDesc: [
-							"Translated UI/UX design mockups from Figma into interactive, dynamic, and accessible web page components.",
-							"Integrated frontend interfaces with API services to ensure a smooth and accurate data flow from the server to the end user.",
-						]
-					}
-				]
-		},
-		{
-			image: "/images/prudential.jpg",
+			image: "/images/padepokan.png",
+			roles: [
+				{ id: "software-developer", start: "2023-09", end: null },
+				{ id: "backend-ojt", start: "2023-06", end: "2023-09" },
+				{ id: "frontend-intern", start: "2023-03", end: "2023-05" },
+			],
+			gallery: [
+				{ id: "team-moment", gradient: "linear-gradient(135deg, #082f49 0%, #0e7490 48%, #67e8f9 100%)" },
+				{ id: "project-day", gradient: "linear-gradient(135deg, #164e63 0%, #155e75 45%, #a5f3fc 100%)" },
+				{ id: "work-setup", gradient: "linear-gradient(135deg, #1e293b 0%, #334155 50%, #22d3ee 100%)" },
+				{ id: "milestone", gradient: "linear-gradient(135deg, #134e4a 0%, #0f766e 48%, #5eead4 100%)" },
+			],
+		}),
+		defineWork({
+			id: "prudential",
 			company: "PT. Prudential Life Assurance (Prudential Indonesia)",
-			alamat: "South Jakarta, Jakarta, Indonesia",
+			image: "/images/prudential.jpg",
 			via: "NTT DATA Indonesia",
-			experience:
-				[
-					{
-						position: "Mobile Developer",
-						type: "Onsite",
-						date: "June 2026 - Present",
-						duration: "",
-						jobDesc: [
-							"Developed and maintained cross-platform mobile applications using Flutter and Dart for Prudential Indonesia.",
-							"Implemented new features and enhancements based on business requirements, ensuring a smooth and consistent user experience.",
-							"Integrated RESTful APIs and handled data flow between mobile applications and backend services.",
-						]
-					}
-				]
-		},
-		{
-			image: "/images/victoria.png",
+			roles: [{ id: "mobile-developer", start: "2026-06", end: null }],
+			gallery: [
+				{ id: "onsite-chapter", gradient: "linear-gradient(135deg, #172554 0%, #1d4ed8 48%, #93c5fd 100%)" },
+				{ id: "mobile-team", gradient: "linear-gradient(135deg, #312e81 0%, #4f46e5 48%, #c4b5fd 100%)" },
+				{ id: "office-day", gradient: "linear-gradient(135deg, #1e1b4b 0%, #3730a3 48%, #818cf8 100%)" },
+			],
+		}),
+		defineWork({
+			id: "victoria",
 			company: "PT. Victoria Investama, Tbk",
-			alamat: "South Jakarta, Jakarta, Indonesia",
-			experience:
-				[
-					{
-						position: "Full Stack Developer",
-						type: "Contract",
-						date: "June 2024 - May 2025",
-						duration: "1 Year",
-						jobDesc: [
-							"Developed and maintained robust end-to-end web applications, utilizing Angular to build responsive user interfaces and NestJS to construct scalable server-side architectures.",
-							"Engineered efficient data pipelines and storage solutions using MongoDB for flexible, document-based data management.",
-							"Optimized application performance by implementing Redis for high-speed caching and session management.",
-							"Designed asynchronous task processing and reliable message queuing systems using BullMQ to handle background jobs without blocking main application workflows.",
-							"Collaborated directly with cross-functional teams in an onsite environment to gather business requirements, perform rapid troubleshooting, and ensure software deliverables met corporate standards.",
-						]
-					}
-				]
-		},
-		{
-			image: "/images/crop.png",
+			image: "/images/victoria.png",
+			roles: [{ id: "fullstack-developer", start: "2024-06", end: "2025-05" }],
+			gallery: [
+				{
+					id: "padepokan-visit",
+					gradient: "linear-gradient(135deg, #3f1d0b 0%, #c2410c 48%, #fdba74 100%)",
+					image: "/images/experience/victoria-onsite-visit.jpg",
+				},
+				{
+					id: "national-batik-day",
+					gradient: "linear-gradient(135deg, #431407 0%, #ea580c 48%, #fed7aa 100%)",
+					image: "/images/experience/victoria-batik-day.jpg",
+				},
+				{
+					id: "last-day",
+					gradient: "linear-gradient(135deg, #422006 0%, #d97706 48%, #fde68a 100%)",
+					image: "/images/experience/victoria-last-day.jpg",
+				},
+			],
+		}),
+		defineWork({
+			id: "crop",
 			company: "Crop Inspirasi Digital",
-			alamat: "Bandung, West Java, Indonesia",
-			experience:
-				[
-					{
-						position: "Mobile Developer",
-						type: "Internship",
-						date: "July 2022 - December 2022",
-						duration: "6 Months",
-						jobDesc: [
-							"Developed mobile applications for Android using the Flutter framework.",
-							"Built responsive and intuitive user interfaces, translating UI/UX design mockups into functional mobile screens using customized Flutter widgets.",
-							"Integrated RESTful APIs to fetch, process, and display dynamic data, ensuring seamless communication between the mobile application and backend services.",
-							"Collaborated with the technical team to troubleshoot issues, debug code, and learn industry-standard mobile development workflows.",
-						]
-					}
-				]
-		}
+			image: "/images/crop.png",
+			roles: [{ id: "mobile-intern", start: "2022-07", end: "2022-12" }],
+			gallery: [
+				{
+					id: "full-team",
+					gradient: "linear-gradient(135deg, #0c4a6e 0%, #0891b2 48%, #a5f3fc 100%)",
+					image: "/images/experience/crop-full-team.jpg",
+				},
+			],
+		}),
 	],
 	project: [
-		{
-			name: "Civiku - Professional CV Builder",
-			desc: "A dynamic online CV generator built with Next.js. Features intuitive resume building using Zustand for efficient state management and a responsive, modern UI powered by Tailwind CSS and shadcn/ui.",
+		defineProject({
+			id: "civiku",
 			image: "/images/project/civiku/SCR-20260830-rxro.png",
 			web: "https://www.civiku.web.id/",
 			isPrivate: true,
-			date: "Jun 2026 - Aug 2026",
-			role: "Fullstack Developer",
-			customer: "Personal Project",
-			jobDesc: [
-				"Developing a dynamic online CV builder with Next.js",
-				"Designing intuitive resume-building flows for structured profile and experience data",
-				"Implementing efficient application state management with Zustand",
-				"Building a responsive and modern user interface with Tailwind CSS and shadcn/ui"
-			],
+			roleKey: "fullstack",
 			tech: [
-				{
-					name: "Next.js",
-					image: "/icons/next-icon.svg"
-				},
-				{
-					name: "TypeScript",
-					image: "/icons/typescript-icon.svg"
-				}
-			]
-		},
-		{
-			name: "Deep Link Diagnostics Tool",
-			desc: "A modern Next.js SPA that helps mobile developers instantly validate their server-side configurations for iOS Universal Links and Android App Links.",
+				{ name: "Next.js", image: "/icons/next-icon.svg" },
+				{ name: "TypeScript", image: "/icons/typescript-icon.svg" },
+			],
+		}),
+		defineProject({
+			id: "deep-link",
 			image: "/images/project/deep_link/Screenshot 2026-05-24 162132.png",
 			link: "https://github.com/nurdinahmadalawiyah/deep-link-diagnostics-tool",
 			web: "https://deep-link-diagnostics-tool.vercel.app",
-			date: "May 2026",
-			role: "Fullstack Developer",
-			customer: "Personal Project",
-			jobDesc: [
-				"Building a beautifully designed Next.js Single Page Application (SPA)",
-				"Validating .well-known configuration files with JSON Schema",
-				"Integrating Apple CDN and Google Digital Asset Links API checks",
-				"Generating CLI commands (xcrun, adb) for local path testing"
-			],
+			roleKey: "fullstack",
 			tech: [
-				{
-					name: "Next.js",
-					image: "/icons/next-icon.svg"
-				},
-				{
-					name: "TypeScript",
-					image: "/icons/typescript-icon.svg"
-				}
-			]
-		},
-		{
-			name: "Ardan Digital Platform",
-			desc: "A comprehensive digital transformation project for Ardan Radio, featuring a cross-platform mobile app and web integration to enhance listener community engagement.",
+				{ name: "Next.js", image: "/icons/next-icon.svg" },
+				{ name: "TypeScript", image: "/icons/typescript-icon.svg" },
+			],
+		}),
+		defineProject({
+			id: "ardan",
 			image: "/images/project/ardan/Gemini_Generated_Image_3jolgw3jolgw3jol.png",
 			link: "#",
 			isPrivate: true,
 			appStore: "https://apps.apple.com/id/app/ardan-super-apps/id6755988577",
 			playStore: "https://play.google.com/store/apps/details?id=com.mobile.ardan",
-			date: "May 2025 - April 2026",
-			customer: "PT. Radio Ardan Swaratama",
-			role: "Mobile Developer",
-			jobDesc: [
-				"Designing and implementing responsive UI using Flutter & Bloc",
-				"Integrating complex RESTful APIs with efficient state management",
-				"Optimizing cross-platform performance for iOS and Android",
-				"Implementing real-time features and community driven modules"
-			],
+			roleKey: "mobile",
 			tech: [
-				{
-					name: "Flutter",
-					image: "/icons/flutter-icon.svg"
-				},
-				{
-					name: "Dart",
-					image: "/icons/dart-icon.svg"
-				},
-				{
-					name: "Next.js",
-					image: "/icons/next-icon.svg"
-				},
-				{
-					name: "Spring Boot",
-					image: "/icons/spring-icon.svg"
-				},
-				{
-					name: "Firebase",
-					image: "/icons/firebase-icon.svg"
-				},
-				{
-					name: "MongoDB",
-					image: "/icons/mongodb-icon.svg"
-				}
-			]
-		},
-		{
-			name: "ITCH MME",
-			desc: "Built a high-throughput data ingestion and transformation pipeline in C++. Managed the consumer process to collect exchange data into MongoDB and developed the parsing logic to extract, process, and load the data into MariaDB for the core ETL pipeline.",
+				{ name: "Flutter", image: "/icons/flutter-icon.svg" },
+				{ name: "Dart", image: "/icons/dart-icon.svg" },
+				{ name: "Next.js", image: "/icons/next-icon.svg" },
+				{ name: "Spring Boot", image: "/icons/spring-icon.svg" },
+				{ name: "Firebase", image: "/icons/firebase-icon.svg" },
+				{ name: "MongoDB", image: "/icons/mongodb-icon.svg" },
+			],
+		}),
+		defineProject({
+			id: "itch-mme",
 			image: "/images/project/ksei/Screenshot 2026-08-30 at 20.16.45.png",
 			link: "#",
 			isPrivate: true,
-			date: "Jan 2026 - Apr 2026",
-			customer: "PT. Kustodian Sentral Efek Indonesia",
-			role: "Backend Developer",
-			jobDesc: [
-				"Building a high-throughput data ingestion and transformation pipeline using C++",
-				"Managing the consumer process to collect exchange data and persist it in MongoDB",
-				"Developing parsing logic to extract and process incoming exchange data",
-				"Loading transformed data into MariaDB as part of the core ETL pipeline"
-			],
+			roleKey: "backend",
 			tech: [
-				{
-					name: "C++",
-					image: "/icons/cpp-icon.svg"
-				},
-				{
-					name: "MongoDB",
-					image: "/icons/mongodb-icon.svg"
-				},
-				{
-					name: "MariaDB",
-					image: "/icons/mysql-icon.svg"
-				}
-			]
-		},
-		{
-			name: "ZenDo",
-			desc: "A modern Android productivity app combining Pomodoro Technique with efficient Task Management. Built using the latest Android standards for a seamless focused experience.",
+				{ name: "C++", image: "/icons/cpp-icon.svg" },
+				{ name: "MongoDB", image: "/icons/mongodb-icon.svg" },
+				{ name: "MariaDB", image: "/icons/mysql-icon.svg" },
+			],
+		}),
+		defineProject({
+			id: "zendo",
 			image: "/images/project/zendo/Gemini_Generated_Image_mly7xjmly7xjmly7.png",
 			link: "https://github.com/nurdinahmadalawiyah/ZenDo",
 			isOngoing: true,
-			date: "Present",
-			role: "Android Developer",
-			customer: "Personal Project",
-			jobDesc: [
-				"Implementing Clean Architecture & MVVM for scalable code",
-				"Building modern UI with 100% Jetpack Compose (Material 3)",
-				"Integrating Firebase Firestore for real-time cloud data sync",
-				"Implementing ambient sounds with Media3 ExoPlayer for focus"
-			],
+			roleKey: "mobile",
 			tech: [
-				{
-					name: "Kotlin",
-					image: "/icons/kotlin-icon.svg"
-				},
-				{
-					name: "Jetpack Compose",
-					image: "/icons/jetpack-compose-icon.svg"
-				},
-				{
-					name: "Firebase",
-					image: "/icons/firebase-icon.svg"
-				}
-			]
-		},
-		{
-			name: "Victoria Life Insurance Core System",
-			desc: "A high performance core system managing critical insurance operations like policy issuance and claims. Engineered to handle high transaction volumes of up to 8,000 certificates daily.",
+				{ name: "Kotlin", image: "/icons/kotlin-icon.svg" },
+				{ name: "Jetpack Compose", image: "/icons/jetpack-compose-icon.svg" },
+				{ name: "Firebase", image: "/icons/firebase-icon.svg" },
+			],
+		}),
+		defineProject({
+			id: "victoria-core",
 			image: "/images/project/victoria/Gemini_Generated_Image_7o4eyx7o4eyx7o4e.png",
 			link: "#",
 			isPrivate: true,
-			date: "June 2024 - May 2025",
-			customer: "PT Victoria Alife Indonesia",
-			role: "Fullstack Developer",
-			jobDesc: [
-				"Developing core modules: Product Setup, Policy, Billing, and Claims",
-				"Implementing BullMQ for high speed Excel data processing to MongoDB",
-				"Optimizing system performance using Redis caching mechanisms",
-				"Building robust Backend with NestJS 10 and Frontend with AngularJS 16"
-			],
+			roleKey: "fullstack",
 			tech: [
-				{
-					name: "NestJS",
-					image: "/icons/nestjs-icon.svg"
-				},
-				{
-					name: "Angular",
-					image: "/icons/angular-icon.svg"
-				},
-				{
-					name: "MongoDB",
-					image: "/icons/mongodb-icon.svg"
-				},
-				{
-					name: "MySQL",
-					image: "/icons/mysql-icon.svg"
-				},
-				{
-					name: "Redis",
-					image: "/icons/redis-icon.svg"
-				}
-			]
-		},
-		{
-			name: "Workshop Management System",
-			desc: "WMS is a microservice based product for vehicle workshops, featuring body repair and service management. Built with high performance Spring Boot and Next.js technology.",
+				{ name: "NestJS", image: "/icons/nestjs-icon.svg" },
+				{ name: "Angular", image: "/icons/angular-icon.svg" },
+				{ name: "MongoDB", image: "/icons/mongodb-icon.svg" },
+				{ name: "MySQL", image: "/icons/mysql-icon.svg" },
+				{ name: "Redis", image: "/icons/redis-icon.svg" },
+			],
+		}),
+		defineProject({
+			id: "wms",
 			image: "/images/project/wms/Gemini_Generated_Image_61srkt61srkt61sr.png",
 			link: "#",
 			isPrivate: true,
-			date: "June 2023 - March 2024",
-			customer: "PT. Layanan Prima Setia Jaya",
-			role: "Fullstack Developer",
-			jobDesc: [
-				"Implementing MINIO for image and video cloud storage (Backend)",
-				"Designing and creating Microservice REST APIs (Backend)",
-				"Implementing Figma designs into Next.js 13 web application (Frontend)",
-				"Integrating complex REST APIs for seamless functionality (Frontend)"
-			],
+			roleKey: "fullstack",
 			tech: [
-				{
-					name: "Next.js",
-					image: "/icons/next-icon.svg"
-				},
-				{
-					name: "Spring Boot",
-					image: "/icons/spring-icon.svg"
-				},
-				{
-					name: "Java",
-					image: "/icons/java-icon.svg"
-				},
-				{
-					name: "PostgreSQL",
-					image: "/icons/postgresql-icon.svg"
-				}
-			]
-		},
-		{
-			name: "Aplikasi Praktik Kerja Lapangan Berbasis Mobile",
-			desc: "A mobile application developed as my final project during my university studies. This application was created to facilitate students in reporting their internship activities and monitoring progress.",
+				{ name: "Next.js", image: "/icons/next-icon.svg" },
+				{ name: "Spring Boot", image: "/icons/spring-icon.svg" },
+				{ name: "Java", image: "/icons/java-icon.svg" },
+				{ name: "PostgreSQL", image: "/icons/postgresql-icon.svg" },
+			],
+		}),
+		defineProject({
+			id: "pkl",
 			image: "/images/project/magang/Gemini_Generated_Image_cz6726cz6726cz67.png",
 			link: "https://github.com/nurdinahmadalawiyah/pkl-app",
-			customer: "Politeknik TEDC Bandung",
-			role: "Fullstack Developer",
-			date: "March 2023 - August 2023",
-			jobDesc: [
-				"Planning and designing frontend interface using Next.js",
-				"Implementing secure authentication system with JWT",
-				"Integrating real-time notifications through OneSignal API",
-				"Designing and developing backend RESTful API using Laravel"
-			],
+			roleKey: "fullstack",
 			tech: [
-				{
-					name: "Flutter",
-					image: "/icons/flutter-icon.svg"
-				},
-				{
-					name: "Next.js",
-					image: "/icons/next-icon.svg"
-				},
-				{
-					name: "Laravel",
-					image: "/icons/laravel-icon.svg"
-				},
-				{
-					name: "PHP",
-					image: "/icons/php-icon.svg"
-				},
-				{
-					name: "MySql",
-					image: "/icons/mysql-icon.svg"
-				}
-			]
-		},
-		{
-			name: "E-Recruitment",
-			desc: "A website application for talent recruitment that can be used by users who will apply for jobs and human resources who select prospective employee.",
+				{ name: "Flutter", image: "/icons/flutter-icon.svg" },
+				{ name: "Next.js", image: "/icons/next-icon.svg" },
+				{ name: "Laravel", image: "/icons/laravel-icon.svg" },
+				{ name: "PHP", image: "/icons/php-icon.svg" },
+				{ name: "MySql", image: "/icons/mysql-icon.svg" },
+			],
+		}),
+		defineProject({
+			id: "e-recruitment",
 			image: "/images/project/e-recruitment/Gemini_Generated_Image_s1agm4s1agm4s1ag.png",
 			link: "#",
 			isPrivate: true,
-			date: "March 2023 - June 2023",
-			customer: "PT. Padepokan Tujuh Sembilan",
-			role: "Frontend Developer",
-			jobDesc: [
-				"Designing the user interface according to the pre-existing design",
-				"Create Screen Daftar Candidate & Detail Candidate",
-				"Create Screen Dashboard - List Contract Candidate",
-				"Integrating REST API provided by the backend"
-			],
+			roleKey: "frontend",
 			tech: [
-				{
-					name: "React",
-					image: "/icons/react-icon.svg"
-				},
-				{
-					name: "Java",
-					image: "/icons/java-icon.svg"
-				},
-				{
-					name: "Spring Boot",
-					image: "/icons/spring-icon.svg"
-				},
-				{
-					name: "PostgreSQL",
-					image: "/icons/postgresql-icon.svg"
-				}
-			]
-		},
-		{
-			name: "Internal Management Web Application Office",
-			desc: "A mobile application that can manage various websites owned by the office. This application can manage login activities for each of its web applications.",
+				{ name: "React", image: "/icons/react-icon.svg" },
+				{ name: "Java", image: "/icons/java-icon.svg" },
+				{ name: "Spring Boot", image: "/icons/spring-icon.svg" },
+				{ name: "PostgreSQL", image: "/icons/postgresql-icon.svg" },
+			],
+		}),
+		defineProject({
+			id: "internal-management",
 			image: "/images/project/crop/Gemini_Generated_Image_qk6nexqk6nexqk6n.png",
 			link: "#",
 			isPrivate: true,
-			date: "July 2022 - December 2022",
-			customer: "PT. Crop Inspirasi Digital",
-			role: "Mobile Developer",
-			jobDesc: [
-				"Implement login feature",
-				"Implement screen manage web internal office"
-			],
+			roleKey: "mobile",
 			tech: [
-				{
-					name: "Flutter",
-					image: "/icons/flutter-icon.svg"
-				},
-				{
-					name: "Dart",
-					image: "/icons/dart-icon.svg"
-				},
-				{
-					name: "Laravel",
-					image: "/icons/laravel-icon.svg"
-				},
-				{
-					name: "MySQL",
-					image: "/icons/mysql-icon.svg"
-				}
-			]
-		},
+				{ name: "Flutter", image: "/icons/flutter-icon.svg" },
+				{ name: "Dart", image: "/icons/dart-icon.svg" },
+				{ name: "Laravel", image: "/icons/laravel-icon.svg" },
+				{ name: "MySQL", image: "/icons/mysql-icon.svg" },
+			],
+		}),
 	],
 	skill: [
-		{
-			name: "JavaScript",
-			image: "/icons/javascript-icon.svg",
-		},
-		{
-			name: "Java",
-			image: "/icons/java-icon.svg",
-		},
-		{
-			name: "Dart",
-			image: "/icons/dart-icon.svg",
-		},
-		{
-			name: "PHP",
-			image: "/icons/php-icon.svg",
-		},
-		{
-			name: "Kotlin",
-			image: "/icons/kotlin-icon.svg",
-		},
-		{
-			name: "TypeScript",
-			image: "/icons/typescript-icon.svg",
-		},
-		{
-			name: "React",
-			image: "/icons/react-icon.svg",
-		},
-		{
-			name: "Next.js",
-			image: "/icons/next-icon.svg",
-		},
-		{
-			name: "Angular",
-			image: "/icons/angular-icon.svg",
-		},
-		{
-			name: "Spring Boot",
-			image: "/icons/spring-icon.svg",
-		},
+		{ name: "JavaScript", image: "/icons/javascript-icon.svg" },
+		{ name: "Java", image: "/icons/java-icon.svg" },
+		{ name: "Dart", image: "/icons/dart-icon.svg" },
+		{ name: "PHP", image: "/icons/php-icon.svg" },
+		{ name: "Kotlin", image: "/icons/kotlin-icon.svg" },
+		{ name: "TypeScript", image: "/icons/typescript-icon.svg" },
+		{ name: "React", image: "/icons/react-icon.svg" },
+		{ name: "Next.js", image: "/icons/next-icon.svg" },
+		{ name: "Angular", image: "/icons/angular-icon.svg" },
+		{ name: "Spring Boot", image: "/icons/spring-icon.svg" },
 		{
 			name: "Flutter",
 			image: "/icons/flutter-icon.svg",
@@ -552,90 +304,31 @@ export const siteConfig = {
 				},
 			],
 		},
-		{
-			name: "Jetpack Compose",
-			image: "/icons/jetpack-compose-icon.svg",
-		},
-		{
-			name: "React Native",
-			image: "/icons/react-native-icon.svg",
-		},
-		{
-			name: "Expo",
-			image: "/icons/expo-icon.svg",
-		},
-		{
-			name: "Laravel",
-			image: "/icons/laravel-icon.svg",
-		},
-		{
-			name: "Express.js",
-			image: "/icons/express-icon.svg",
-		},
-		{
-			name: "NestJS",
-			image: "/icons/nestjs-icon.svg",
-		},
-		{
-			name: "Node JS",
-			image: "/icons/node-icon.svg",
-		},
-		{
-			name: "MySQL",
-			image: "/icons/mysql-icon.svg",
-		},
-		{
-			name: "MongoDB",
-			image: "/icons/mongodb-icon.svg",
-		},
-		{
-			name: "PostgreSQL",
-			image: "/icons/postgresql-icon.svg",
-		},
-		{
-			name: "Redis",
-			image: "/icons/redis-icon.svg",
-		},
-		{
-			name: "Firebase",
-			image: "/icons/firebase-icon.svg",
-		},
-		{
-			name: "Figma",
-			image: "/icons/figma-icon.svg",
-		},
-		{
-			name: "Crashlytics",
-			image: "/icons/crashlytics-icon.svg",
-		},
-		{
-			name: "Remote Config",
-			image: "/icons/remoteconfig-icon.svg",
-		},
-		{
-			name: "Cloud Messaging",
-			image: "/icons/cloudmessaging-icon.svg",
-		},
-		{
-			name: "App Store Connect",
-			image: "/icons/appstore-icon.svg",
-		},
-		{
-			name: "Google Play Console",
-			image: "/icons/playconsole-icon.svg",
-		},
-		{
-			name: "Codemagic",
-			image: "/icons/codemagic-icon.svg",
-		},
-		{
-			name: "Git",
-			image: "/icons/git-icon.svg",
-		}
+		{ name: "Jetpack Compose", image: "/icons/jetpack-compose-icon.svg" },
+		{ name: "React Native", image: "/icons/react-native-icon.svg" },
+		{ name: "Expo", image: "/icons/expo-icon.svg" },
+		{ name: "Laravel", image: "/icons/laravel-icon.svg" },
+		{ name: "Express.js", image: "/icons/express-icon.svg" },
+		{ name: "NestJS", image: "/icons/nestjs-icon.svg" },
+		{ name: "Node JS", image: "/icons/node-icon.svg" },
+		{ name: "MySQL", image: "/icons/mysql-icon.svg" },
+		{ name: "MongoDB", image: "/icons/mongodb-icon.svg" },
+		{ name: "PostgreSQL", image: "/icons/postgresql-icon.svg" },
+		{ name: "Redis", image: "/icons/redis-icon.svg" },
+		{ name: "Firebase", image: "/icons/firebase-icon.svg" },
+		{ name: "Figma", image: "/icons/figma-icon.svg" },
+		{ name: "Crashlytics", image: "/icons/crashlytics-icon.svg" },
+		{ name: "Remote Config", image: "/icons/remoteconfig-icon.svg" },
+		{ name: "Cloud Messaging", image: "/icons/cloudmessaging-icon.svg" },
+		{ name: "App Store Connect", image: "/icons/appstore-icon.svg" },
+		{ name: "Google Play Console", image: "/icons/playconsole-icon.svg" },
+		{ name: "Codemagic", image: "/icons/codemagic-icon.svg" },
+		{ name: "Git", image: "/icons/git-icon.svg" },
 	],
 	contact: {
 		email: "nurdinahmada@gmail.com",
 		linkedin: "https://www.linkedin.com/in/nurdin-ahmad-alawiyah/",
+		linkedinName: "Nurdin Ahmad Alawiyah",
 		instagram: "https://www.instagram.com/nurdin_ahmad_alawiyah/",
 		github: "https://github.com/nurdinahmadalawiyah",
 		whatsapp: "https://wa.me/628977612607",
@@ -643,43 +336,28 @@ export const siteConfig = {
 		maps: "https://www.google.com/maps/search/?api=1&query=Bandung",
 	},
 	navItems: [
-		{
-			label: "Home",
-			href: "#home",
-		},
-		{
-			label: "Project",
-			href: "#project",
-		},
-		{
-			label: "Skill",
-			href: "#skill",
-		},
-		{
-			label: "Experience",
-			href: "#experience",
-		},
-		{
-			label: "About",
-			href: "#about",
-		},
-		{
-			label: "Contact",
-			href: "#contact",
-		}
+		{ key: "home" as NavItemKey, href: "#home" },
+		{ key: "project" as NavItemKey, href: "#project" },
+		{ key: "skill" as NavItemKey, href: "#skill" },
+		{ key: "experience" as NavItemKey, href: "#experience" },
+		{ key: "about" as NavItemKey, href: "#about" },
+		{ key: "contact" as NavItemKey, href: "#contact" },
 	],
 	navMenuItems: [
-		{ label: "Home", href: "#home" },
-		{ label: "Project", href: "#project" },
-		{ label: "Skill", href: "#skill" },
-		{ label: "Experience", href: "#experience" },
-		{ label: "About", href: "#about" },
-		{ label: "Contact", href: "#contact" },
+		{ key: "home" as NavItemKey, href: "#home" },
+		{ key: "project" as NavItemKey, href: "#project" },
+		{ key: "skill" as NavItemKey, href: "#skill" },
+		{ key: "experience" as NavItemKey, href: "#experience" },
+		{ key: "about" as NavItemKey, href: "#about" },
+		{ key: "contact" as NavItemKey, href: "#contact" },
 	],
 	links: {
 		github: "https://github.com/nurdinahmadalawiyah",
-		cv: "CV - Nurdin A. Alawiyah.pdf"
+		cv: "CV - Nurdin A. Alawiyah.pdf",
 	},
 };
 
 export type SiteConfig = typeof siteConfig;
+export type WorkId = SiteConfig["work"][number]["id"];
+export type ProjectId = SiteConfig["project"][number]["id"];
+export type EducationId = SiteConfig["about"]["education"][number]["id"];

@@ -4,7 +4,9 @@ import { useState } from "react";
 import { Card, CardBody } from "@heroui/card";
 import { Button } from "@heroui/button";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@heroui/modal";
-import { siteConfig } from "@/config/site";
+import { siteConfig, type SiteConfig, type WorkId } from "@/config/site";
+import type { Dictionary } from "@/i18n/dictionaries";
+import { useFormat, useT } from "@/i18n/context";
 import { Avatar } from "@heroui/avatar";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -19,101 +21,15 @@ const entrance = {
   },
 };
 
-const experienceStories = [
-  {
-    title: "First professional chapter",
-    desc: "My professional journey started here while I was in my final year of college, just before graduation. I began as a Frontend Developer intern, continued with backend on-the-job training, and was later contracted as a Software Developer. This phase shaped me to be adaptive across frontend, backend, and mobile development.",
-  },
-  {
-    title: "Returning to Jakarta for mobile development",
-    desc: "This is my second onsite assignment in Jakarta, this time as a Mobile Developer at PT. Prudential Life Assurance (Prudential Indonesia) through NTT DATA Indonesia. This chapter allows me to deepen my mobile development experience in a large corporate environment.",
-  },
-  {
-    title: "Stepping into corporate work",
-    desc: "This was my first outsourced and onsite assignment with a client company. I moved from Bandung to Jakarta, learned to live independently, and experienced working inside a large corporate environment. As a Full Stack Developer, I helped continue Victoria's core system using NestJS and Angular.",
-  },
-  {
-    title: "Where mobile development began",
-    desc: "This was the first time I wrote code for a real company while I was still a student. I joined as an intern at my lecturer's company, discovered mobile programming, and built a mobile system for the business using Flutter. It became the starting point of my interest in mobile development.",
-  },
-];
-
-type GalleryItem = {
+type GalleryItem = SiteConfig["work"][number]["gallery"][number] & {
   label: string;
   caption: string;
-  gradient: string;
-  image?: string;
 };
 
-const experienceGallery: GalleryItem[][] = [
-  [
-    {
-      label: "Team moment",
-      caption: "A team collaboration moment from this chapter.",
-      gradient: "linear-gradient(135deg, #082f49 0%, #0e7490 48%, #67e8f9 100%)",
-    },
-    {
-      label: "Project day",
-      caption: "A moment from a project or client assignment.",
-      gradient: "linear-gradient(135deg, #164e63 0%, #155e75 45%, #a5f3fc 100%)",
-    },
-    {
-      label: "Work setup",
-      caption: "A behind-the-scenes moment from the work setup.",
-      gradient: "linear-gradient(135deg, #1e293b 0%, #334155 50%, #22d3ee 100%)",
-    },
-    {
-      label: "Milestone",
-      caption: "A memorable professional milestone from this chapter.",
-      gradient: "linear-gradient(135deg, #134e4a 0%, #0f766e 48%, #5eead4 100%)",
-    },
-  ],
-  [
-    {
-      label: "Onsite chapter",
-      caption: "A moment from the onsite assignment.",
-      gradient: "linear-gradient(135deg, #172554 0%, #1d4ed8 48%, #93c5fd 100%)",
-    },
-    {
-      label: "Mobile team",
-      caption: "A mobile development team moment.",
-      gradient: "linear-gradient(135deg, #312e81 0%, #4f46e5 48%, #c4b5fd 100%)",
-    },
-    {
-      label: "Office day",
-      caption: "A day at the client office.",
-      gradient: "linear-gradient(135deg, #1e1b4b 0%, #3730a3 48%, #818cf8 100%)",
-    },
-  ],
-  [
-    {
-      label: "Padepokan visit",
-      caption: "The Padepokan Tujuh Sembilan team visiting during the onsite assignment.",
-      gradient: "linear-gradient(135deg, #3f1d0b 0%, #c2410c 48%, #fdba74 100%)",
-      image: "/images/experience/victoria-onsite-visit.jpg",
-    },
-    {
-      label: "National Batik Day",
-      caption: "A team photo celebrating National Batik Day at Victoria Investama.",
-      gradient: "linear-gradient(135deg, #431407 0%, #ea580c 48%, #fed7aa 100%)",
-      image: "/images/experience/victoria-batik-day.jpg",
-    },
-    {
-      label: "Last day at Victoria",
-      caption: "A team photo from the final day of the assignment at Victoria Investama.",
-      gradient: "linear-gradient(135deg, #422006 0%, #d97706 48%, #fde68a 100%)",
-      image: "/images/experience/victoria-last-day.jpg",
-    },
-  ],
-  [
-    {
-      label: "Full team",
-      caption: "Full team moment during the Crop Inspirasi Digital chapter.",
-      gradient: "linear-gradient(135deg, #0c4a6e 0%, #0891b2 48%, #a5f3fc 100%)",
-      image: "/images/experience/crop-full-team.jpg",
-    },
-  ],
-];
+type ValueOf<T> = T extends Record<string, infer V> ? V : never;
+type WorkCopy = Dictionary["experience"]["work"][WorkId];
+type RoleCopy = ValueOf<WorkCopy["roles"]>;
+type GalleryCopy = ValueOf<WorkCopy["gallery"]>;
 
 type ModalState = {
   isOpen: boolean;
@@ -129,6 +45,8 @@ type GalleryModalState = {
 };
 
 export default function ExperiencePage() {
+  const t = useT();
+  const format = useFormat();
   const [modal, setModal] = useState<ModalState>({ isOpen: false, position: "", jobDesc: [] });
   const [openGalleries, setOpenGalleries] = useState<Record<string, boolean>>({});
   const [galleryModal, setGalleryModal] = useState<GalleryModalState>({
@@ -138,12 +56,10 @@ export default function ExperiencePage() {
     index: 0,
   });
 
-  const calculateDuration = (dateString: string) => {
+  const calculateDuration = (start: string) => {
     try {
-      const [start, end] = dateString.split(" - ");
-      if (!end || end.toLowerCase() !== "present") return null;
-
-      const startDate = new Date(start);
+      const [startYear, startMonth] = start.split("-").map(Number);
+      const startDate = new Date(startYear, startMonth - 1, 1);
       const endDate = new Date();
 
       let years = endDate.getFullYear() - startDate.getFullYear();
@@ -161,11 +77,11 @@ export default function ExperiencePage() {
         months -= 12;
       }
 
-      let result = [];
-      if (years > 0) result.push(`${years} Year${years > 1 ? "s" : ""}`);
-      if (months > 0) result.push(`${months} Month${months > 1 ? "s" : ""}`);
+      const parts: string[] = [];
+      if (years > 0) parts.push(format(t.common.yearsShort, { years }));
+      if (months > 0) parts.push(format(t.common.monthsShort, { months }));
 
-      return result.join(" ");
+      return parts.length > 0 ? parts.join(" ") : null;
     } catch (e) {
       return null;
     }
@@ -186,7 +102,7 @@ export default function ExperiencePage() {
     <section className="relative flex flex-col items-center justify-center gap-8 py-12 md:py-24 w-full max-w-6xl mx-auto px-6 overflow-hidden">
       {/* Giant Background Text Watermark */}
       <div className="absolute top-10 left-1/2 -translate-x-1/2 pointer-events-none select-none z-0 opacity-[0.04] dark:opacity-[0.08]">
-        <h1 className="text-[12rem] md:text-[20rem] font-black tracking-tighter leading-none text-foreground whitespace-nowrap">EXPERIENCE</h1>
+        <h1 className="text-[12rem] md:text-[20rem] font-black tracking-tighter leading-none text-foreground whitespace-nowrap">{t.experience.watermark}</h1>
       </div>
 
       <motion.div
@@ -197,9 +113,9 @@ export default function ExperiencePage() {
         viewport={{ once: true, margin: "-80px" }}
         className="relative z-10 w-full mb-12 flex flex-col items-start"
       >
-        <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">Professional Journey</h2>
+        <h2 className="text-sm font-black uppercase tracking-[0.5em] text-turquoise mb-4">{t.experience.eyebrow}</h2>
         <h3 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
-          Work <span className="text-turquoise italic font-serif font-light">Experience.</span>
+          {t.experience.titleLead}<span className="text-turquoise italic font-serif font-light">{t.experience.titleAccent}</span>
         </h3>
       </motion.div>
 
@@ -214,13 +130,20 @@ export default function ExperiencePage() {
 
         <div className="flex w-full flex-col gap-8 md:gap-12">
           {siteConfig.work.map((item, index) => {
+            const work = t.experience.work[item.id];
+            // Key cast: TS can't tie a union-typed work item to its own dictionary branch.
+            const workRoles = work.roles as Record<string, RoleCopy>;
+            const workGallery = work.gallery as Record<string, GalleryCopy>;
             const isRight = index % 2 !== 0;
-            const firstExperience = item.experience[0];
-            const story = experienceStories[index];
-            const gallery = experienceGallery[index] ?? [];
+            const firstRole = item.roles[0];
+            const story = work.story;
+            const gallery: GalleryItem[] = item.gallery.map((photo) => ({
+              ...photo,
+              ...workGallery[photo.id],
+            }));
             const galleryPreview = gallery.length > 3 ? gallery.slice(0, 2) : gallery;
             const remainingGallery = gallery.length > 3 ? gallery.slice(2) : [];
-            const isGalleryOpen = Boolean(openGalleries[item.company]);
+            const isGalleryOpen = Boolean(openGalleries[item.id]);
 
             return (
               <motion.div
@@ -245,7 +168,7 @@ export default function ExperiencePage() {
                 <div className={`col-start-2 row-start-1 self-start pb-4 md:pb-0 ${isRight ? "md:col-start-1 md:text-right" : "md:col-start-3 md:text-left"}`}>
                   <div className={`flex flex-col gap-3 ${isRight ? "md:items-end" : "md:items-start"}`}>
                     <span className="w-fit rounded-full border border-turquoise/20 bg-turquoise/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.22em] text-turquoise">
-                      Storyline
+                      {t.experience.storyline}
                     </span>
                     <h4 className="max-w-sm text-2xl font-black tracking-tight text-foreground md:text-3xl">
                       {story.title}
@@ -262,22 +185,22 @@ export default function ExperiencePage() {
                         onClick={() =>
                           setOpenGalleries((previous) => ({
                             ...previous,
-                            [item.company]: !previous[item.company],
+                            [item.id]: !previous[item.id],
                           }))
                         }
                         className="group/gallery-toggle flex w-full items-center justify-between gap-4 rounded-xl border border-transparent px-4 py-3 text-left transition-colors hover:border-turquoise/20 hover:bg-turquoise/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/70 md:px-5"
                       >
                         <div>
                           <p className="text-[10px] font-black uppercase tracking-[0.24em] text-turquoise/80">
-                            Moments from this chapter
+                            {t.experience.momentsTitle}
                           </p>
                           <p className="mt-1 text-xs font-medium text-default-500">
-                            A visual record of the journey
+                            {t.experience.momentsSubtitle}
                           </p>
                         </div>
                         <div className="flex shrink-0 items-center gap-2">
                           <span className="text-[10px] font-black uppercase tracking-[0.16em] text-default-400">
-                            {gallery.length} {gallery.length === 1 ? "photo" : "photos"}
+                            {format(t.common.photoCount, { count: gallery.length })}
                           </span>
                           <svg
                             aria-hidden="true"
@@ -308,14 +231,14 @@ export default function ExperiencePage() {
                             <div
                               id={`gallery-${index}`}
                               role="region"
-                              aria-label={`${item.company} gallery`}
+                              aria-label={format(t.common.galleryRegion, { company: item.company })}
                               className="mt-3 grid grid-cols-3 gap-2"
                             >
                         {galleryPreview.map((photo, photoIndex) => (
                           <button
                             key={`${item.company}-gallery-${photoIndex}`}
                             type="button"
-                            aria-label={`Open ${photo.label} from ${item.company}`}
+                            aria-label={format(t.common.openPhoto, { label: photo.label, company: item.company })}
                             onClick={() =>
                               setGalleryModal({
                                 isOpen: true,
@@ -346,7 +269,7 @@ export default function ExperiencePage() {
                         {remainingGallery.length > 0 && (
                           <button
                             type="button"
-                            aria-label={`Open ${remainingGallery.length} more gallery photos from ${item.company}`}
+                            aria-label={format(t.common.openMorePhotos, { count: remainingGallery.length, company: item.company })}
                             onClick={() =>
                               setGalleryModal({
                                 isOpen: true,
@@ -368,7 +291,7 @@ export default function ExperiencePage() {
                             </div>
                             <div className="p-2">
                               <p className="truncate text-[10px] font-black text-foreground transition-colors group-hover/gallery:text-turquoise">
-                                More moments
+                                {t.experience.moreMoments}
                               </p>
                             </div>
                           </button>
@@ -389,50 +312,54 @@ export default function ExperiencePage() {
                           {item.company}
                         </h4>
                         <p className="mt-2 text-xs font-bold uppercase tracking-[0.18em] text-default-500">
-                          {item.alamat}
+                          {work.location}
                         </p>
                         {item.via && (
                           <p className="mt-1 text-[11px] font-black uppercase tracking-[0.16em] text-turquoise/80">
-                            via {item.via}
+                            {format(t.experience.via, { company: item.via })}
                           </p>
                         )}
                       </div>
 
                       <div className="rounded-2xl border border-turquoise/20 bg-turquoise/10 px-4 py-3 text-left md:text-right">
                         <p className="text-[10px] font-black uppercase tracking-[0.24em] text-turquoise/80">
-                          Main Role
+                          {t.experience.mainRole}
                         </p>
                         <p className="mt-1 text-sm font-black text-foreground">
-                          {firstExperience.position}
+                          {workRoles[firstRole.id].position}
                         </p>
                       </div>
                     </div>
 
                     <div className="flex flex-col gap-4">
-                      {item.experience.map((experience: any, experienceIndex: number) => (
+                      {item.roles.map((role) => {
+                        const roleText = workRoles[role.id];
+                        const duration = role.end ? roleText.duration : calculateDuration(role.start);
+
+                        return (
                         <div
-                          key={`${item.company}-${experienceIndex}`}
+                          key={role.id}
                           onClick={() => {
-                            if (experience.jobDesc) {
-                              setModal({ isOpen: true, position: experience.position, jobDesc: experience.jobDesc });
+                            if (roleText.jobDesc) {
+                              setModal({ isOpen: true, position: roleText.position, jobDesc: roleText.jobDesc });
                             }
                           }}
-                          className={`group/role relative rounded-2xl border border-black/10 bg-background/50 p-4 transition-all duration-300 hover:border-turquoise/30 hover:bg-turquoise/[0.04] dark:border-white/10 ${experience.jobDesc ? "cursor-pointer" : ""}`}
+                          className={`group/role relative rounded-2xl border border-black/10 bg-background/50 p-4 transition-all duration-300 hover:border-turquoise/30 hover:bg-turquoise/[0.04] dark:border-white/10 ${roleText.jobDesc ? "cursor-pointer" : ""}`}
                         >
                           <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                             <div className="flex-1">
                               <div className="flex items-center gap-2">
                                 <h5 className="text-lg font-black leading-tight text-foreground md:text-xl group-hover/role:text-turquoise transition-colors">
-                                  {experience.position}
+                                  {roleText.position}
                                 </h5>
                               </div>
                               <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-bold text-default-500">
-                                <span>{experience.date}</span>
-                                {(experience.duration || calculateDuration(experience.date)) && (
+                                <span>{roleText.date}</span>
+                                {duration && (
                                   <>
                                     <span className="h-1 w-1 rounded-full bg-turquoise/50" />
                                     <span className="text-turquoise/80">
-                                      {experience.duration || calculateDuration(experience.date)}
+                                      {duration}
                                     </span>
                                   </>
                                 )}
@@ -440,11 +367,12 @@ export default function ExperiencePage() {
                             </div>
 
                             <span className="w-fit rounded-full border border-turquoise/20 bg-turquoise/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-turquoise">
-                              {experience.type}
+                              {roleText.type}
                             </span>
                           </div>
                         </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -481,7 +409,7 @@ export default function ExperiencePage() {
               </ModalBody>
               <ModalFooter>
                 <Button color="default" variant="light" onPress={onClose} className="font-bold">
-                  Close
+                  {t.common.close}
                 </Button>
               </ModalFooter>
             </>
@@ -516,7 +444,7 @@ export default function ExperiencePage() {
                       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,255,255,0.3),transparent_32%),linear-gradient(135deg,transparent_35%,rgba(0,0,0,0.2))]" />
                       <button
                         type="button"
-                        aria-label="Previous gallery photo"
+                        aria-label={t.experience.previousPhoto}
                         disabled={galleryModal.index === 0}
                         onClick={() => changeGalleryPhoto(-1)}
                         className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/30 text-white backdrop-blur-sm transition hover:bg-black/55 disabled:pointer-events-none disabled:opacity-25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
@@ -527,7 +455,7 @@ export default function ExperiencePage() {
                       </button>
                       <button
                         type="button"
-                        aria-label="Next gallery photo"
+                        aria-label={t.experience.nextPhoto}
                         disabled={galleryModal.index === galleryModal.gallery.length - 1}
                         onClick={() => changeGalleryPhoto(1)}
                         className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/30 text-white backdrop-blur-sm transition hover:bg-black/55 disabled:pointer-events-none disabled:opacity-25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
@@ -548,7 +476,7 @@ export default function ExperiencePage() {
                   {galleryModal.gallery.length > 0 ? `${galleryModal.index + 1} / ${galleryModal.gallery.length}` : ""}
                 </span>
                 <Button color="default" variant="light" onPress={onClose} className="font-bold">
-                  Close
+                  {t.common.close}
                 </Button>
               </ModalFooter>
             </>
