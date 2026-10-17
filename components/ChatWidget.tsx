@@ -183,17 +183,34 @@ export default function ChatWidget() {
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.setProperty('overflow', 'hidden');
+      // Signals globals.css to push the page aside (lg and up) to make room for the pane.
+      document.documentElement.setAttribute('data-chat-open', '');
+      // Lock the page only while the pane covers the whole viewport; on lg and up the
+      // pushed page stays readable and scrollable behind it.
+      const paneViewport = window.matchMedia('(min-width: 64rem)');
+      const syncLock = () => {
+        if (paneViewport.matches) {
+          document.body.style.removeProperty('overflow');
+        } else {
+          document.body.style.setProperty('overflow', 'hidden');
+        }
+      };
+      syncLock();
+      paneViewport.addEventListener('change', syncLock);
+
       const timer = setTimeout(() => {
         inputRef.current?.focus();
         // A restored conversation opens mid-history; jump to the latest message.
         scrollToBottom(true);
       }, 120);
       return () => {
+        document.documentElement.removeAttribute('data-chat-open');
         clearTimeout(timer);
+        paneViewport.removeEventListener('change', syncLock);
         document.body.style.removeProperty('overflow');
       };
     } else {
+      document.documentElement.removeAttribute('data-chat-open');
       document.body.style.removeProperty('overflow');
       // Mark all existing messages as typed when widget closes so they never replay
       setMessages((prev) => prev.map((m) => ({ ...m, isTyped: true })));
@@ -261,15 +278,15 @@ export default function ChatWidget() {
 
   return (
     <>
-      {/* Floating Chat Window */}
+      {/* Chat pane: fullscreen below lg; floats on the right and pushes the page aside on lg+ */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 16, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 16, scale: 0.98 }}
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 380, damping: 28 }}
-            className="fixed inset-0 sm:inset-auto sm:bottom-24 sm:right-6 sm:w-[390px] h-[100dvh] sm:h-[520px] sm:max-h-[calc(100dvh-7.5rem)] z-50 flex flex-col bg-background text-foreground sm:border sm:border-black/10 dark:sm:border-white/10 sm:rounded-2xl sm:shadow-2xl overflow-hidden"
+            className="fixed inset-0 h-[100dvh] z-50 flex flex-col bg-background text-foreground overflow-hidden lg:top-6 lg:right-6 lg:bottom-6 lg:left-auto lg:h-auto lg:w-[400px] lg:rounded-2xl lg:border lg:border-black/10 dark:lg:border-white/10 lg:shadow-2xl"
           >
             {/* Header (Frosted blur blending into body) */}
             <div className="absolute top-0 inset-x-0 z-20 px-4 pt-4 sm:pt-3.5 pb-2.5 bg-background/80 backdrop-blur-md">
@@ -439,7 +456,7 @@ export default function ChatWidget() {
       </AnimatePresence>
 
       {/* Floating Action Buttons */}
-      <div className={clsx("fixed bottom-6 right-6 z-40 flex items-center gap-3", isOpen && "hidden sm:flex")}>
+      <div className={clsx("fixed bottom-6 right-6 z-40 flex items-center gap-3", isOpen && "hidden lg:flex lg:right-[448px]")}>
         <ScrollToTop />
 
         <button
