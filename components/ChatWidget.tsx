@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollToTop } from './scrollToTop';
 import { useLocale, useT } from '@/i18n/context';
 import type { Locale } from '@/i18n/config';
+import { useHoldAboveFooter } from '@/components/hooks/useHoldAboveFooter';
 
 type Message = {
   role: 'user' | 'bot';
@@ -148,6 +149,7 @@ const TypewriterMarkdown = ({
 export default function ChatWidget() {
   const t = useT();
   const { locale } = useLocale();
+  const holdPx = useHoldAboveFooter();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>(() => createInitialMessages(t.chat.greeting));
   const [inputValue, setInputValue] = useState('');
@@ -487,8 +489,12 @@ export default function ChatWidget() {
         )}
       </AnimatePresence>
 
-      {/* Floating Action Buttons */}
-      <div className={clsx("fixed bottom-6 right-6 z-40 flex items-center gap-3", isOpen && "hidden lg:flex lg:right-[448px]")}>
+      {/* Floating Action Buttons — menyeret ke atas saat footer masuk viewport,
+          maksimal berhenti di garis atas footer, tidak pernah nutupin isinya */}
+      <div
+        style={{ bottom: 24 + holdPx }}
+        className={clsx("fixed right-6 z-40 flex items-center gap-3", isOpen && "hidden lg:flex lg:right-[448px]")}
+      >
         <ScrollToTop />
 
         <button
