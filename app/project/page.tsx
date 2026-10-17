@@ -25,12 +25,11 @@ import {
 } from "@/components/icons";
 
 const entrance = {
-  hidden: { opacity: 0, y: 58, scale: 0.96, filter: "blur(10px)" },
+  hidden: { opacity: 0, y: 58, scale: 0.96 },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
-    filter: "blur(0px)",
     transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] as const },
   },
 };

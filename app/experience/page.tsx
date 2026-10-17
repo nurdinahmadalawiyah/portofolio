@@ -257,7 +257,7 @@ export default function ExperiencePage() {
                   </div>
                 </div>
 
-                <div className={`col-start-2 row-start-2 self-center overflow-clip rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 transition-all duration-300 hover:border-turquoise/50 shadow-none ${isRight ? "md:col-start-3" : "md:col-start-1"} md:row-start-1`}>
+                <div className={`col-start-2 row-start-2 self-center overflow-clip rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md transition-all duration-300 hover:border-turquoise/50 shadow-none ${isRight ? "md:col-start-3" : "md:col-start-1"} md:row-start-1`}>
                   <div className="p-5 md:p-8">
                     <div className="mb-7">
                       <h4 className="text-2xl font-black tracking-tight text-foreground md:text-4xl">
