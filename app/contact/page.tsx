@@ -8,7 +8,8 @@ import {
   InstagramIcon, 
   WhatsAppIcon, 
   MailIcon, 
-  MapPinIcon 
+  MapPinIcon,
+  DownloadIcon 
 } from "@/components/icons";
 import { motion, Variants } from "framer-motion";
 
@@ -199,8 +200,9 @@ export default function ContactPage() {
                 download
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full bg-white/60 dark:bg-default-100/40 border border-black/10 dark:border-white/10 font-black uppercase tracking-widest py-4 rounded-xl hover:border-turquoise/50 transition-all duration-300 flex items-center justify-center text-xs text-foreground"
+                className="w-full bg-white/60 dark:bg-default-100/40 border border-black/10 dark:border-white/10 font-black uppercase tracking-widest py-4 rounded-xl hover:border-turquoise/50 transition-all duration-300 flex items-center justify-center gap-2 text-xs text-foreground"
               >
+                <DownloadIcon size={18} />
                 {t.contact.downloadCv}
               </motion.a>
             </div>

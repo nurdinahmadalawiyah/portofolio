@@ -6,7 +6,8 @@ import ReactMarkdown from 'react-markdown';
 import clsx from 'clsx';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollToTop } from './scrollToTop';
-import { useT } from '@/i18n/context';
+import { useLocale, useT } from '@/i18n/context';
+import type { Locale } from '@/i18n/config';
 
 type Message = {
   role: 'user' | 'bot';
@@ -21,6 +22,59 @@ const createInitialMessages = (greeting: string): Message[] => [
     isTyped: true,
   }
 ];
+
+// Conversations are kept in sessionStorage, keyed per locale: the active locale is
+// applied after hydration, so a single shared key would let the initial default-locale
+// render overwrite the stored conversation before the real locale takes over.
+const CHAT_STORAGE_PREFIX = 'chat_history_v1:';
+const MAX_STORED_MESSAGES = 50;
+
+type StoredChat = {
+  version: 1;
+  messages: Message[];
+};
+
+const loadStoredChat = (locale: Locale): Message[] | null => {
+  try {
+    const raw = window.sessionStorage.getItem(CHAT_STORAGE_PREFIX + locale);
+    if (!raw) return null;
+
+    const stored = JSON.parse(raw) as StoredChat;
+    if (stored.version !== 1 || !Array.isArray(stored.messages)) {
+      window.sessionStorage.removeItem(CHAT_STORAGE_PREFIX + locale);
+      return null;
+    }
+
+    const valid = stored.messages.filter(
+      (m) => m && (m.role === 'user' || m.role === 'bot') && typeof m.content === 'string'
+    );
+    if (valid.length === 0) return null;
+
+    // Restored messages never replay the typewriter animation.
+    return valid.map((m) => ({ role: m.role, content: m.content, isTyped: true }));
+  } catch {
+    return null;
+  }
+};
+
+const saveStoredChat = (locale: Locale, messages: Message[]) => {
+  try {
+    const key = CHAT_STORAGE_PREFIX + locale;
+    if (messages.length <= 1) {
+      // Only the greeting is left: nothing worth keeping around.
+      window.sessionStorage.removeItem(key);
+      return;
+    }
+
+    const payload: StoredChat = {
+      version: 1,
+      messages: messages.slice(-MAX_STORED_MESSAGES),
+    };
+    window.sessionStorage.setItem(key, JSON.stringify(payload));
+  } catch {
+    // sessionStorage can be unavailable (private mode, quota) — the chat works without it.
+  }
+};
 
 const TypewriterMarkdown = ({ 
   content, 
@@ -69,6 +123,7 @@ const TypewriterMarkdown = ({
 
 export default function ChatWidget() {
   const t = useT();
+  const { locale } = useLocale();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>(() => createInitialMessages(t.chat.greeting));
   const [inputValue, setInputValue] = useState('');
@@ -77,6 +132,9 @@ export default function ChatWidget() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const isAtBottomRef = useRef(true);
+  // The locale the current `messages` belong to, so a locale switch doesn't save the
+  // previous locale's conversation under the new locale's key.
+  const messagesLocaleRef = useRef(locale);
 
   // Check if user is near the bottom (threshold 60px)
   const handleScroll = useCallback(() => {
@@ -109,26 +167,55 @@ export default function ChatWidget() {
   };
 
   // A locale switch starts a fresh conversation so replies match the new language.
+  // Restoring here (not in the useState initializer) keeps the first client render
+  // identical to the server-rendered markup. Each locale keeps its own history, so
+  // switching back to a language restores that conversation instead of wiping it.
   useEffect(() => {
-    setMessages(createInitialMessages(t.chat.greeting));
-  }, [t.chat.greeting]);
+    messagesLocaleRef.current = locale;
+    setMessages(loadStoredChat(locale) ?? createInitialMessages(t.chat.greeting));
+  }, [locale, t.chat.greeting]);
+
+  // Mirror the conversation into sessionStorage so a refresh doesn't lose it.
+  useEffect(() => {
+    if (messagesLocaleRef.current !== locale) return;
+    saveStoredChat(locale, messages);
+  }, [locale, messages]);
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.setProperty('overflow', 'hidden');
+      // Signals globals.css to push the page aside (lg and up) to make room for the pane.
+      document.documentElement.setAttribute('data-chat-open', '');
+      // Lock the page only while the pane covers the whole viewport; on lg and up the
+      // pushed page stays readable and scrollable behind it.
+      const paneViewport = window.matchMedia('(min-width: 64rem)');
+      const syncLock = () => {
+        if (paneViewport.matches) {
+          document.body.style.removeProperty('overflow');
+        } else {
+          document.body.style.setProperty('overflow', 'hidden');
+        }
+      };
+      syncLock();
+      paneViewport.addEventListener('change', syncLock);
+
       const timer = setTimeout(() => {
         inputRef.current?.focus();
+        // A restored conversation opens mid-history; jump to the latest message.
+        scrollToBottom(true);
       }, 120);
       return () => {
+        document.documentElement.removeAttribute('data-chat-open');
         clearTimeout(timer);
+        paneViewport.removeEventListener('change', syncLock);
         document.body.style.removeProperty('overflow');
       };
     } else {
+      document.documentElement.removeAttribute('data-chat-open');
       document.body.style.removeProperty('overflow');
       // Mark all existing messages as typed when widget closes so they never replay
       setMessages((prev) => prev.map((m) => ({ ...m, isTyped: true })));
     }
-  }, [isOpen]);
+  }, [isOpen, scrollToBottom]);
 
   const sendMessage = async (messageText?: string) => {
     const textToSend = (messageText ?? inputValue).trim();
@@ -191,15 +278,15 @@ export default function ChatWidget() {
 
   return (
     <>
-      {/* Floating Chat Window */}
+      {/* Chat pane: fullscreen below lg; floats on the right and pushes the page aside on lg+ */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 16, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 16, scale: 0.98 }}
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 380, damping: 28 }}
-            className="fixed inset-0 sm:inset-auto sm:bottom-24 sm:right-6 sm:w-[390px] h-[100dvh] sm:h-[520px] sm:max-h-[calc(100dvh-7.5rem)] z-50 flex flex-col bg-background text-foreground sm:border sm:border-black/10 dark:sm:border-white/10 sm:rounded-2xl sm:shadow-2xl overflow-hidden"
+            className="fixed inset-0 h-[100dvh] z-50 flex flex-col bg-background text-foreground overflow-hidden lg:top-6 lg:right-6 lg:bottom-6 lg:left-auto lg:h-auto lg:w-[400px] lg:rounded-2xl lg:border lg:border-black/10 dark:lg:border-white/10 lg:shadow-2xl"
           >
             {/* Header (Frosted blur blending into body) */}
             <div className="absolute top-0 inset-x-0 z-20 px-4 pt-4 sm:pt-3.5 pb-2.5 bg-background/80 backdrop-blur-md">
@@ -369,7 +456,7 @@ export default function ChatWidget() {
       </AnimatePresence>
 
       {/* Floating Action Buttons */}
-      <div className={clsx("fixed bottom-6 right-6 z-40 flex items-center gap-3", isOpen && "hidden sm:flex")}>
+      <div className={clsx("fixed bottom-6 right-6 z-40 flex items-center gap-3", isOpen && "hidden lg:flex lg:right-[448px]")}>
         <ScrollToTop />
 
         <button

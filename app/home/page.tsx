@@ -7,7 +7,7 @@ import { useFormat, useT } from "@/i18n/context";
 import { title } from "@/components/primitives";
 import { motion, Variants } from "framer-motion";
 import TypedDescription from "@/components/typedDescription";
-import { DownloadIcon } from "@/components/icons";
+import { ExternalLinkIcon } from "@/components/icons";
 import { useLenis } from "lenis/react";
 import { useIntroReady } from "@/components/useIntroReady";
 
@@ -118,7 +118,7 @@ export default function HomePage() {
             size="lg"
             className="bg-transparent border-2 border-foreground/20 text-foreground hover:border-foreground/60 hover:bg-foreground/5 font-bold px-8 h-12 rounded-full transition-all"
             href={siteConfig.links.cv}
-            startContent={<DownloadIcon size={18} />}
+            startContent={<ExternalLinkIcon size={18} />}
           >
             {t.home.downloadCv}
           </Button>
