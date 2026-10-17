@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --accent-color: 8 145 178; /* Cyan-600: #0891B2 */
+    --accent-color: 14 116 144; /* Cyan-700: #0E7490, keeps small text at 5.3:1 on white */
   }
 
   .dark {

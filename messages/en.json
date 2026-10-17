@@ -85,11 +85,8 @@
 		"eyebrow": "Professional Journey",
 		"titleLead": "Work ",
 		"titleAccent": "Experience.",
-		"storyline": "Storyline",
-		"mainRole": "Main Role",
 		"via": "via {company}",
-		"momentsTitle": "Moments from this chapter",
-		"momentsSubtitle": "A visual record of the journey",
+		"momentsTitle": "Gallery Moments",
 		"moreMoments": "More moments",
 		"previousPhoto": "Previous gallery photo",
 		"nextPhoto": "Next gallery photo",
@@ -135,24 +132,7 @@
 						]
 					}
 				},
-				"gallery": {
-					"team-moment": {
-						"label": "Team moment",
-						"caption": "A team collaboration moment from this chapter."
-					},
-					"project-day": {
-						"label": "Project day",
-						"caption": "A moment from a project or client assignment."
-					},
-					"work-setup": {
-						"label": "Work setup",
-						"caption": "A behind-the-scenes moment from the work setup."
-					},
-					"milestone": {
-						"label": "Milestone",
-						"caption": "A memorable professional milestone from this chapter."
-					}
-				}
+				"gallery": {}
 			},
 			"prudential": {
 				"location": "South Jakarta, Jakarta, Indonesia",
@@ -163,7 +143,7 @@
 				"roles": {
 					"mobile-developer": {
 						"position": "Mobile Developer",
-						"type": "Onsite",
+						"type": "Contract",
 						"date": "June 2026 - Present",
 						"duration": "",
 						"jobDesc": [
@@ -173,20 +153,7 @@
 						]
 					}
 				},
-				"gallery": {
-					"onsite-chapter": {
-						"label": "Onsite chapter",
-						"caption": "A moment from the onsite assignment."
-					},
-					"mobile-team": {
-						"label": "Mobile team",
-						"caption": "A mobile development team moment."
-					},
-					"office-day": {
-						"label": "Office day",
-						"caption": "A day at the client office."
-					}
-				}
+				"gallery": {}
 			},
 			"victoria": {
 				"location": "South Jakarta, Jakarta, Indonesia",

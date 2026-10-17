@@ -145,8 +145,8 @@ export default function ContactPage() {
 
         {/* Direct Contact Section */}
         <motion.div
-          initial={{ opacity: 0, x: 54, scale: 0.96, filter: "blur(10px)" }}
-          whileInView={{ opacity: 1, x: 0, scale: 1, filter: "blur(0px)" }}
+          initial={{ opacity: 0, x: 54, scale: 0.96 }}
+          whileInView={{ opacity: 1, x: 0, scale: 1 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
           className="w-full"

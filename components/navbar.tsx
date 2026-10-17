@@ -160,10 +160,10 @@ export const Navbar = () => {
       <NextUINavbar 
         maxWidth="full" 
         position="static"
-        isBlurred={true}
+        isBlurred={false}
         isMenuOpen={isMenuOpen}
         onMenuOpenChange={setIsMenuOpen}
-        className="pointer-events-auto h-16 rounded-2xl border border-black/10 dark:border-white/10 bg-background/70 shadow-none transition-all duration-300 px-4"
+        className="pointer-events-auto h-16 rounded-2xl border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md shadow-none transition-all duration-300 px-4"
       >
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
           <NavbarBrand as="li" className="gap-3 max-w-fit">
