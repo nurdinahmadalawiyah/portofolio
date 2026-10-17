@@ -6,7 +6,8 @@ import ReactMarkdown from 'react-markdown';
 import clsx from 'clsx';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollToTop } from './scrollToTop';
-import { useT } from '@/i18n/context';
+import { useLocale, useT } from '@/i18n/context';
+import type { Locale } from '@/i18n/config';
 
 type Message = {
   role: 'user' | 'bot';
@@ -21,6 +22,59 @@ const createInitialMessages = (greeting: string): Message[] => [
     isTyped: true,
   }
 ];
+
+// Conversations are kept in sessionStorage, keyed per locale: the active locale is
+// applied after hydration, so a single shared key would let the initial default-locale
+// render overwrite the stored conversation before the real locale takes over.
+const CHAT_STORAGE_PREFIX = 'chat_history_v1:';
+const MAX_STORED_MESSAGES = 50;
+
+type StoredChat = {
+  version: 1;
+  messages: Message[];
+};
+
+const loadStoredChat = (locale: Locale): Message[] | null => {
+  try {
+    const raw = window.sessionStorage.getItem(CHAT_STORAGE_PREFIX + locale);
+    if (!raw) return null;
+
+    const stored = JSON.parse(raw) as StoredChat;
+    if (stored.version !== 1 || !Array.isArray(stored.messages)) {
+      window.sessionStorage.removeItem(CHAT_STORAGE_PREFIX + locale);
+      return null;
+    }
+
+    const valid = stored.messages.filter(
+      (m) => m && (m.role === 'user' || m.role === 'bot') && typeof m.content === 'string'
+    );
+    if (valid.length === 0) return null;
+
+    // Restored messages never replay the typewriter animation.
+    return valid.map((m) => ({ role: m.role, content: m.content, isTyped: true }));
+  } catch {
+    return null;
+  }
+};
+
+const saveStoredChat = (locale: Locale, messages: Message[]) => {
+  try {
+    const key = CHAT_STORAGE_PREFIX + locale;
+    if (messages.length <= 1) {
+      // Only the greeting is left: nothing worth keeping around.
+      window.sessionStorage.removeItem(key);
+      return;
+    }
+
+    const payload: StoredChat = {
+      version: 1,
+      messages: messages.slice(-MAX_STORED_MESSAGES),
+    };
+    window.sessionStorage.setItem(key, JSON.stringify(payload));
+  } catch {
+    // sessionStorage can be unavailable (private mode, quota) — the chat works without it.
+  }
+};
 
 const TypewriterMarkdown = ({ 
   content, 
@@ -69,6 +123,7 @@ const TypewriterMarkdown = ({
 
 export default function ChatWidget() {
   const t = useT();
+  const { locale } = useLocale();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>(() => createInitialMessages(t.chat.greeting));
   const [inputValue, setInputValue] = useState('');
@@ -77,6 +132,9 @@ export default function ChatWidget() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const isAtBottomRef = useRef(true);
+  // The locale the current `messages` belong to, so a locale switch doesn't save the
+  // previous locale's conversation under the new locale's key.
+  const messagesLocaleRef = useRef(locale);
 
   // Check if user is near the bottom (threshold 60px)
   const handleScroll = useCallback(() => {
@@ -109,15 +167,27 @@ export default function ChatWidget() {
   };
 
   // A locale switch starts a fresh conversation so replies match the new language.
+  // Restoring here (not in the useState initializer) keeps the first client render
+  // identical to the server-rendered markup. Each locale keeps its own history, so
+  // switching back to a language restores that conversation instead of wiping it.
   useEffect(() => {
-    setMessages(createInitialMessages(t.chat.greeting));
-  }, [t.chat.greeting]);
+    messagesLocaleRef.current = locale;
+    setMessages(loadStoredChat(locale) ?? createInitialMessages(t.chat.greeting));
+  }, [locale, t.chat.greeting]);
+
+  // Mirror the conversation into sessionStorage so a refresh doesn't lose it.
+  useEffect(() => {
+    if (messagesLocaleRef.current !== locale) return;
+    saveStoredChat(locale, messages);
+  }, [locale, messages]);
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.setProperty('overflow', 'hidden');
       const timer = setTimeout(() => {
         inputRef.current?.focus();
+        // A restored conversation opens mid-history; jump to the latest message.
+        scrollToBottom(true);
       }, 120);
       return () => {
         clearTimeout(timer);
@@ -128,7 +198,7 @@ export default function ChatWidget() {
       // Mark all existing messages as typed when widget closes so they never replay
       setMessages((prev) => prev.map((m) => ({ ...m, isTyped: true })));
     }
-  }, [isOpen]);
+  }, [isOpen, scrollToBottom]);
 
   const sendMessage = async (messageText?: string) => {
     const textToSend = (messageText ?? inputValue).trim();
