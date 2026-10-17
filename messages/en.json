@@ -85,8 +85,6 @@
 		"eyebrow": "Professional Journey",
 		"titleLead": "Work ",
 		"titleAccent": "Experience.",
-		"storyline": "Storyline",
-		"mainRole": "Main Role",
 		"via": "via {company}",
 		"momentsTitle": "Moments from this chapter",
 		"momentsSubtitle": "A visual record of the journey",
@@ -163,7 +161,7 @@
 				"roles": {
 					"mobile-developer": {
 						"position": "Mobile Developer",
-						"type": "Onsite",
+						"type": "Contract",
 						"date": "June 2026 - Present",
 						"duration": "",
 						"jobDesc": [

@@ -85,8 +85,6 @@
 		"eyebrow": "Perjalanan Karier",
 		"titleLead": "Pengalaman ",
 		"titleAccent": "Bekerja.",
-		"storyline": "Garis Cerita",
-		"mainRole": "Peran Utama",
 		"via": "via {company}",
 		"momentsTitle": "Momen dari bab ini",
 		"momentsSubtitle": "Rekaman visual perjalanan",
@@ -163,7 +161,7 @@
 				"roles": {
 					"mobile-developer": {
 						"position": "Mobile Developer",
-						"type": "Onsite",
+						"type": "Kontrak",
 						"date": "Juni 2026 - Sekarang",
 						"duration": "",
 						"jobDesc": [
