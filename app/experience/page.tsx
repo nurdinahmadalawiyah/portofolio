@@ -8,7 +8,7 @@ import { siteConfig, type SiteConfig, type WorkId } from "@/config/site";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { useFormat, useT } from "@/i18n/context";
 import { Avatar } from "@heroui/avatar";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 const entrance = {
   hidden: { opacity: 0, y: 58 },
@@ -27,7 +27,6 @@ type GalleryItem = SiteConfig["work"][number]["gallery"][number] & {
 type ValueOf<T> = T extends Record<string, infer V> ? V : never;
 type WorkCopy = Dictionary["experience"]["work"][WorkId];
 type RoleCopy = ValueOf<WorkCopy["roles"]>;
-type GalleryCopy = ValueOf<WorkCopy["gallery"]>;
 
 type ModalState = {
   isOpen: boolean;
@@ -46,7 +45,6 @@ export default function ExperiencePage() {
   const t = useT();
   const format = useFormat();
   const [modal, setModal] = useState<ModalState>({ isOpen: false, position: "", jobDesc: [] });
-  const [openGalleries, setOpenGalleries] = useState<Record<string, boolean>>({});
   const [galleryModal, setGalleryModal] = useState<GalleryModalState>({
     isOpen: false,
     company: "",
@@ -131,7 +129,7 @@ export default function ExperiencePage() {
             const work = t.experience.work[item.id];
             // Key cast: TS can't tie a union-typed work item to its own dictionary branch.
             const workRoles = work.roles as Record<string, RoleCopy>;
-            const workGallery = work.gallery as Record<string, GalleryCopy>;
+            const workGallery = work.gallery as Record<string, { label: string; caption: string }>;
             const isRight = index % 2 !== 0;
             const story = work.story;
             const gallery: GalleryItem[] = item.gallery.map((photo) => ({
@@ -140,7 +138,6 @@ export default function ExperiencePage() {
             }));
             const galleryPreview = gallery.length > 3 ? gallery.slice(0, 2) : gallery;
             const remainingGallery = gallery.length > 3 ? gallery.slice(2) : [];
-            const isGalleryOpen = Boolean(openGalleries[item.id]);
 
             return (
               <motion.div
@@ -162,7 +159,7 @@ export default function ExperiencePage() {
                   </div>
                 </div>
 
-                <div className={`col-start-2 row-start-1 self-start pb-4 md:pb-0 ${isRight ? "md:col-start-1 md:text-right" : "md:col-start-3 md:text-left"}`}>
+                <div className={`col-start-2 row-start-1 self-center pb-4 md:pb-0 ${isRight ? "md:col-start-1 md:text-right" : "md:col-start-3 md:text-left"}`}>
                   <div className={`flex flex-col gap-3 ${isRight ? "md:items-end" : "md:items-start"}`}>
                     <h4 className="max-w-sm text-2xl font-black tracking-tight text-foreground md:text-3xl">
                       {story.title}
@@ -171,133 +168,96 @@ export default function ExperiencePage() {
                       {story.desc}
                     </p>
 
-                    <div className="mt-6 w-full max-w-sm">
-                      <button
-                        type="button"
-                        aria-expanded={isGalleryOpen}
-                        aria-controls={`gallery-${index}`}
-                        onClick={() =>
-                          setOpenGalleries((previous) => ({
-                            ...previous,
-                            [item.id]: !previous[item.id],
-                          }))
-                        }
-                        className="group/gallery-toggle flex w-full items-center justify-between gap-4 rounded-xl border border-transparent px-4 py-3 text-left transition-colors hover:border-turquoise/20 hover:bg-turquoise/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/70 md:px-5"
-                      >
-                        <div>
-                          <p className="text-[10px] font-black uppercase tracking-[0.24em] text-turquoise">
-                            {t.experience.momentsTitle}
-                          </p>
-                          <p className="mt-1 text-xs font-medium text-default-500 dark:text-default-400">
-                            {t.experience.momentsSubtitle}
-                          </p>
-                        </div>
-                        <div className="flex shrink-0 items-center gap-2">
-                          <span className="text-[10px] font-black uppercase tracking-[0.16em] text-default-500 dark:text-default-400">
-                            {format(t.common.photoCount, { count: gallery.length })}
-                          </span>
-                          <svg
-                            aria-hidden="true"
-                            viewBox="0 0 24 24"
-                            className={`h-4 w-4 text-turquoise transition-transform duration-300 ${isGalleryOpen ? "rotate-180" : ""}`}
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          >
-                            <path d="m6 9 6 6 6-6" />
-                          </svg>
-                        </div>
-                      </button>
-
-                      <AnimatePresence initial={false}>
-                        {isGalleryOpen && (
-                          <motion.div
-                            key={`gallery-${index}`}
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{
-                              height: { duration: 0.34, ease: [0.16, 1, 0.3, 1] },
-                              opacity: { duration: 0.2 },
-                            }}
-                            className="overflow-hidden"
-                          >
-                            <div
-                              id={`gallery-${index}`}
-                              role="region"
-                              aria-label={format(t.common.galleryRegion, { company: item.company })}
-                              className="mt-3 grid grid-cols-3 gap-2"
-                            >
-                        {galleryPreview.map((photo, photoIndex) => (
-                          <button
-                            key={`${item.company}-gallery-${photoIndex}`}
-                            type="button"
-                            aria-label={format(t.common.openPhoto, { label: photo.label, company: item.company })}
-                            onClick={() =>
-                              setGalleryModal({
-                                isOpen: true,
-                                company: item.company,
-                                gallery,
-                                index: photoIndex,
-                              })
-                            }
-                            className="group/gallery min-w-0 overflow-hidden rounded-xl border border-black/10 bg-background/50 text-left transition-all duration-300 hover:-translate-y-1 hover:border-turquoise/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/70 dark:border-white/10"
-                          >
-                            <div
-                              className="relative aspect-[4/3] overflow-hidden bg-cover bg-center"
-                              style={{ backgroundImage: photo.image ? `url("${photo.image}")` : photo.gradient }}
-                            >
-                              <div className="absolute inset-0 bg-black/20" />
-                              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-white/90">
-                                <span className="text-[8px] font-black uppercase tracking-[0.12em]">{String(photoIndex + 1).padStart(2, "0")}</span>
-                              </div>
-                            </div>
-                            <div className="p-2">
-                              <p className="truncate text-[10px] font-black text-foreground transition-colors group-hover/gallery:text-turquoise">
-                                {photo.label}
-                              </p>
-                            </div>
-                          </button>
-                        ))}
-                        {remainingGallery.length > 0 && (
+                    {gallery.length > 0 && (
+                      <div className="mt-6 w-full max-w-sm">
+                        <div className="group/moments relative rounded-xl border border-black/10 bg-background/50 transition-all duration-300 hover:border-turquoise/50 dark:border-white/10">
                           <button
                             type="button"
-                            aria-label={format(t.common.openMorePhotos, { count: remainingGallery.length, company: item.company })}
+                            aria-haspopup="dialog"
+                            aria-label={format(t.common.galleryRegion, { company: item.company })}
                             onClick={() =>
-                              setGalleryModal({
-                                isOpen: true,
-                                company: item.company,
-                                gallery,
-                                index: gallery.indexOf(remainingGallery[0]),
-                              })
+                              setGalleryModal({ isOpen: true, company: item.company, gallery, index: 0 })
                             }
-                            className="group/gallery relative min-w-0 overflow-hidden rounded-xl border border-black/10 bg-background/50 text-left transition-all duration-300 hover:-translate-y-1 hover:border-turquoise/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/70 dark:border-white/10"
-                          >
-                            <div
-                              className="relative aspect-[4/3] overflow-hidden bg-cover bg-center"
-                              style={{ backgroundImage: remainingGallery[0].image ? `url("${remainingGallery[0].image}")` : remainingGallery[0].gradient }}
-                            >
-                              <div className="absolute inset-0 bg-black/45 transition-colors group-hover/gallery:bg-black/35" />
-                              <div className="absolute inset-0 flex items-center justify-center text-white">
-                                <span className="text-xl font-black tracking-tight">+{remainingGallery.length}</span>
-                              </div>
+                            className="absolute inset-0 z-10 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/70"
+                          />
+                          <div className="flex items-center gap-3 p-2">
+                            <div className="flex shrink-0 items-center gap-1.5">
+                              {galleryPreview.map((photo, photoIndex) => (
+                                <button
+                                  key={`${item.company}-peek-${photoIndex}`}
+                                  type="button"
+                                  aria-label={format(t.common.openPhoto, { label: photo.label, company: item.company })}
+                                  onClick={() =>
+                                    setGalleryModal({
+                                      isOpen: true,
+                                      company: item.company,
+                                      gallery,
+                                      index: photoIndex,
+                                    })
+                                  }
+                                  className="relative z-20 h-12 w-12 shrink-0 sm:h-14 sm:w-14 overflow-hidden rounded-lg bg-cover bg-center transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/70"
+                                  style={{
+                                    backgroundImage: photo.image ? `url("${photo.image}")` : photo.gradient,
+                                  }}
+                                >
+                                  <span className="absolute inset-0 bg-black/20" />
+                                </button>
+                              ))}
+                              {remainingGallery.length > 0 && (
+                                <button
+                                  key={`${item.company}-peek-more`}
+                                  type="button"
+                                  aria-label={format(t.common.openMorePhotos, { count: remainingGallery.length, company: item.company })}
+                                title={t.experience.moreMoments}
+                                  onClick={() =>
+                                    setGalleryModal({
+                                      isOpen: true,
+                                      company: item.company,
+                                      gallery,
+                                      index: gallery.indexOf(remainingGallery[0]),
+                                    })
+                                  }
+                                  className="relative z-20 h-12 w-12 shrink-0 sm:h-14 sm:w-14 overflow-hidden rounded-lg bg-cover bg-center transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-turquoise/70"
+                                  style={{
+                                    backgroundImage: remainingGallery[0].image
+                                      ? `url("${remainingGallery[0].image}")`
+                                      : remainingGallery[0].gradient,
+                                  }}
+                                >
+                                  <span className="absolute inset-0 bg-black/45 transition-colors group-hover/moments:bg-black/35" />
+                                  <span className="absolute inset-0 flex items-center justify-center text-sm font-black tracking-tight text-white">
+                                    +{remainingGallery.length}
+                                  </span>
+                                </button>
+                              )}
                             </div>
-                            <div className="p-2">
-                              <p className="truncate text-[10px] font-black text-foreground transition-colors group-hover/gallery:text-turquoise">
-                                {t.experience.moreMoments}
+                            <div className="min-w-0 flex-1">
+                              <p className="truncate text-[10px] font-black uppercase tracking-[0.24em] text-turquoise">
+                                {t.experience.momentsTitle}
+                              </p>
+                              <p className="mt-1 truncate text-xs font-medium text-default-500 dark:text-default-400">
+                                {format(t.common.photoCount, { count: gallery.length })}
                               </p>
                             </div>
-                          </button>
-                        )}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
+                            <svg
+                              aria-hidden="true"
+                              viewBox="0 0 24 24"
+                              className="h-4 w-4 shrink-0 text-turquoise transition-transform duration-300 group-hover/moments:translate-x-0.5"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                            >
+                              <path d="M5 12h14" />
+                              <path d="m12 5 7 7-7 7" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 
-                <div className={`col-start-2 row-start-2 overflow-clip rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 transition-all duration-300 hover:border-turquoise/50 shadow-none ${isRight ? "md:col-start-3" : "md:col-start-1"} md:row-start-1`}>
+                <div className={`col-start-2 row-start-2 self-center overflow-clip rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 transition-all duration-300 hover:border-turquoise/50 shadow-none ${isRight ? "md:col-start-3" : "md:col-start-1"} md:row-start-1`}>
                   <div className="p-5 md:p-8">
                     <div className="mb-7">
                       <h4 className="text-2xl font-black tracking-tight text-foreground md:text-4xl">

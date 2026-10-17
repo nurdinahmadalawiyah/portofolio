@@ -75,12 +75,7 @@ export const siteConfig = {
 				{ id: "backend-ojt", start: "2023-06", end: "2023-09" },
 				{ id: "frontend-intern", start: "2023-03", end: "2023-05" },
 			],
-			gallery: [
-				{ id: "team-moment", gradient: "linear-gradient(135deg, #082f49 0%, #0e7490 48%, #67e8f9 100%)" },
-				{ id: "project-day", gradient: "linear-gradient(135deg, #164e63 0%, #155e75 45%, #a5f3fc 100%)" },
-				{ id: "work-setup", gradient: "linear-gradient(135deg, #1e293b 0%, #334155 50%, #22d3ee 100%)" },
-				{ id: "milestone", gradient: "linear-gradient(135deg, #134e4a 0%, #0f766e 48%, #5eead4 100%)" },
-			],
+			gallery: [],
 		}),
 		defineWork({
 			id: "prudential",
@@ -88,11 +83,7 @@ export const siteConfig = {
 			image: "/images/prudential.jpg",
 			via: "NTT DATA Indonesia",
 			roles: [{ id: "mobile-developer", start: "2026-06", end: null }],
-			gallery: [
-				{ id: "onsite-chapter", gradient: "linear-gradient(135deg, #172554 0%, #1d4ed8 48%, #93c5fd 100%)" },
-				{ id: "mobile-team", gradient: "linear-gradient(135deg, #312e81 0%, #4f46e5 48%, #c4b5fd 100%)" },
-				{ id: "office-day", gradient: "linear-gradient(135deg, #1e1b4b 0%, #3730a3 48%, #818cf8 100%)" },
-			],
+			gallery: [],
 		}),
 		defineWork({
 			id: "victoria",
