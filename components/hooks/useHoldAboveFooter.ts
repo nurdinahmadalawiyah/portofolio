@@ -37,3 +37,48 @@ export function useHoldAboveFooter(): number {
 
   return holdPx;
 }
+
+/**
+ * `true` selagi pengguna scroll ke bawah dengan tempo cukup cepat,
+ * kembali `false` saat berhenti sebentar (350ms) atau scroll ke atas.
+ */
+export function useHideWhileScrollingDown(): boolean {
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let lastT = performance.now();
+    let timer: ReturnType<typeof setTimeout>;
+    let stable = true;
+
+    const onScroll = () => {
+      const y = window.scrollY;
+      const now = performance.now();
+      const dt = Math.max(now - lastT, 1);
+      const velocity = (y - lastY) / dt; // px per ms
+      lastY = y;
+      lastT = now;
+
+      if (velocity > 0.35) {
+        // kecepatan cukup: sembunyikan dan tunda muncul selama still
+        stable = false;
+        setHidden(true);
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          stable = true;
+          setHidden(false);
+        }, 350);
+      } else if (stable || velocity < 0) {
+        setHidden(false);
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(timer);
+    };
+  }, []);
+
+  return hidden;
+}
