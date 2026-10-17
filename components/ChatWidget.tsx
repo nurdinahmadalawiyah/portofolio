@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollToTop } from './scrollToTop';
 import { useLocale, useT } from '@/i18n/context';
 import type { Locale } from '@/i18n/config';
+import { useHoldAboveFooter, useHideWhileScrollingDown } from '@/components/hooks/useHoldAboveFooter';
 
 type Message = {
   role: 'user' | 'bot';
@@ -87,7 +88,12 @@ const TypewriterMarkdown = ({
   onUpdate?: () => void; 
   onComplete?: () => void; 
 }) => {
-  const cleanContent = content.replace(/\[cite:\s*[0-9,\s]*\]/gi, '');
+  // URL polos di luar markdown link ikut jadi link.
+  // Regex hanya match di awal teks/setelah whitespace supaya
+  // URL target `](https://...)` dari markdown asli tidak di-link ganda.
+  const cleanContent = content
+    .replace(/\[cite:\s*[0-9,\s]*\]/gi, '')
+    .replace(/(^|\s)(https?:\/\/[^\s)\]]+)/g, '$1[$2]($2)');
   const [displayed, setDisplayed] = useState(animate ? '' : cleanContent);
   const onUpdateRef = useRef(onUpdate);
   const onCompleteRef = useRef(onComplete);
@@ -118,12 +124,33 @@ const TypewriterMarkdown = ({
     return () => clearInterval(timer);
   }, [cleanContent, animate]);
 
-  return <ReactMarkdown>{displayed}</ReactMarkdown>;
+  return (
+    <ReactMarkdown
+      components={{
+        // Render anchor eksplisit: tidak bergantung pada class `prose-a:*`,
+        // dan selalu buka tab baru (jangan membawa user keluar dari chat panel).
+        a: ({ href = '', children }) => (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-turquoise underline underline-offset-2 decoration-turquoise/50 hover:decoration-turquoise transition-colors"
+          >
+            {children}
+          </a>
+        ),
+      }}
+    >
+      {displayed}
+    </ReactMarkdown>
+  );
 };
 
 export default function ChatWidget() {
   const t = useT();
   const { locale } = useLocale();
+  const holdPx = useHoldAboveFooter();
+  const scrollingAway = useHideWhileScrollingDown();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>(() => createInitialMessages(t.chat.greeting));
   const [inputValue, setInputValue] = useState('');
@@ -239,7 +266,15 @@ export default function ChatWidget() {
       });
 
       if (!res.ok) {
-        throw new Error('API response was not ok');
+        let detail = '';
+        try {
+          detail = (await res.json())?.message ?? '';
+        } catch {
+          /* response bukan JSON */
+        }
+        throw new Error(
+          `API response was not ok (${res.status})${detail ? `: ${detail}` : ''}`
+        );
       }
 
       const json = await res.json();
@@ -455,8 +490,16 @@ export default function ChatWidget() {
         )}
       </AnimatePresence>
 
-      {/* Floating Action Buttons */}
-      <div className={clsx("fixed bottom-6 right-6 z-40 flex items-center gap-3", isOpen && "hidden lg:flex lg:right-[448px]")}>
+      {/* Floating Action Buttons — auto-hide saat scroll aktif + menyeret ke atas
+          saat footer masuk viewport, maksimal berhenti di garis atas footer */}
+      <div
+        style={{ bottom: 24 + holdPx }}
+        className={clsx(
+          "fixed right-6 z-40 flex items-center gap-3 transition-all duration-300",
+          isOpen && "hidden lg:flex lg:right-[448px]",
+          !isOpen && scrollingAway && "opacity-0 translate-y-8 pointer-events-none"
+        )}
+      >
         <ScrollToTop />
 
         <button

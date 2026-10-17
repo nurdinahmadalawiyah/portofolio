@@ -5,6 +5,7 @@ import { siteConfig } from "@/config/site";
 import { useFormat, useT } from "@/i18n/context";
 import { GithubIcon, LinkedInIcon, WhatsAppIcon, MailIcon, InstagramIcon } from "@/components/icons";
 import { Divider } from "@heroui/divider";
+import { MiniCity } from "@/components/mini-city";
 
 export const Footer = () => {
   const t = useT();
@@ -14,8 +15,11 @@ export const Footer = () => {
   return (
     <footer className="w-full pt-16 pb-10 px-6 relative overflow-hidden mt-20">
       {/* Top Border Gradient */}
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-      
+      <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
+
+      {/* Overlay kota mini parallax di belakang konten */}
+      <MiniCity />
+
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-10 mb-12">
           {/* Brand Column */}

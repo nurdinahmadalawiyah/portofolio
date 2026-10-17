@@ -122,7 +122,8 @@ export default function ExperiencePage() {
         whileInView="visible"
         viewport={{ once: true, margin: "-80px" }}
       >
-        <div className="absolute left-5 top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-turquoise/40 to-transparent md:left-1/2 md:-translate-x-1/2" />
+        {/* Garis timeline hanya di desktop; mobile hemat lebar tanpa garis */}
+        <div className="hidden md:block absolute left-1/2 top-4 bottom-4 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-turquoise/40 to-transparent" />
 
         <div className="flex w-full flex-col gap-8 md:gap-12">
           {siteConfig.work.map((item, index) => {
@@ -142,13 +143,13 @@ export default function ExperiencePage() {
             return (
               <motion.div
                 key={item.company}
-                className="relative grid w-full items-start grid-cols-[2.5rem_1fr] gap-4 md:grid-cols-[1fr_5rem_1fr] md:gap-8"
+                className="relative grid w-full items-start grid-cols-1 gap-5 md:grid-cols-[1fr_5rem_1fr] md:gap-8"
                 initial={{ opacity: 0, y: 54 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: index * 0.12 }}
               >
-                <div className="relative z-10 col-start-1 row-start-1 flex justify-center md:col-start-2">
+                <div className="relative z-10 hidden md:flex md:col-start-2 md:row-start-1 justify-center">
                   <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-turquoise/30 bg-background md:h-16 md:w-16">
                     <Avatar
                       src={item.image}
@@ -159,8 +160,19 @@ export default function ExperiencePage() {
                   </div>
                 </div>
 
-                <div className={`col-start-2 row-start-1 self-center pb-4 md:pb-0 ${isRight ? "md:col-start-1 md:text-right" : "md:col-start-3 md:text-left"}`}>
+                <div className={`col-start-1 row-start-1 self-center ${isRight ? "md:col-start-1 md:text-right" : "md:col-start-3 md:text-left"}`}>
                   <div className={`flex flex-col gap-3 ${isRight ? "md:items-end" : "md:items-start"}`}>
+                    {/* logo inline hanya di mobile (desktop pakai bubble di kolom timeline) */}
+                    <div className="flex items-center gap-3 md:hidden">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-turquoise/30 bg-background">
+                        <Avatar
+                          src={item.image}
+                          name={item.company}
+                          className="h-7 w-7 border border-white/10"
+                          radius="md"
+                        />
+                      </span>
+                    </div>
                     <h4 className="max-w-sm text-2xl font-black tracking-tight text-foreground md:text-3xl">
                       {story.title}
                     </h4>
@@ -257,7 +269,7 @@ export default function ExperiencePage() {
                   </div>
                 </div>
 
-                <div className={`col-start-2 row-start-2 self-center overflow-clip rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md transition-all duration-300 hover:border-turquoise/50 shadow-none ${isRight ? "md:col-start-3" : "md:col-start-1"} md:row-start-1`}>
+                <div className={`col-start-1 row-start-2 md:row-start-1 self-center overflow-clip rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/50 dark:bg-default-100/30 backdrop-blur-md transition-all duration-300 hover:border-turquoise/50 shadow-none ${isRight ? "md:col-start-3" : "md:col-start-1"}`}>
                   <div className="p-5 md:p-8">
                     <div className="mb-7">
                       <h4 className="text-2xl font-black tracking-tight text-foreground md:text-4xl">
