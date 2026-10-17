@@ -75,7 +75,11 @@
 
 /* Chat pane pushes the page aside while open (ChatWidget sets [data-chat-open] on <html>).
    424px = 24px gap + 400px pane width, so content ends exactly where the pane begins.
-   Unlayered on purpose so it wins over Tailwind's right-0 utility on .chat-push-offset. */
+   The navbar wrapper carries no right/width utility anymore, so nothing competes here. */
+.chat-push-offset {
+  right: 0;
+}
+
 @media (min-width: 1024px) {
   body {
     transition: margin-right 0.3s ease;
@@ -91,5 +95,8 @@
 
   html[data-chat-open] .chat-push-offset {
     right: 424px;
+    /* Guards against any width:100% here: left + width + right would then be
+       over-constrained and LTR would ignore right, parking the navbar under the pane. */
+    width: auto;
   }
 }
