@@ -152,7 +152,7 @@ export const Navbar = () => {
 
   return (
     <motion.div
-      className="chat-push-offset fixed top-6 left-0 right-0 z-50 mx-auto w-full max-w-6xl px-4 pointer-events-none"
+      className="chat-push-offset fixed top-6 left-0 z-50 mx-auto max-w-6xl px-4 pointer-events-none"
       initial={{ opacity: 0, y: -42, scale: 0.96 }}
       animate={isIntroReady ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: -42, scale: 0.96 }}
       transition={{ duration: 0.75, ease: easeOutExpo, delay: 0.08 }}
